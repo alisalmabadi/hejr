@@ -252,5 +252,5 @@ Route::post('loadfields',['as'=>'loadfields','uses'=>'FieldController@search']);
 });*/
 /******test route***********/
 Route::get('/test' , function(){
-dd('add reposirory - first test for commit and push');
+dd('add reposirory - first test for commit and push - 02');
 });
