@@ -251,3 +251,6 @@ Route::post('loadfields',['as'=>'loadfields','uses'=>'FieldController@search']);
    return view('user.dashboard');
 });*/
 /******test route***********/
+Route::get('/test' , function(){
+dd('add reposirory - first test for commit and push');
+});
