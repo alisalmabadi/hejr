@@ -89,6 +89,11 @@ Route::delete('area/destroy','AreaController@destroy');
     /***show users for message route *******/
     Route::post('users','UserController@show_users')->name('show_users');
 
+    /*** admin event subject ***/
+    Route::get('eventSubject/changeStatus/{event}' , ['uses'=>'EventSubjectController@changeStatus' , 'as'=>'eventSubject.changeStatus']);
+    Route::delete('eventSubject/destroy','EventSubjectController@destroy');
+    Route::resource('eventSubject' , 'EventSubjectController' , ['except'=>'show','destroy']);
+    /*** admin event subject ***/
 });
 
 /***laravel filemanger ***/
