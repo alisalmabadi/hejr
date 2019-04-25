@@ -39,7 +39,7 @@
                             <select class="form-control" name="status">
                                 <option value="" selected>انتخاب کنید</option>
                                 <option value="1">فعال</option>
-                                <option value="0">غیرفال</option>
+                                <option value="0">غیرفعال</option>
                             </select>
                             @if($errors->first('status'))
                                 <label style="color:red;">{{$errors->first('status')}}</label>
