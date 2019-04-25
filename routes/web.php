@@ -94,6 +94,18 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::delete('eventSubject/destroy','EventSubjectController@destroy');
     Route::resource('eventSubject' , 'EventSubjectController' , ['except'=>'show','destroy']);
     /*** admin event subject ***/
+
+    /*** admin event type ***/
+    Route::get('eventType/changeStatus/{event}' , ['uses'=>'EventTypeController@changeStatus' , 'as'=>'eventType.changeStatus']);
+    Route::delete('eventType/destroy','EventTypeController@destroy');
+    Route::resource('eventType' , 'EventTypeController' , ['except'=>'show','destroy']);
+    /*** admin event type ***/
+
+    /*** admin event Status ***/
+    Route::get('eventStatus/changeStatus/{event}' , ['uses'=>'EventStatusController@changeStatus' , 'as'=>'eventStatus.changeStatus']);
+    Route::delete('eventStatus/destroy','EventStatusController@destroy');
+    Route::resource('eventStatus' , 'EventStatusController' , ['except'=>'show','destroy']);
+    /*** admin event Status ***/
 });
 
 /***laravel filemanger ***/
