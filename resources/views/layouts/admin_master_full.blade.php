@@ -383,6 +383,102 @@
                         </ul>
                     </li>
 
+                {{--event subjects--}}
+                    <li class="@if(strpos($current_route_name, 'eventSubject.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>event subject</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'eventSubject.index')===6) active @endif"><a href="{{route('admin.eventSubject.index')}}"><i class="fa fa-circle-o"></i>event subject index</a></li>
+                            <li class="@if(strpos($current_route_name, 'eventSubject.create')===6) active @endif"><a href="{{route('admin.eventSubject.create')}}"><i class="fa fa-circle-o"></i>event subject create</a></li>
+                        </ul>
+                    </li>
+
+
+                    {{--event Type--}}
+                    <li class="@if(strpos($current_route_name, 'eventType.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>event Type</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'eventType.index')===6) active @endif"><a href="{{route('admin.eventType.index')}}"><i class="fa fa-circle-o"></i>event Type index</a></li>
+                            <li class="@if(strpos($current_route_name, 'eventType.create')===6) active @endif"><a href="{{route('admin.eventType.create')}}"><i class="fa fa-circle-o"></i>event Type create</a></li>
+                        </ul>
+                    </li>
+
+
+                    {{--event status--}}
+                    <li class="@if(strpos($current_route_name, 'eventStatus.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>event Status</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'eventStatus.index')===6) active @endif"><a href="{{route('admin.eventStatus.index')}}"><i class="fa fa-circle-o"></i>event Status index</a></li>
+                            <li class="@if(strpos($current_route_name, 'eventStatus.create')===6) active @endif"><a href="{{route('admin.eventStatus.create')}}"><i class="fa fa-circle-o"></i>event Status create</a></li>
+                        </ul>
+                    </li>
+
+                    {{--event users--}}
+                    <li class="@if(strpos($current_route_name, 'eventUser.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>event user</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'eventUser.index')===6) active @endif"><a href="{{route('admin.eventUser.index')}}"><i class="fa fa-circle-o"></i>event user index</a></li>
+                        </ul>
+                    </li>
+
+
+                    {{--event--}}
+                    <li class="@if(strpos($current_route_name, 'event.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>event</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'event.index')===6) active @endif"><a href="{{route('admin.event.index')}}"><i class="fa fa-circle-o"></i>event index</a></li>
+                            <li class="@if(strpos($current_route_name, 'event.create')===6) active @endif"><a href="{{route('admin.event.create')}}"><i class="fa fa-circle-o"></i>event create</a></li>
+                        </ul>
+                    </li>
+
+
+                    {{--discount--}}
+                    <li class="@if(strpos($current_route_name, 'discount.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>تخفیف</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'discount.index')===6) active @endif"><a href="{{route('admin.discount.index')}}"><i class="fa fa-circle-o"></i>تخفیف ها</a></li>
+                            <li class="@if(strpos($current_route_name, 'discount.create')===6) active @endif"><a href="{{route('admin.discount.create')}}"><i class="fa fa-plus"></i>تخفیف ها</a></li>
+                        </ul>
+                    </li>
+
+
+
+
                 </ul>
             </section>
             <!-- /.sidebar -->

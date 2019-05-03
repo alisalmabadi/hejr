@@ -89,6 +89,40 @@ Route::delete('area/destroy','AreaController@destroy');
     /***show users for message route *******/
     Route::post('users','UserController@show_users')->name('show_users');
 
+    /*** admin event subject ***/
+    Route::get('eventSubject/changeStatus/{event}' , ['uses'=>'EventSubjectController@changeStatus' , 'as'=>'eventSubject.changeStatus']);
+    Route::delete('eventSubject/destroy','EventSubjectController@destroy');
+    Route::resource('eventSubject' , 'EventSubjectController' , ['except'=>'show','destroy']);
+    /*** admin event subject ***/
+
+    /*** admin event type ***/
+    Route::get('eventType/changeStatus/{event}' , ['uses'=>'EventTypeController@changeStatus' , 'as'=>'eventType.changeStatus']);
+    Route::delete('eventType/destroy','EventTypeController@destroy');
+    Route::resource('eventType' , 'EventTypeController' , ['except'=>'show','destroy']);
+    /*** admin event type ***/
+
+    /*** admin event Status ***/
+    Route::get('eventStatus/changeStatus/{event}' , ['uses'=>'EventStatusController@changeStatus' , 'as'=>'eventStatus.changeStatus']);
+    Route::delete('eventStatus/destroy','EventStatusController@destroy');
+    Route::resource('eventStatus' , 'EventStatusController' , ['except'=>'show','destroy']);
+    /*** admin event Status ***/
+
+    /*** admin event ***/
+    Route::get('event/changeStatus/{event}' , ['uses'=>'EventController@changeStatus' , 'as'=>'eventStatus.changeStatus']);
+    Route::delete('event/destroy','EventController@destroy');
+    Route::resource('event' , 'EventController' , ['except'=>'show','destroy']);
+    /*** admin event ***/
+
+    /*** admin event user ***/
+    Route::resource('eventUser' , 'EventUserController' , ['except'=>'show','destroy','create','edit','store','update']);
+    /*** admin event user ***/
+
+    /*** discounts ***/
+    Route::get('discount/changeStatus/{item}' , ['uses'=>'DiscountController@changeStatus' , 'as'=>'discount.changeStatus']);
+    Route::get('discount/delete/{id}' , ['uses'=>'DiscountController@delete' , 'as'=>'discount.delete']);
+    Route::resource('discount' , 'DiscountController' , ['except' => 'destroy']);
+    /*** discounts ***/
+
 });
 
 /***laravel filemanger ***/
@@ -252,5 +286,5 @@ Route::post('loadfields',['as'=>'loadfields','uses'=>'FieldController@search']);
 });*/
 /******test route***********/
 Route::get('/test' , function(){
-dd('add reposirory - first test for commit and push - 02');
+dd('add reposirory - first test for commit and push - 03');
 });
