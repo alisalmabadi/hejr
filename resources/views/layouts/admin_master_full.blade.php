@@ -430,6 +430,54 @@
                         </ul>
                     </li>
 
+                    {{--event users--}}
+                    <li class="@if(strpos($current_route_name, 'eventUser.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>event user</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'eventUser.index')===6) active @endif"><a href="{{route('admin.eventUser.index')}}"><i class="fa fa-circle-o"></i>event user index</a></li>
+                        </ul>
+                    </li>
+
+
+                    {{--event--}}
+                    <li class="@if(strpos($current_route_name, 'event.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>event</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'event.index')===6) active @endif"><a href="{{route('admin.event.index')}}"><i class="fa fa-circle-o"></i>event index</a></li>
+                            <li class="@if(strpos($current_route_name, 'event.create')===6) active @endif"><a href="{{route('admin.event.create')}}"><i class="fa fa-circle-o"></i>event create</a></li>
+                        </ul>
+                    </li>
+
+
+                    {{--discount--}}
+                    <li class="@if(strpos($current_route_name, 'discount.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>تخفیف</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'discount.index')===6) active @endif"><a href="{{route('admin.discount.index')}}"><i class="fa fa-circle-o"></i>تخفیف ها</a></li>
+                            <li class="@if(strpos($current_route_name, 'discount.create')===6) active @endif"><a href="{{route('admin.discount.create')}}"><i class="fa fa-plus"></i>تخفیف ها</a></li>
+                        </ul>
+                    </li>
+
+
+
 
                 </ul>
             </section>
