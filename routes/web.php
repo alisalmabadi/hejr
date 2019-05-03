@@ -106,6 +106,23 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::delete('eventStatus/destroy','EventStatusController@destroy');
     Route::resource('eventStatus' , 'EventStatusController' , ['except'=>'show','destroy']);
     /*** admin event Status ***/
+
+    /*** admin event ***/
+    Route::get('event/changeStatus/{event}' , ['uses'=>'EventController@changeStatus' , 'as'=>'eventStatus.changeStatus']);
+    Route::delete('event/destroy','EventController@destroy');
+    Route::resource('event' , 'EventController' , ['except'=>'show','destroy']);
+    /*** admin event ***/
+
+    /*** admin event user ***/
+    Route::resource('eventUser' , 'EventUserController' , ['except'=>'show','destroy','create','edit','store','update']);
+    /*** admin event user ***/
+
+    /*** discounts ***/
+    Route::get('discount/changeStatus/{item}' , ['uses'=>'DiscountController@changeStatus' , 'as'=>'discount.changeStatus']);
+    Route::get('discount/delete/{id}' , ['uses'=>'DiscountController@delete' , 'as'=>'discount.delete']);
+    Route::resource('discount' , 'DiscountController' , ['except' => 'destroy']);
+    /*** discounts ***/
+
 });
 
 /***laravel filemanger ***/
