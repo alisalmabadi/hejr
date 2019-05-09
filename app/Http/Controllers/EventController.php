@@ -164,7 +164,7 @@ class EventController extends Controller
         $request['start_date'] = Convertnumber2english($request['start_date']);
         $request['end_date'] = Convertnumber2english($request['end_date']);
         $request['end_date_signup'] = Convertnumber2english($request['end_date_signup']);
-        
+
         $this->validate($request , [
             'name'=>'required|max:255',
             'description'=>'required|max:100',
@@ -237,7 +237,13 @@ class EventController extends Controller
     public function delete(event $event)
     {
         if(!empty($event)){
-            Event::destroy($event->id);
+            if($event->operator_user_id == \Auth::guard('admin')->user()->id){
+                Event::destroy($event->id);
+            }
+            else{
+                flash('شما قادر به حذف این رویداد نمی باشید');
+                return redirect()->route('admin.event.index');
+            }
         }
         flash('رویداد حذف گردید');
         return redirect()->route('admin.event.index');
