@@ -14069,12 +14069,28 @@ var app = new Vue({
     data: {
         notifications: ''
     },
-    created: function created() {
-        var _this = this;
+    methods: {
+        btcTrkAPICall: function btcTrkAPICall() {
+            var _this = this;
 
-        axios.post('/user/notification/get').then(function (response) {
-            _this.notifications = response.data;
-        });
+            axios.post('/user/notification/get').then(function (response) {
+                _this.notifications = response.data;
+            }).catch(function (error) {
+                return console.log(error);
+            });
+        },
+        intervalFetchData: function intervalFetchData() {
+            var _this2 = this;
+
+            setInterval(function () {
+                _this2.btcTrkAPICall();
+            }, 1000);
+        }
+    },
+    mounted: function mounted() {
+        // Run the functions once when mounted
+        this.btcTrkAPICall();
+        this.intervalFetchData();
     }
 });
 
