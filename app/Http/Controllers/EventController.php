@@ -68,7 +68,7 @@ class EventController extends Controller
             'city_id'=>'required|numeric',
             'address'=>'required|max:255',
             'center_core_id'=>'required|numeric',
-            'information'=>'required|max:255'
+            'information'=>'max:255'
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
             'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
@@ -143,6 +143,7 @@ class EventController extends Controller
             $event_statuses = EventStatus::where('status', 1)->get();
             $provinces = Province::all();
             $cores = Core::where('status', 1)->get();
+            $event['information'] = json_decode($event->information);
             return view('admin.event.edit', compact('event', 'cities', 'event_subjects', 'event_types', 'event_statuses', 'provinces', 'cores'));
         }
         else{/*in event baraye in admin nist, dastresi nade*/
@@ -181,7 +182,7 @@ class EventController extends Controller
             'city_id'=>'required|numeric',
             'address'=>'required|max:255',
             'center_core_id'=>'required|numeric',
-            'information'=>'required|max:255'
+            'information'=>'max:255'
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
             'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
