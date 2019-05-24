@@ -4,13 +4,13 @@
     <section class="content-header">
         <div class="pull-left">
             <button type="submit" form="form-material" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="ذخیره"><i class="fa fa-save"></i></button>
-            <a href="{{route('admin.eventType.index')}}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="لغو"><i class="fa fa-reply"></i></a></div>
+            <a href="{{route('admin.eventStatus.index')}}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="لغو"><i class="fa fa-reply"></i></a></div>
         <h1>
-            update eventSubject
+            ویرایش وضعیت رویداد
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-bars"></i>event subjects</a></li>
-            <li class="active">update event subject</li>
+            <li><a href="#"><i class="fa fa-bars"></i>وضعیت رویداد</a></li>
+            <li class="active">ویرایش وضعیت رویداد</li>
         </ol>
     </section>
 @endsection
@@ -21,7 +21,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-plus "></i>edit event status</h3>
+                <h3 class="panel-title"><i class="fa fa-plus "></i>ویرایش وضعیت رویداد</h3>
             </div>
             <div class="panel-body">
                 <form action="{{route('admin.eventStatus.update' , $event_status->id)}}" class="form-horizontal" method="post" enctype="multipart/form-data" id="form-material">
