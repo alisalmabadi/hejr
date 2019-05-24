@@ -7,11 +7,11 @@
             <button type="button" data-toggle="tooltip" title="" class="btn btn-danger" onclick="confirm('آیا مطمئن هستید؟') ? $('#form-material').submit() : false;" data-original-title="حذف"><i class="fa fa-trash-o"></i></button>
         </div>
         <h1>
-            eventSubject
+            موضوع رویداد
         </h1>
         <ol class="breadcrumb">
 
-            <li class="active"><i class="fa fa-th"></i>all eventSubject</li>
+            <li class="active"><i class="fa fa-th"></i>همه موضوعات رویداد</li>
         </ol>
     </section>
 @endsection
@@ -21,7 +21,7 @@
     <section class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>eventSubject list</h3>
+                <h3 class="panel-title"><i class="fa fa-list"></i>لیست موضوعات رویداد</h3>
             </div>
             <div class="panel-body">
                 <form action="/admin/eventSubject/destroy" method="post" enctype="multipart/form-data" id="form-material">
