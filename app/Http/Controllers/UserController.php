@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Intervention\Image\Facades\Image;
+use App\Event;
 
 class UserController extends Controller
 {
@@ -399,4 +400,9 @@ $this->validate($request,[
         return $users;
     }
 
+    public function show_events()
+    {
+        $events = Event::all();
+        return view('user.event.index' , compact('events'));
+    }
 }
