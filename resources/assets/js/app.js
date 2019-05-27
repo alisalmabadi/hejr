@@ -23,9 +23,21 @@ const app = new Vue({
     data:{
         notifications:''
     },
-    created() {
-        axios.post('/user/notification/get').then(response => {
-            this.notifications = response.data;
-        });
+    methods: {
+        btcTrkAPICall: function () {
+            axios.post('/user/notification/get').then(response => {
+                this.notifications = response.data;
+            }).catch(error => console.log(error));
+        },
+        intervalFetchData: function () {
+            setInterval(() => {
+                this.btcTrkAPICall();
+            }, 1000);
+        }
+    },
+    mounted () {
+        // Run the functions once when mounted
+        this.btcTrkAPICall();
+        this.intervalFetchData();
     }
 });

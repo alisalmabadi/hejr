@@ -46,7 +46,6 @@
     </li>
 
 </template>
-
 <script>
     export default {
         props:['notifications']
