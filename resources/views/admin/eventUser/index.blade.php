@@ -6,11 +6,11 @@
             <a href="{{route('admin.eventUser.index')}}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="بازسازی"><i class="fa fa-refresh"></i></a>
         </div>
         <h1>
-            event users
+           کابران ثبت نام شده رویداد ها
         </h1>
         <ol class="breadcrumb">
 
-            <li class="active"><i class="fa fa-th"></i>all event users</li>
+            <li class="active"><i class="fa fa-th"></i>تمامی کابران ثبت شده رویداد ها</li>
         </ol>
     </section>
 @endsection
@@ -20,16 +20,18 @@
     <section class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>event User list</h3>
+                <h3 class="panel-title"><i class="fa fa-list"></i>لیست کابران ثبت نام شده رویداد ها</h3>
             </div>
             <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
+{{--
                                 <td class="text-center">ID</td>
-                                <td class="text-center">event name</td>
-                                <td class="text-center">user name</td>
+--}}
+                                <td class="text-center">نام رویداد</td>
+                                <td class="text-center">کابران</td>
                                 <td class="text-center">اطلاعات کاربر</td>
                                 <td class="text-center">وضعیت</td>
                             </tr>
