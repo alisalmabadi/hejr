@@ -54,8 +54,8 @@ class EventController extends Controller
 
         $this->validate($request , [
             'name'=>'required|max:255',
-            'description'=>'required|max:100',
-            'long_description'=>'required|max:255',
+            'description'=>'required|max:60000',
+            'long_description'=>'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date',
             'end_date_signup'=>'required|date',
@@ -68,7 +68,9 @@ class EventController extends Controller
             'city_id'=>'required|numeric',
             'address'=>'required|max:255',
             'center_core_id'=>'required|numeric',
-            'information'=>'max:255'
+            'xplace'=>'nullable|numeric',
+            'yplace'=>'nullable|numeric',
+
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
             'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
@@ -100,17 +102,16 @@ class EventController extends Controller
             'center_core_id.numeric'=>'از لیست بالا انتخاب کنید',
             'address.required'=>'لطفا ادرس را وارد کنید',
             'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
-            'information.required'=>'لطفا این فیلد را خالی رها نکنید',
-            'information.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است'
+            'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+            'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
         ]);
 
         $admin = \Auth::guard('admin')->user();
         $request['operator_user_id'] = $admin->id;
-
-        $request['information'] = json_encode($request['information']);
-
-        $event = new Event();
-        $event->create($request->all());
+        $address_point=[$request->xplace,$request->yplace];
+        $address_point=json_encode($address_point);
+        $event=Event::create($request->except(['information','address_point']));
+        $event->update(['address_point'=>$address_point]);
 
         flash('رویداد با موفقیت ثبت گردید');
         return redirect()->route('admin.event.index');
@@ -168,8 +169,8 @@ class EventController extends Controller
 
         $this->validate($request , [
             'name'=>'required|max:255',
-            'description'=>'required|max:100',
-            'long_description'=>'required|max:255',
+            'description'=>'required|max:60000',
+            'long_description'=>'required',
             'start_date'=>'required|date',
             'end_date'=>'required|date',
             'end_date_signup'=>'required|date',
@@ -182,7 +183,8 @@ class EventController extends Controller
             'city_id'=>'required|numeric',
             'address'=>'required|max:255',
             'center_core_id'=>'required|numeric',
-            'information'=>'max:255'
+            'xplace'=>'nullable|numeric',
+            'yplace'=>'nullable|numeric',
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
             'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
@@ -214,12 +216,14 @@ class EventController extends Controller
             'center_core_id.numeric'=>'از لیست بالا انتخاب کنید',
             'address.required'=>'لطفا ادرس را وارد کنید',
             'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
-            'information.required'=>'لطفا این فیلد را خالی رها نکنید',
-            'information.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است'
+            'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+            'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
         ]);
 
-        $event->update($request->all());
-
+        $event->update($request->except(['information','address_point']));
+        $address_point=[$request->xplace,$request->yplace];
+        $address_point=json_encode($address_point);
+        $event->update(['address_point'=>$address_point]);
         flash('تغییرات با موفقیت اعمال گردید');
         return redirect()->route('admin.event.index');
     }
