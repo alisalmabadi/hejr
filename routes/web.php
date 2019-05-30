@@ -273,7 +273,7 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::post('checkemail',['as'=>'checkemail','uses'=>'UserController@checkemail']);
     Route::post('checkusername',['as'=>'checkusername','uses'=>'UserController@checkusername']);
     Route::post('uploadpic',['uses'=>'UserController@uploadpic','as'=>'uploadpic']);
-    Route::get('notification/get',['uses'=>'NotificationController@get','as'=>'notification.get']);
+    Route::post('notification/get',['uses'=>'NotificationController@get','as'=>'notification.get']);
     Route::get('events',['uses'=>'UserController@show_events','as'=>'events']);
 
 });

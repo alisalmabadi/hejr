@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
@@ -32,5 +33,26 @@ class Event extends Model
     }
     public function center_core(){
         return $this->belongsTo(Core::class , 'center_core_id');
+    }
+
+    public function getStartDatesAttribute()
+    {
+        $v=Verta::parse($this->start_date);
+        $res=$v->format('%d %B %Y');
+        return $res;
+    }
+
+    public function getEndDatesAttribute()
+    {
+        $v=Verta::parse($this->end_date);
+        $res=$v->format('%d %B %Y');
+        return $res;
+    }
+
+    public function getEndDateSignAttribute()
+    {
+        $v=Verta::parse($this->end_date_signup);
+        $res=$v->format('%d %B %Y');
+        return $res;
     }
 }

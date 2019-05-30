@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <title>@yield('title','شبکه طلایه داران جهاد')</title>
-    <meta name="description" content="Latest updates and statistic charts">
+    <meta name="description" content="hejr_ir">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{csrf_token()}}">
 

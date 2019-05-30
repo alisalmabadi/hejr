@@ -410,7 +410,7 @@
                         </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="@if(strpos($current_route_name, 'eventUser.index')===6) active @endif"><a href="{{route('admin.eventUser.index')}}"><i class="fa fa-circle-o"></i>event user index</a></li>
+                            <li class="@if(strpos($current_route_name, 'eventUser.index')===6) active @endif"><a href="{{route('admin.eventUser.index')}}"><i class="fa fa-circle-o"></i>کاربران ثبت شده در هر رویداد</a></li>
                         </ul>
                     </li>
 

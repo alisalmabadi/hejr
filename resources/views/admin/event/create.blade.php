@@ -43,7 +43,7 @@
                                 <label style="color:red;">{{$errors->first('description')}}</label>
                             @endif
                         </div>
-                        <label class="col-md-2 col-lg-2">توضیحات طولانی</label>
+                        <label class="col-md-2 col-lg-2">توضیحات اجمالی</label>
                         <div class="col-md-4 col-lg-4">
                             <textarea name="long_description" class="form-control">{{old('long_description')}}</textarea>
                             @if($errors->first('long_description'))
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     <div class="form-group required">
-                        <label class="col-md-2 col-lg-2">event subject</label>
+                        <label class="col-md-2 col-lg-2">موضوع رویداد</label>
                         <div class="col-md-10 col-lg-10">
                             <select class="form-control" name="event_subject_id">
                                 <option value="">انتخاب کنید</option>
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                     <div class="form-group required">
-                        <label class="col-md-2 col-lg-2">event type</label>
+                        <label class="col-md-2 col-lg-2">نوع رویداد</label>
                         <div class="col-md-4 col-lg-4">
                             <select class="form-control" name="event_type_id">
                                 <option value="">انتخاب کنید</option>
@@ -119,7 +119,7 @@
                                 <label style="color:red;">{{$errors->first('event_type_id')}}</label>
                             @endif
                         </div>
-                        <label class="col-md-2 col-lg-2">event status</label>
+                        <label class="col-md-2 col-lg-2">وضعیت رویداد</label>
                         <div class="col-md-4 col-lg-4">
                             <select class="form-control" name="event_status_id">
                                 <option value="">انتخاب کنید</option>
@@ -163,13 +163,33 @@
                                 <label style="color:red;">{{$errors->first('address')}}</label>
                             @endif
                         </div>
-                        <label class="col-md-2 col-lg-2">address point</label>
-                        <div class="col-md-4 col-lg-4">
-                            <textarea class="form-control" name="address_point">{{old('address_point')}}</textarea>
-                            @if($errors->first('address_point'))
-                                <label style="color:red;">{{$errors->first('address_point')}}</label>
-                            @endif
+                        <label class="col-md-2 col-lg-2 control-label" for="instagram_id">مختصات <a href="https://jsfiddle.net/ehLr8ehk/">لیفلت</a> </label>
+
+                        <div class="col-sm-2">
+                            <input id="xplace" name="xplace" value="{{old('xplace')}}" placeholder="xplace" class="form-control" type="text">
+                            <label class="success">
+                                مختصات lat
+                            </label>
+                            <label style="color:red">
+                                @if($errors->has('xplace'))
+                                    {{$errors->first('xplace')}}
+                                    @endif
+                            </label>
                         </div>
+
+                        <div class="col-sm-2">
+                            <input id="yplace" name="yplace" value="{{old('yplace')}}" placeholder="yplace" class="form-control" type="text">
+                            <label class="success">
+                                مختصات lng
+                            </label>
+                            <label style="color:red">
+                                @if($errors->has('yplace'))
+                                    {{$errors->first('yplace')}}
+                                @endif
+                            </label>
+                        </div>
+
+
                     </div>
                     <div class="form-group required">
                         <label class="col-md-2 col-lg-2">هسته اصلی</label>
@@ -185,6 +205,7 @@
                             @endif
                         </div>
                     </div>
+{{--
                     <div class="form-group required">
                         <label class="col-md-2 col-lg-2">اطلاعات تکمیلی</label>
                         <div class="col-md-10 col-lg-10">
@@ -194,6 +215,7 @@
                             @endif
                         </div>
                     </div>
+--}}
                 </form>
 
             </div>
