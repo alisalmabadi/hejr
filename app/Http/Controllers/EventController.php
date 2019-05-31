@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Event;
 use App\EventSubject;
 use App\EventType;
+use App\EventUser;
 use App\EventStatus;
 use App\province;
 use App\City;
@@ -261,5 +262,89 @@ class EventController extends Controller
             return response($cities);
         else
             return $cities;
+    }
+
+    public function getDetails(Request $request)
+    {
+        $event = Event::find($request['event_id']);
+        $event->province = $event->provinces->name;
+        $event->city = $event->cities->name;
+        return response($event);
+    }
+
+
+
+    /***Add user functions ***/
+    public function addUser()
+    {
+        $events = Event::all();
+        return view('admin.event.addUser' , compact('events'));
+    }
+
+    public function selectEvent(Request $request)
+    {
+        $this->validate($request , [
+            'event'=>'required|numeric'
+        ],[
+            'event.required'=>'لطفا رویداد را انتخاب کنید',
+            'event.numeric'=>'مشکلی رخ داده است'
+        ]);
+        
+        $event = Event::find($request['event']);
+        $users = User::all();
+        foreach ($users as $user)
+        {
+            $check = EventUser::where('user_id',$user->id)->where('event_id',$event->id)->first();
+            if(!empty($check))
+                $user->added = $event->id;
+        }
+        return view('admin.event.addUser' , compact('event','users'));
+    }
+
+    public function storeUser(Request $request)
+    {
+        $user = User::find($request['user_id']);
+        $user_information = ['name'=>$user->name.' '.$user->lastname , 'email'=>$user->email , 'username'=>$user->username , 'phonenumber'=>$user->phonenumber];
+        $user_information = json_encode($user_information);
+        $eventUser = EventUser::create([
+            'user_id'=>$request['user_id'],
+            'event_id'=>$request['event_id'],
+            'user_information'=>$user_information,
+            'status'=>1,
+        ]);
+        return response($eventUser);
+    }
+
+    public function removeUser(Request $request)
+    {
+        $eventUser = EventUser::where('user_id',$request['user_id'])->where('event_id',$request['event_id'])->first();
+        EventUser::destroy($eventUser->id);
+        return response($eventUser);
+    }
+
+    public function showResult(Request $request)
+    {
+        return response('result here');
+    }
+
+    public function selectAll(Request $request)
+    {
+        $user_ids = $request['user_ids'];
+        foreach ($user_ids as $key => $user_id) {
+            $eventUser = EventUser::where('user_id',$user_id)->where('event_id',$request['event_id'])->first();
+            if(empty($eventUser))
+            {
+                $user = User::find($user_id);
+                $user_information = ['name'=>$user->name.' '.$user->lastname , 'email'=>$user->email , 'username'=>$user->username , 'phonenumber'=>$user->phonenumber];
+                $user_information = json_encode($user_information);
+                $eventUser = EventUser::create([
+                    'user_id'=>$user_id,
+                    'event_id'=>$request['event_id'],
+                    'user_information'=>$user_information,
+                    'status'=>1,
+                ]);
+            }
+        }
+        return redirect()->route('admin.event.addUser');
     }
 }

@@ -111,6 +111,7 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::get('event/changeStatus/{event}' , ['uses'=>'EventController@changeStatus' , 'as'=>'eventStatus.changeStatus']);
     Route::delete('event/destroy','EventController@destroy');
     Route::resource('event' , 'EventController' , ['except'=>'show','destroy']);
+    Route::post('event/getDetails' , ['uses'=>'EventController@getDetails' , 'as'=>'event.details']);
     /*** admin event ***/
 
     /*** admin event user ***/
@@ -118,6 +119,15 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::get('event/delete/{event}' , ['uses'=>'EventController@delete','as'=>'event.delete']);
     Route::resource('eventUser' , 'EventUserController' , ['except'=>'show','destroy','create','edit','store','update']);
     /*** admin event user ***/
+
+    /*** add user to event ***/
+    Route::get('event/addUser' , ['uses'=>'EventController@addUser' , 'as'=>'event.addUser']);
+    Route::post('event/addUser' ,['uses'=>'EventController@selectEvent' , 'as'=>'event.addUser.selectEvent']);
+    Route::post('event/addUser/store' , ['uses'=>'EventController@storeUser' , 'as'=>'event.addUser.store']);
+    Route::post('event/addUser/remove' , ['uses'=>'EventController@removeUser' , 'as'=>'event.addUser.remove']);
+    Route::post('event/addUser/showResult' , ['uses'=>'EventController@showResult' , 'as'=>'event.addUser.showResult']);
+    Route::post('event/addUser/selectAll' , ['uses'=>'EventController@selectAll' , 'as'=>'event.addUser.selectAll']);
+    /*** add user to event ***/
 
     /*** discounts ***/
     Route::get('discount/changeStatus/{item}' , ['uses'=>'DiscountController@changeStatus' , 'as'=>'discount.changeStatus']);
