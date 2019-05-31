@@ -20,7 +20,9 @@
             </div>
         </div>
     </div>
-
+{{--@can('create-event',$cuser->core->admin_id)
+    asd
+    @endcan--}}
     <!-- END: Subheader -->
     <div class="m-content">
         <div class="row">
