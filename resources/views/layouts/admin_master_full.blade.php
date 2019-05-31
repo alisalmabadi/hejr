@@ -400,6 +400,20 @@
                         </ul>
                     </li>
 
+                    {{--sabte name--}}
+                    <li class="@if(strpos($current_route_name, 'event.')===6 ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-money"></i>
+                            <span>ثبت نام</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'event.addUser')===6) active @endif"><a href="{{route('admin.event.addUser')}}"><i class="fa fa-plus"></i>ثبت نام کاربر در رویداد</a></li>
+                        </ul>
+                    </li>
+
                     {{--event users--}}
                     <li class="@if(strpos($current_route_name, 'eventUser')===6 ) active @endif treeview">
                         <a href="#">
