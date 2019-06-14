@@ -19,6 +19,29 @@
           opacity: 1;
         }
         /*End of hover styles*/
+
+        .owl-prev {
+            width: 15px;
+            height: 100px;
+            position: absolute;
+            top: 30%;
+            margin-left: -20px;
+            display: block !important;
+            border:0px solid black;
+        }
+
+        .owl-next {
+            width: 15px;
+            height: 100px;
+            position: absolute;
+            top: 30%;
+            right: -25px;
+            margin-right: 100%;
+            display: block !important;
+            border:0px solid black;
+        }
+        .owl-prev i, .owl-next i {transform : scale(6,6); color: #ccc;}
+    </style>
     </style>
 
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
@@ -177,28 +200,19 @@
         $(document).ready(function() { 
             $("#owl-example").owlCarousel({
                 // Most important owl features
-                items : 4,
+                items : 5,
+                touchDrag: true,
+                nav:true,
+                autoplay:true,
                 itemsDesktop : [1199,4],
                 itemsDesktopSmall : [980,3],
                 itemsTablet: [768,2],
                 itemsTabletSmall: false,
                 itemsMobile : [479,1],
                 singleItem : true,
-                 //Basic Speeds
-                slideSpeed : 200,
-                paginationSpeed : 800,
-                rewindSpeed : 1000,
-                 //Autoplay
-                autoPlay : true,
-                stopOnHover : true,
-                // Navigation
-                navigation : true,
-                navigationText : ["prev","next"],
-                rewindNav : true,
-                scrollPerPage : false,
-                    //Pagination
-                pagination : true,
-                paginationNumbers: true,
+                rtl:true,
+                nav:true,
+                navText : ['<i class="fa fa-angle-right" aria-hidden="true"></i>','<i class="fa fa-angle-left" aria-hidden="true"></i>']
             });
         });
     </script>
