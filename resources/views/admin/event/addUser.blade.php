@@ -280,6 +280,11 @@
                     url:url,
                     type:'POST',
                     success:function(data){
+                         $("#resultModal").find(".modal-body").html('');
+                        $.each(data , function(user){
+                            $("#resultModal").find(".modal-body").append('<div class="row" style="border: 1px solid;border-radius: 15px;"><div class="col-md-4"><img src="{{asset('')}}/images/user2-160x160.jpg" style="border-radius: 50px;width: 75px;"></div><div class="col-md-8"><label class="form-control label label-info">'+data[user].name+' '+data[user].lastname+ ' </label><br/><label class="form-control label label-info">'+data[user].nationcode+ ' </label><br/><label class="form-control label label-info">'+data[user].phonenumber+ ' </label></div></div>');
+                        });
+
                         $("#resultModal").modal('show');
                         console.log(data);
                     },
