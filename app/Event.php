@@ -55,4 +55,14 @@ class Event extends Model
         $res=$v->format('%d %B %Y');
         return $res;
     }
+
+    public function images()
+    {
+        return $this->belongsToMany(Image::class , 'event_images');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class , 'event_users');
+    }
 }

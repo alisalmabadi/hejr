@@ -162,7 +162,7 @@
                     <div class="form-group required">
                         <label class="col-md-2 col-lg-2">آدرس</label>
                         <div class="col-md-4 col-lg-4">
-                            <textarea class="form-control" name="address">{{old('address')}}</textarea>
+                            <textarea class="form-control" name="address">{{$event->address}}</textarea>
                             @if($errors->first('address'))
                                 <label style="color:red;">{{$errors->first('address')}}</label>
                             @endif
@@ -221,6 +221,25 @@
                         </div>
                     </div>
 --}}
+
+                    <div class="form-group required">
+                        <label class="col-md-2 col-lg-2">تصویر</label>
+                        <div class="col-md-4 col-lg-4">
+                            <input type="file" name="image" class="form-control">
+                            @if($errors->first('center_core_id'))
+                                <label style="color:red;">{{$errors->first('center_core_id')}}</label>
+                            @endif
+                        </div>
+                        <label class="col-lg-2 col-md-2">تصویر رویداد</label>
+                        <div class="col-md-4 col-lg-4">
+                            @if(count($event->images) > 0)
+                                <img src="{{asset($event->images[0]->image_path)}}" style="width: 200px;">
+                            @else
+                                <label class="label label-danger">عکسی انتخاب نشده</label>
+                            @endif
+                        </div>
+                    </div>
+
                 </form>
 
             </div>

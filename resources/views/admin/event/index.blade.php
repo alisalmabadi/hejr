@@ -49,6 +49,7 @@
 {{--
                             <td class="text-center">اطلاعات</td>
 --}}
+                            <td class="text-center">تصویر</td>
                             <td class="text-center">عملیات</td>
                         </tr>
                         </thead>
@@ -60,9 +61,9 @@
                                     <td class="text-center">{{$event->name}}</td>
                                     <td class="text-center">{!! $event->description !!}</td>
                                  {{--   <td class="text-center">{!! $event->longdescription !!}</td>--}}
-                                    <td class="text-center">{{$event->start_dates}}</td>
-                                    <td class="text-center">{{$event->end_dates}}</td>
-                                    <td class="text-center">{{$event->end_date_sign}}</td>
+                                    <td class="text-center">{{-- {{$event->start_dates}} --}}</td>
+                                    <td class="text-center">{{-- {{$event->end_dates}} --}}</td>
+                                    <td class="text-center">{{-- {{$event->end_date_sign}} --}}</td>
                                     <td class="text-center">{{$event->price}}</td>
                                     <td class="text-center">{{$event->capacity}}</td>
                                     <td class="text-center">{{$event->event_subject->name}}</td>
@@ -77,6 +78,14 @@
 {{--
                                     <td class="text-center">{{$event->information}}</td>
 --}}
+                                    <td class="text-center">
+                                        @if(count($event->images) > 0)
+                                            <img src="{{asset($event->images[0]->image_path)}}" style="width: 200px;">
+                                        @else
+                                            <label class="label label-danger">عکسی انتخاب نشده</label>
+                                        @endif
+                                    </td>
+
                                     <td class="text-center">
                                         <a href="{{route('admin.event.edit' , $event->id)}}"><button type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></button></a>
                                         <a href="{{route('admin.event.delete',$event)}}" onClick="return confirm('مطمئن هستید؟')"><button class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
