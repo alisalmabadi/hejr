@@ -123,6 +123,7 @@ Route::delete('area/destroy','AreaController@destroy');
     /*** add user to event ***/
     Route::get('event/addUser' , ['uses'=>'EventController@addUser' , 'as'=>'event.addUser']);
     Route::post('event/addUser' ,['uses'=>'EventController@selectEvent' , 'as'=>'event.addUser.selectEvent']);
+    Route::post('event/addUser/loadUsersByCore' , ['uses'=>'EventController@loadUsersByCore', 'as'=>'event.addUser.loadUsersByCore']);
     Route::post('event/addUser/store' , ['uses'=>'EventController@storeUser' , 'as'=>'event.addUser.store']);
     Route::post('event/addUser/remove' , ['uses'=>'EventController@removeUser' , 'as'=>'event.addUser.remove']);
     Route::post('event/addUser/showResult' , ['uses'=>'EventController@showResult' , 'as'=>'event.addUser.showResult']);
