@@ -106,7 +106,6 @@ class EventController extends Controller
             'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
             'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
         ]);
-
         $admin = \Auth::guard('admin')->user();
         $request['operator_user_id'] = $admin->id;
         $address_point=[$request->xplace,$request->yplace];
@@ -221,6 +220,8 @@ class EventController extends Controller
             'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
         ]);
 
+
+
         $event->update($request->except(['information','address_point']));
         $address_point=[$request->xplace,$request->yplace];
         $address_point=json_encode($address_point);
@@ -289,7 +290,7 @@ class EventController extends Controller
             'event.required'=>'لطفا رویداد را انتخاب کنید',
             'event.numeric'=>'مشکلی رخ داده است'
         ]);
-        
+
         $event = Event::find($request['event']);
         $users = User::all();
         foreach ($users as $user)
