@@ -111,7 +111,6 @@ class EventController extends Controller
             'image.image'=>'لطفا فقط عکس انتخاب کنید',
             'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',
         ]);
-
         $admin = \Auth::guard('admin')->user();
         $request['operator_user_id'] = $admin->id;
         $address_point=[$request->xplace,$request->yplace];
@@ -247,6 +246,8 @@ class EventController extends Controller
             'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',
         ]);
 
+
+
         $event->update($request->except(['information','address_point']));
         $address_point=[$request->xplace,$request->yplace];
         $address_point=json_encode($address_point);
@@ -336,7 +337,7 @@ class EventController extends Controller
             'event.required'=>'لطفا رویداد را انتخاب کنید',
             'event.numeric'=>'مشکلی رخ داده است'
         ]);
-        
+
         $event = Event::find($request['event']);
         $cores = Core::all();
         $users = User::all();
