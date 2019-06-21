@@ -128,6 +128,7 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::post('event/addUser/remove' , ['uses'=>'EventController@removeUser' , 'as'=>'event.addUser.remove']);
     Route::post('event/addUser/showResult' , ['uses'=>'EventController@showResult' , 'as'=>'event.addUser.showResult']);
     Route::post('event/addUser/selectAll' , ['uses'=>'EventController@selectAll' , 'as'=>'event.addUser.selectAll']);
+    Route::post('event/addUser/loadUsersByCore', ['uses'=>'EventController@loadUsersByCore', 'as'=>'event.loadUsersByCore']);
     /*** add user to event ***/
 
     /*** discounts ***/
