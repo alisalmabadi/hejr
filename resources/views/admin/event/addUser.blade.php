@@ -77,7 +77,7 @@
                             {{csrf_field()}}
                             <div class="form-group">
                                 <label class="col-md-2">انتخاب رویداد</label>
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <select class="form-control selectEvent" name="event">
                                         <option value="">انتخاب کنید</option>
                                         @foreach($events as $event)
@@ -88,14 +88,26 @@
                                     </select>
                                     <label style="color: red;">{{$errors->first('event')}}</label>
                                 </div>
-                                <div class="col-md-2">
+                                <label class="col-md-2">انتخاب هسته</label>
+                                <div class="col-md-4">
+                                    <select class="form-control" name="core">
+                                        <option value="">انتخاب کنید</option>
+                                        @foreach($cores as $core)
+                                            <option value="{{$core->id}}">
+                                                {{$core->name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label style="color: red;">{{$errors->first('core')}}</label>
+                                </div>
+                                <div class="col-md-12">
                                     <input type="submit" name="submit" value="ثبت" class="btn btn-default form-control">
                                 </div>
                             </div>
                         </form>
                     @else
                         <div class="form-group">
-                            <label class="col-md-12 form-control label label-info" style="font-size: 20px;">انتخاب کاربر برای رویداد {{$event->name}}</label>
+                            <label class="col-md-12 form-control label label-info" style="font-size: 20px;">انتخاب کاربر برای رویداد {{$event->name}} و کاربران هسته {{$core->name}}</label>
                             <input type="hidden" name="selectEvent" class="selectEvent" value="{{$event->id}}">
                         </div>
                         <hr/>
