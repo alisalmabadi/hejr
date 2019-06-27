@@ -326,28 +326,32 @@ class EventController extends Controller
     public function addUser()
     {
         $events = Event::all();
-        return view('admin.event.addUser' , compact('events'));
+        $cores = Core::all();
+        return view('admin.event.addUser' , compact('events','cores'));
     }
 
     public function selectEvent(Request $request)
     {
         $this->validate($request , [
-            'event'=>'required|numeric'
+            'event'=>'required|numeric',
+            'core' => 'required|numeric'
         ],[
             'event.required'=>'لطفا رویداد را انتخاب کنید',
-            'event.numeric'=>'مشکلی رخ داده است'
+            'event.numeric'=>'مشکلی رخ داده است',
+            'core.required'=>'لطفا هسته را مشخص کنید',
+            'core.numeric'=>'لطفا مجدد تلاش کنید'
         ]);
 
         $event = Event::find($request['event']);
-        $cores = Core::all();
-        $users = User::all();
+        $core = Core::find($request['core']);
+        $users = $core->users;
         foreach ($users as $user)
         {
             $check = EventUser::where('user_id',$user->id)->where('event_id',$event->id)->first();
             if(!empty($check))
                 $user->added = $event->id;
         }
-        return view('admin.event.addUser' , compact('event','users','cores'));
+        return view('admin.event.addUser' , compact('event','users','core'));
     }
 
     public function loadUsersByCore(Request $request)
@@ -386,19 +390,21 @@ class EventController extends Controller
     public function selectAll(Request $request)
     {
         $user_ids = $request['user_ids'];
-        foreach ($user_ids as $key => $user_id) {
-            $eventUser = EventUser::where('user_id',$user_id)->where('event_id',$request['event_id'])->first();
-            if(empty($eventUser))
-            {
-                $user = User::find($user_id);
-                $user_information = ['name'=>$user->name.' '.$user->lastname , 'email'=>$user->email , 'username'=>$user->username , 'phonenumber'=>$user->phonenumber];
-                $user_information = json_encode($user_information);
-                $eventUser = EventUser::create([
-                    'user_id'=>$user_id,
-                    'event_id'=>$request['event_id'],
-                    'user_information'=>$user_information,
-                    'status'=>1,
-                ]);
+        if(!empty($request['user_ids'])){
+            foreach ($user_ids as $key => $user_id) {
+                $eventUser = EventUser::where('user_id',$user_id)->where('event_id',$request['event_id'])->first();
+                if(empty($eventUser))
+                {
+                    $user = User::find($user_id);
+                    $user_information = ['name'=>$user->name.' '.$user->lastname , 'email'=>$user->email , 'username'=>$user->username , 'phonenumber'=>$user->phonenumber];
+                    $user_information = json_encode($user_information);
+                    $eventUser = EventUser::create([
+                        'user_id'=>$user_id,
+                        'event_id'=>$request['event_id'],
+                        'user_information'=>$user_information,
+                        'status'=>1,
+                    ]);
+                }
             }
         }
         return redirect()->route('admin.event.addUser');
