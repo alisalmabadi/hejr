@@ -42,7 +42,7 @@
         }
         .owl-prev i, .owl-next i {transform : scale(6,6); color: #ccc;}
     </style>
-    </style>
+
 
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
