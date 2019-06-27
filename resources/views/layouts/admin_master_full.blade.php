@@ -384,7 +384,7 @@
                     </li>
 
                     {{--events--}}
-                    <li class="@if(strpos($current_route_name, 'eventSubject')===6 || strpos($current_route_name, 'eventType')===6 || strpos($current_route_name,'eventStatus')===6 || strpos($current_route_name,'index')===12) active @endif treeview">
+                    <li class="@if(strpos($current_route_name, 'eventSubject')===6 || strpos($current_route_name, 'eventType')===6 || strpos($current_route_name,'eventStatus')===6 || strpos($current_route_name,'index')===12|| strpos($current_route_name, 'image')===6) active @endif treeview">
                         <a href="#">
                             <i class="fa fa-handshake-o"></i>
                             <span>مدیریت رویدادها</span>
@@ -397,6 +397,7 @@
                             <li class="@if(strpos($current_route_name, 'eventSubject.index')===6) active @endif"><a href="{{route('admin.eventSubject.index')}}"><i class="fa fa-server"></i>مدیریت موضوعات</a></li>
                             <li class="@if(strpos($current_route_name, 'eventType.index')===6) active @endif"><a href="{{route('admin.eventType.index')}}"><i class="fa fa-sitemap"></i>مدیریت نوع ها</a></li>
                             <li class="@if(strpos($current_route_name, 'eventStatus.index')===6) active @endif"><a href="{{route('admin.eventStatus.index')}}"><i class="fa fa-toggle-on"></i>مدیریت وضعیت ها</a></li>
+                            <li class="@if(strpos($current_route_name, 'image')===6) active @endif"><a href="{{route('admin.image.index')}}"><i class="fa fa-picture-o"></i>مدیریت گالری</a></li>
                         </ul>
                     </li>
 

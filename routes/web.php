@@ -128,6 +128,7 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::post('event/addUser/remove' , ['uses'=>'EventController@removeUser' , 'as'=>'event.addUser.remove']);
     Route::post('event/addUser/showResult' , ['uses'=>'EventController@showResult' , 'as'=>'event.addUser.showResult']);
     Route::post('event/addUser/selectAll' , ['uses'=>'EventController@selectAll' , 'as'=>'event.addUser.selectAll']);
+    Route::post('event/addUser/loadUsersByCore', ['uses'=>'EventController@loadUsersByCore', 'as'=>'event.loadUsersByCore']);
     /*** add user to event ***/
 
     /*** discounts ***/
@@ -135,6 +136,14 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::get('discount/delete/{id}' , ['uses'=>'DiscountController@delete' , 'as'=>'discount.delete']);
     Route::resource('discount' , 'DiscountController' , ['except' => 'destroy']);
     /*** discounts ***/
+
+    /*** images ***/
+    Route::delete('image/delete' , ['uses'=>'ImageController@delete','as'=>'image.delete']);    
+    Route::resource('image' , 'ImageController', ['except'=>'destroy']);    
+    Route::post('image/showEventImages' , ['uses'=>'ImageController@show_event_images' , 'as'=>'image.show_event_images']);
+    Route::post('image/addEventImage' , ['uses'=>'ImageController@add_event_image', 'as'=>'image.add_event_image']);
+    Route::post('image/deleteEventImage', ['uses'=>'ImageController@delete_event_image', 'as'=>'image.delete_event_image']);
+    /*** end of images ***/
 
 });
 
