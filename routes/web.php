@@ -111,7 +111,7 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::get('event/changeStatus/{event}' , ['uses'=>'EventController@changeStatus' , 'as'=>'eventStatus.changeStatus']);
     Route::delete('event/destroy','EventController@destroy');
     Route::resource('event' , 'EventController' , ['except'=>'show','destroy']);
-    Route::post('event/getDetails' , ['uses'=>'EventController@getDetails' , 'as'=>'event.details']);
+    Route::post('event/showAllEvents', ['uses'=>'EventController@showAllEvents','as'=>'event.showAllEvents']);
     /*** admin event ***/
 
     /*** admin event user ***/
@@ -298,6 +298,10 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::get('events',['uses'=>'UserController@show_events','as'=>'events']);
 
     Route::get('events/create',['uses'=>'UserController@createEvent','as'=>'events.create']);
+    Route::post('events/register',['uses'=>'UserController@registerEvent','as'=>'events.register']);
+    Route::get('events/registered/{user_event}',['uses'=>'UserController@showregistered_event','as'=>'events.registered']);
+    Route::get('events/showAllRegistered', ['uses'=>'UserController@showAllRegistered','as'=>'events.showAllRegistered']);
+    Route::post('event/getDetails' , ['uses'=>'EventController@getDetails' , 'as'=>'event.details']);
 
 });
 
