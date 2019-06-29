@@ -86,4 +86,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\messages', 'tuser_id');
     }
 
+    public function events()
+    {
+        return $this->belongsToMany(Event::class , 'event_users' , 'user_id');
+    }
+
 }
