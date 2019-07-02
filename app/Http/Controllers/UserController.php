@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Intervention\Image\Facades\Image;
 use App\Event;
+use App\EventUser;
 
 class UserController extends Controller
 {
@@ -406,6 +407,7 @@ $this->validate($request,[
         return view('user.event.index' , compact('events'));
     }
 
+
     public function createEvent()
     {
         $user=\Auth::user();
@@ -419,5 +421,53 @@ $this->validate($request,[
         }else{
             abort('404');
         }
+    }
+    public function registerEvent(Request $request)
+    {
+        $event = Event::find($request['event_id']);
+        $user = \Auth::guard('web')->user();
+        $user_information = ['name'=>$user->name.' '.$user->lastname , 'email'=>$user->email , 'username'=>$user->username , 'phonenumber'=>$user->phonenumber];
+        $user_information = json_encode($user_information);
+        $event_information = ['name'=>$event->name , 'description'=>$event->description , 'start_date'=>$event->start_date , 'end_date'=>$event->end_date , 'price'=>$event->price , 'capacity'=>$event->capacity];
+        $event_information = json_encode($event_information);
+        $eventUser = EventUser::create([
+            'user_id'=>$user->id,
+            'event_id'=>$request['event_id'],
+            'user_information'=>$user_information,
+            'event_information'=>$event_information,
+            'status'=>1,
+        ]);
+        return response($eventUser);
+    }
+
+    public function showregistered_event($eventUser_id)
+    {
+        $eventUser = EventUser::find($eventUser_id);
+        $user = \Auth::guard('web')->user();
+        if(!empty($eventUser) && $eventUser->user_id == $user->id){/**event peyda shode va male in shakhs hast**/
+            if(!empty($eventUser->event)){
+                $eventUser->load('event');
+            }
+            else{
+                $event->event = $eventUser->event_information;
+            }
+            if(!empty($eventUser->user)){
+                $eventUser->load('user');
+            }
+            else{
+                $eventUser->user = $eventUser->user_information;
+            }
+            return view('user.event.show_registered', compact('eventUser'));
+        }
+        else{/**ya safhe peyda nashode, ya male in shakhs nist**/
+            dd('safhe 404 biad');
+        }
+    }
+
+    public function showAllRegistered()
+    {
+        $user = \Auth::guard('web')->user();
+        $events = $user->events;
+        return view('user.event.show_AllRegistered' , compact('user','events'));
     }
 }

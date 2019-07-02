@@ -142,6 +142,7 @@
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modal-lg">
+            <input type="hidden" value="" class="event_id">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -167,7 +168,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
-                    <button type="button" class="btn btn-success">ثبت نام</button>
+                    <button type="button" data-event_id="" class="btn btn-success btn-success-modal">ثبت نام</button>
                 </div>
             </div>
         </div>
@@ -210,17 +211,23 @@
         });
         $(".btn-read-more").on('click' , function(){
             var id = $(this).data('id');
-            var url = "{{route('admin.event.details')}}";
+            var url = "{{route('user.event.details')}}";
             $.ajax({
                 data:{'event_id':id},
                 url:url,
                 type:'POST',
                 success:function(data){
-                    console.log(data);
                     $("#myModal").find(".firstPlace").html(data.long_description);
                     $("#myModal").find(".secondPlace").html(data.province + ' ' + data.city +  ' ' + data.address);
                     $("#myModal").find(".thirdPlace").html(data.address_point);
                     $("#myModal").find(".imagePlace").find(".modalImage").prop('src' , $(".image_"+data.id).prop('src'));
+                    $("#myModal").find(".event_id").val(data.id);
+                    /*** agar ghablan in rooydad ro register karde bood, nazare dobare oon ro register kone ***/
+                    if(data.registered_me == 'YES'){//ghablan register karde too in event
+                        $("#myModal").find(".btn-success-modal").css('display','none');
+                        var new_url = "{{url('/user/events/registered')}}/"+data.registered_id;
+                        $("#myModal").find(".modal-footer").append('<a href="'+new_url+'"><button class="btn btn-primary btn-show-detail">نمایش رویداد</button></a>');
+                    }
                     $("#myModal").modal('show');
                 },
                 error:function(){
@@ -230,4 +237,57 @@
         });
     </script>
     {{--end of namayeshe details--}}
+
+    {{-- namayeshe sweet alert e YES va NO --}}
+    <script>
+        $(".btn-success-modal").click(function(){
+            swal.fire({
+                title: 'ثبت نام',
+                text: "مایل به ثبت نام در این رویداد هستید ؟",
+                type: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: 'red',
+                confirmButtonText: 'بله',
+                cancelButtonText: 'خیر'
+                }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    var event_id = $(this).closest(".modal-dialog").find(".event_id").val();
+                    var url = "{{route('user.events.register')}}";
+                    $.ajax({
+                        data:{'event_id':event_id},
+                        url:url,
+                        type:"POST",
+                        success:function(data){
+                            Swal.fire(
+                            'موفقیت آمیز',
+                            'ثبت نام با موفقیت انجام شد',
+                            'success'
+                            )
+                            var redirct = "{{url('/user/events/registered')}}/"+data.id;
+                            window.location.replace(redirct);
+                        },
+                        error:function(){
+                            console.log('error in registering in event');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    {{-- end of namayeshe sweet alert e YES va NO --}}
+
+    {{-- pak kardane etelaate ezafi az modal --}}
+    <script>
+        $('#myModal').on('hidden.bs.modal', function () {
+            $("#myModal").find(".btn-success-modal").css('display','block');
+            $("#myModal").find(".modal-footer").find(".btn-show-detail").remove();
+        });
+    </script>
+    {{-- end of pak kardane etelaat e ezafi az modal --}}
 @endsection
