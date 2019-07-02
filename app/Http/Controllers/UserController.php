@@ -28,7 +28,7 @@ class UserController extends Controller
     public function __construct()
     {
          $this->middleware('admin')->only(['index','create','edit','store','update','index','multiple','multiple_store','show_users']);
-         $this->middleware('auth')->only(['panel','profile']);
+         $this->middleware('auth')->only(['panel','profile','createEvent']);
     }
 
     /**
@@ -404,5 +404,20 @@ $this->validate($request,[
     {
         $events = Event::all();
         return view('user.event.index' , compact('events'));
+    }
+
+    public function createEvent()
+    {
+        $user=\Auth::user();
+        if($user->can('create-event')){
+            $areas=Area::all();
+            $grades=Grade::all();
+            $universities=University::where('status',1)->get();
+            $soldier_services=SoldierServices::all();
+            $jobs=Job::where('status',1)->get();
+            return view('user.event.event_create',compact('areas','grades','universities','soldier_services','jobs'));
+        }else{
+            abort('404');
+        }
     }
 }
