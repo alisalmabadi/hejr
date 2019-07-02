@@ -83,9 +83,7 @@
             <label>انتخای این تصویر برای رویداد جدید</label>
             <div class="row select_event">
                 <select class="form-control eventor">
-                    @foreach($events as $event)
-                        <option value="{{$event->id}}">{{$event->name}}</option>
-                    @endforeach
+                    
                 </select>
                 <button type="button" class="btn btn-success form-control add_eventor">ذخیره</button>
             </div>
@@ -116,6 +114,7 @@
             }
         });
         $(".show_event_images").on('click' , function(){
+            //namayesh e event_image ha
             var id = $(this).data('image_id');
             var url = "{{route('admin.image.show_event_images')}}";
             $.ajax({
@@ -128,10 +127,32 @@
                         $("#myModal").find(".modal-body").find(".show_events").append('<div class="col-md-12 col-lg-12 event_id_'+data[event].id+'" style="border: 1px solid black;border-radius: 50px;margin-bottom: 10px;text-align: center;"><div class="col-md-9 col-lg-9"><label class=" label-primary form-control" style="    border-radius: 5px;margin-top: 3px;">'+data[event].name+'</label></div><div class="col-lg-3 col-md-3"><button style="    margin-top: 3px;" class="btn btn-danger delete_event_image" data-image="'+id+'" data-event="'+data[event].id+'">حذف</button></div></div>');
                     });
                     $("#myModal").find(".modal-body").find(".show_events").append('<input type="hidden" id="modal_image_id" value="'+id+'">');
-                    $("#myModal").modal("show");
                 },
                 error:function(){
                     console.log('error');
+                }
+            });
+            //namayesh e event ha
+            var image_id = $("#myModal").find(".modal-body").find(".show_events").find("#modal_image_id").val();
+            var url = "{{route('admin.event.showAllEvents')}}";
+            $.ajax({
+                data:{'image_id':image_id},
+                url:url,
+                type:"POST",
+                success:function(events){
+                    $("#myModal").find(".select_event").find(".eventor").html('');
+                    $.each(events, function(event){
+                        if(events[event].has_this_image == null){
+                            $("#myModal").find(".select_event").find(".eventor").append('<option value="'+events[event].id+'" id="modal_option_event_'+events[event].id+'">'+events[event].name+'</option>');
+                        }
+                        else{
+                            $("#myModal").find(".select_event").find(".eventor").append('<option value="'+events[event].id+'" id="modal_option_event_'+events[event].id+'" disabled>'+events[event].name+'</option>');
+                        }
+                    });
+                    $("#myModal").modal('show');
+                },
+                error:function(){
+                    console.log('error on getting all events');
                 }
             });
         });
@@ -155,6 +176,7 @@
                 type:"POST",
                 success:function(data){
                     $("#myModal").find(".modal-body").find(".show_events").append('<div class="col-md-12 col-lg-12 event_id_'+data.id+'" style="border: 1px solid black;border-radius: 50px;margin-bottom: 10px;text-align: center;"><div class="col-md-9 col-lg-9"><label class=" label-primary form-control" style="    border-radius: 5px;margin-top: 3px;">'+data.name+'</label></div><div class="col-lg-3 col-md-3"><button style="    margin-top: 3px;" class="btn btn-danger delete_event_image" data-image="'+image_id+'" data-event="'+data.id+'">حذف</button></div></div>');
+                    $("#myModal").find("#modal_option_event_"+data.id).prop('disabled',true);
                 },
                 error:function(){
                     console.log('error in adding the event_image');
@@ -176,6 +198,7 @@
                 type:"POST",
                 success:function(data){
                     $(".event_id_"+event_id).fadeOut("slow");
+                    $("#myModal").find("#modal_option_event_"+event_id).prop('disabled',false);
                 },
                 error:function(){
                     console.log('error in deleting event_image');

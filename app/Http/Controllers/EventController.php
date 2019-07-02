@@ -312,11 +312,33 @@ class EventController extends Controller
             return $cities;
     }
 
+    public function showAllEvents(Request $request)
+    {
+        $events = Event::all();
+        foreach($events as $event){
+            foreach($event->images as $item){
+                if($item->id == $request['image_id']){
+                    $event->has_this_image = 'YES';
+                }
+            }
+        }
+        return response($events);
+    }
+
     public function getDetails(Request $request)
     {
         $event = Event::find($request['event_id']);
+        $user = \Auth::guard('web')->user();
         $event->province = $event->provinces->name;
         $event->city = $event->cities->name;
+        /***check kone ke in rooydad ghablan entekhab shode ya na***/
+        foreach($user->events as $u_event){
+            if($u_event->id == $event->id){
+                $event_user_id = EventUser::where('event_id',$event->id)->where('user_id',$user->id)->first()->id;
+                $event->registered_me = 'YES';
+                $event->registered_id = $event_user_id;
+            }
+        }
         return response($event);
     }
 
@@ -364,11 +386,15 @@ class EventController extends Controller
     {
         $user = User::find($request['user_id']);
         $user_information = ['name'=>$user->name.' '.$user->lastname , 'email'=>$user->email , 'username'=>$user->username , 'phonenumber'=>$user->phonenumber];
+        $event = Event::find($request['event_id']);
+        $event_information = ['name'=>$event->name , 'description'=>$event->description , 'start_date'=>$event->start_date , 'end_date'=>$event->end_date , 'price'=>$event->price , 'capacity'=>$event->capacity];
         $user_information = json_encode($user_information);
+        $event_information = json_encode($event_information);
         $eventUser = EventUser::create([
             'user_id'=>$request['user_id'],
             'event_id'=>$request['event_id'],
             'user_information'=>$user_information,
+            'event_information'=>$event_information,
             'status'=>1,
         ]);
         return response($eventUser);
