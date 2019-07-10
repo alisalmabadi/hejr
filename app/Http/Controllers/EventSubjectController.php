@@ -49,7 +49,7 @@ class EventSubjectController extends Controller
         $eventSubject = new EventSubject();
         $eventSubject->create($request->all());
 
-        flash('با موفقیت ذخیره شد');
+        flashs('با موفقیت ذخیره شد');
         return redirect()->route('admin.eventSubject.index');
     }
 
@@ -98,7 +98,7 @@ class EventSubjectController extends Controller
         $eventSubject = EventSubject::find($id);
         $eventSubject->update($request->all());
 
-        flash('با موفقیت به روزرسانی شد');
+        flashs('با موفقیت به روزرسانی شد');
         return redirect()->route('admin.eventSubject.index');
     }
 
@@ -124,7 +124,7 @@ class EventSubjectController extends Controller
             $event_subject->update(['status' => 0]);
         }
 
-        flash('تغییر وضعیت انجام شد');
+        flashs('تغییر وضعیت انجام شد');
         return redirect()->route('admin.eventSubject.index');
     }
 }
