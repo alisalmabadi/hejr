@@ -8206,7 +8206,7 @@ a.text-dark:hover, a.text-dark:focus {
       font-size: 0;
       outline: none !important; }
       .modal .modal-content .modal-header .close:before {
-        content: ""; }
+        content: "×"; }
       .modal .modal-content .modal-header .close:before {
         font-size: 1.2rem; }
       .modal .modal-content .modal-header .close span {
