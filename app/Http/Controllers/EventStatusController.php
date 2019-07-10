@@ -49,7 +49,7 @@ class EventStatusController extends Controller
         $eventStatus = new EventStatus();
         $eventStatus->create($request->all());
 
-        flash('با موفقیت ذخیره شد');
+        flashs('با موفقیت ذخیره شد');
         return redirect()->route('admin.eventStatus.index');
     }
 
@@ -98,7 +98,7 @@ class EventStatusController extends Controller
         $eventStatus = EventStatus::find($id);
         $eventStatus->update($request->all());
 
-        flash('با موفقیت به روزرسانی شد');
+        flashs('با موفقیت به روزرسانی شد');
         return redirect()->route('admin.eventStatus.index');
     }
 
@@ -125,7 +125,7 @@ class EventStatusController extends Controller
             $event_status->update(['status' => 0]);
         }
 
-        flash('تغییر وضعیت انجام شد');
+        flashs('تغییر وضعیت انجام شد');
         return redirect()->route('admin.eventStatus.index');
     }
 }
