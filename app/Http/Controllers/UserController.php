@@ -519,7 +519,94 @@ $this->validate($request,[
         //$event->images()->attach($image->id);
 
         flashs('رویداد مورد نظر با موفقیت ثبت گردید','success');
-        return redirect()->route('user.event.index_created_events');
+        return redirect()->route('user.events.index');
+    }
+
+    public function updateEvent(Request $request,Event $event)
+    {
+        //dd($event);
+        $request['start_date'] = Convertnumber2english($request['start_date']);
+        $request['end_date'] = Convertnumber2english($request['end_date']);
+        $request['end_date_signup'] = Convertnumber2english($request['end_date_signup']);
+
+        $this->validate($request , [
+            'name'=>'required|max:255',
+            'description'=>'required|max:60000',
+            'long_description'=>'required',
+            'start_date'=>'required|date',
+            'end_date'=>'required|date',
+            'end_date_signup'=>'required|date',
+            'price'=>'required|numeric',
+            'capacity'=>'required|numeric',
+            'event_subject_id'=>'required|numeric',
+            'event_type_id'=>'required|numeric',
+            'event_status_id'=>'required|numeric',
+            'province_id'=>'required|numeric',
+            'city_id'=>'required|numeric',
+            'address'=>'required|max:255',
+            'center_core_id'=>'required|numeric',
+            'xplace'=>'nullable|numeric',
+            'yplace'=>'nullable|numeric',
+            'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',
+
+        ],[
+            'name.required'=>'لطفا نام را وارد کنید',
+            'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'description.required'=>'لطفا این فیلد را پر کنید',
+            'description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'long_description.required'=>'لطفا این فیلد را پر کنید',
+            'long_description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'start_date.required'=>'لطفا تاریخ شروع را وارد کنید',
+            'start_date.date'=>'فرمت وارد شده اشتباه است',
+            'end_date.required'=>'لطفا تاریخ اتمام را وارد کنید',
+            'end_date.date'=>'فرمت وارد شده اشتباه است',
+            'end_date_signup.required'=>'لطفا تاریخ اتمام ثبت نام را وارد کنید',
+            'end_date_signup.date'=>'فرمت وارد شده اشتباه است',
+            'price.required'=>'لطفا قیمت را وارد کنید',
+            'price.numeric'=>'فقط عدد وارد کنید',
+            'capacity.required'=>'ظرفیت را وارد کنید',
+            'capacity.numeric'=>'فقط عدد وارد کنید',
+            'evend_subject_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_subject_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'event_type_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_type_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'event_status_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_status_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'province_id.required'=>'این فیلد را خالی رها نکنید',
+            'province_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'city_id.required'=>'این فیلد را خالی رها نکنید',
+            'city_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'center_core_id.required'=>'این فیلد را خالی رها نکنید',
+            'center_core_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'address.required'=>'لطفا ادرس را وارد کنید',
+            'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+            'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+            'image.image'=>'لطفا فقط عکس انتخاب کنید',
+            'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',
+        ]);
+
+        $event->update($request->except(['information','address_point']));
+        $address_point=[$request->xplace,$request->yplace];
+        $address_point=json_encode($address_point);
+        $event->update(['address_point'=>$address_point]);
+
+      /*  if(!empty($request['image'])){
+            $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
+            $main_folder = 'images/events/'.$request['name'].'/';
+            $url = $main_folder;
+            $request['image']->move($url, $imagename);
+            $image = new \App\Image();
+            $image = $image->create([
+                'image_type' => $request['image']->getClientOriginalExtension(),
+                'image_original' => $imagename,
+                'image_path' => $url . $imagename,
+            ]);
+            $event->images()->sync($image->id);
+        }*/
+
+        flashs('تغییرات با موفقیت اعمال گردید');
+        return redirect()->route('user.events.index');
     }
 
     public function indexCreatedEvents()
