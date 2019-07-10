@@ -21,7 +21,7 @@ Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
 Route::get('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@showLoginForm']);
 Route::post('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@login']);
 Route::get('/logout',['as'=>'logout','uses'=>'AdminAuth\LoginController@logout']);
-Route::GET('/post/isaac',['as'=>'post.isaac','uses'=>'PostController@isaac']);
+/*Route::GET('/post/isaac',['as'=>'post.isaac','uses'=>'PostController@isaac']);*/
 
 Route::group(['prefix'=>'users','as'=>'user.'],function (){
     Route::get('/',['uses'=>'UserController@index','as'=>'all']);
@@ -303,6 +303,8 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::post('events/store',['uses'=>'UserController@storeEvent','as'=>'events.store']);
     
     Route::get('events/index',['uses'=>'UserController@indexCreatedEvents','as'=>'events.index']);
+
+    Route::patch('events/{event}',['uses'=>'UserController@updateEvent','as'=>'events.update']);
 
     Route::get('events/{event}/edit',['uses'=>'UserController@editCreatedEvents','as'=>'events.edit']);
 /*** event Create For Spec Users ***/
