@@ -9,8 +9,8 @@
             <div class="m-stack__item m-brand  m-brand--skin-dark ">
                 <div class="m-stack m-stack--ver m-stack--general">
                     <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                        <a href="index.html" class="m-brand__logo-wrapper">
-                            <img alt="" src="assets/demo/media/img/logo/logo_default_dark.png" />
+                        <a href="{{url('/')}}" class="m-brand__logo-wrapper">
+                            <img class="logohejr" alt="هجر" src="{{asset('images/logo.png')}}" />
                         </a>
                     </div>
                     <div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -328,7 +328,7 @@
                 <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general m-stack--fluid">
                     <div class="m-stack__item m-topbar__nav-wrapper">
                         <ul class="m-topbar__nav m-nav m-nav--inline">
-  <notification v-bind:notifications="notifications"></notification>
+  <notification v-bind:notifications="notifications" backgroundimg="{{url('/')}}/img/misc/notification_bg.jpg"></notification>
 
                             <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" m-dropdown-toggle="click"
                                 m-dropdown-persistent="1">
@@ -475,7 +475,7 @@
                                 <div class="m-dropdown__wrapper">
                                     <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
                                     <div class="m-dropdown__inner">
-                                        <div class="m-dropdown__header m--align-center" style="background: url(../img/misc/user_profile_bg.jpg); background-size: cover;">
+                                        <div class="m-dropdown__header m--align-center" style="background: url({{url('/')}}/img/misc/user_profile_bg.jpg); background-size: cover;">
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
                                                     <img src="{{$cuser->thumbnail}}" class="m--img-rounded m--marginless" alt="" />
@@ -566,3 +566,4 @@
 </header>
 </div>
 <!-- END: Header -->
+
