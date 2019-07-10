@@ -52,8 +52,9 @@
 
             <div class="col-xl-12 col-lg-12">
 
-                <form class="m-form m-form--fit m-form--label-align-right" action="{{route('user.events.store')}}" novalidate="novalidate" id="create_event" method="post">
+                <form class="m-form m-form--fit m-form--label-align-right" action="{{route('user.events.update',$event)}}" novalidate="novalidate" id="create_event" method="post">
                     {{csrf_field()}}
+                    {{method_field('patch')}}
                     <div class="m-portlet__body">
                         {{-- <div class="form-group m-form__group row">
                                                                            <div class="col-10 ml-auto">
