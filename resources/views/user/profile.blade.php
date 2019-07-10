@@ -10,27 +10,36 @@
 @section('content')
 
 
-                <!-- BEGIN: Subheader -->
-                <div class="m-subheader ">
-                    <div class="d-flex align-items-center">
-                        <div class="mr-auto">
-                            <h3 class="m-subheader__title ">پروفایل</h3>
-                        </div>
-                       {{-- <div>
-								<span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
-									<span class="m-subheader__daterange-label">
-										<span class="m-subheader__daterange-title"></span>
-										<span class="m-subheader__daterange-date m--font-brand"></span>
-									</span>
-									<a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-										<i class="la la-angle-down"></i>
-									</a>
-								</span>
-                        </div>--}}
-                    </div>
-                </div>
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="margin-right-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">پروفایل کاربری</h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a href="#" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-user-times"></i>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">کاربری</span>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text"> پروفایل کاربری</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-                <!-- END: Subheader -->
+        </div>
+    </div>
+
+    <!-- END: Subheader -->
                 <div class="m-content">
                     <div class="row">
                         <div class="col-xl-3 col-lg-4">
@@ -42,7 +51,7 @@
                                         </div>
                                         <div class="m-card-profile__pic">
                                             <div class="m-card-profile__pic-wrapper">
-                                                <img src="{{$cuser->thumbnail}}" alt="" />
+                                                <img src="{{$cuser->thumbnails or asset('images/user.jpg')}}" alt="" />
                                             </div>
                                         </div>
                                         <div class="m-card-profile__details">
@@ -691,7 +700,7 @@
                             var alert = $('#errormessage');
                             alert.removeClass('m--hide').show();
                             /*
-                            swal({
+                            Swal.fire({
                                 "title": "",
                                 "text": "There are some errors in your submission. Please correct them.",
                                 "type": "error",
@@ -722,7 +731,7 @@
                                 data:data,
                                 success: function (data) {
                                     if(data[1] ==1) {
-    swal( "بروزرسانی انجام شد!","اطلاعات شما با موفقیت به روز شدند.", "success");
+    Swal.fire( "بروزرسانی انجام شد!","اطلاعات شما با موفقیت به روز شدند.", "success");
                                     }
                                 },
                                 error: function () {
@@ -793,13 +802,13 @@
                 contentType: false,//neccessory
                 success:function (response) {
                     if(response == 1){
-                        swal({
+                        Swal.fire({
                             type: 'success',
                             text: 'تصویر با موفیت آپلود و تعویض شد.',
                             confirmButtonColor:'#22caff',
                         });
                     }else{
-                        swal({
+                        Swal.fire({
                             type: 'error',
                             text: 'مشکلی در حین ارسال پیش آمده،دوباره تلاش کنید.',
                             confirmButtonColor:'#22caff'
