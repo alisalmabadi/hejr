@@ -11,7 +11,7 @@ class FieldController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin')->except(['search']);
     }
 
     /**

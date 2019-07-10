@@ -33,4 +33,9 @@ class Admin extends Authenticatable
     {
         return $this->morphMany('App\MessageUser', 'fuser');
     }
+
+    public function events()
+    {
+        return $this->morphMany(Event::class,'eventable');
+    }
 }

@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="author" content="isaac ghorbani">
+    <meta name="author" content="seyyed ali salmabadi">
     <meta name="author_mail" content="s.alisalmabadi@yahoo.com">
     @yield('metas')
     <title>{{ \Setting::get('site_name') }}</title>
@@ -307,7 +307,6 @@
 <body class="hold-transition skin-blue sidebar-mini" style="display: none;">
 
 @yield('main_content')
-
     <!-- Scripts -->
     <script src="{{ asset('js/admin-app.js') }}"></script>
    <script src="{{asset('js/select2.min.js')}}"></script>

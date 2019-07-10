@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     protected $fillable = [
-        'name','description','long_description','start_date','end_date','end_date_signup','price','capacity','event_subject_id','event_type_id','event_status_id','province_id','city_id','address','address_point','operator_user_id','center_core_id','information'
+        'name','description','long_description','start_date','end_date','end_date_signup','price','capacity','event_subject_id','event_type_id','event_status_id','province_id','city_id','address','address_point','eventable_id','center_core_id','information','eventable_type'
     ];
 
     protected $table = 'events';
@@ -28,9 +28,7 @@ class Event extends Model
     public function cities(){
         return $this->belongsTo(City::class , 'city_id');
     }
-    public function operator(){
-        return $this->belongsTo(Admin::class , 'operator_user_id');
-    }
+
     public function center_core(){
         return $this->belongsTo(Core::class , 'center_core_id');
     }
@@ -64,5 +62,15 @@ class Event extends Model
     public function users()
     {
         return $this->belongsToMany(User::class , 'event_users');
+    }
+    public function getEventUserIdAttribute(){
+        $user_id=\Auth::user()->id;
+        $event_user_id=EventUser::where(['user_id'=>$user_id,'event_id'=>$this->id])->first()->id;
+        return $event_user_id;
+    }
+    
+
+    public function eventable(){
+        return $this->morphto();
     }
 }

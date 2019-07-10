@@ -8,7 +8,7 @@
                 <!-- BEGIN: Subheader -->
                 <div class="m-subheader ">
                     <div class="d-flex align-items-center">
-                        <div class="mr-auto">
+                        <div class="margin-right-auto">
                             <h3 class="m-subheader__title ">داشبورد</h3>
                         </div>
                        {{-- <div>

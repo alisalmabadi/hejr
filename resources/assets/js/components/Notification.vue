@@ -8,7 +8,7 @@
         <div class="m-dropdown__wrapper">
             <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
             <div class="m-dropdown__inner">
-                <div class="m-dropdown__header m--align-center" style="background: url(../img/misc/notification_bg.jpg); background-size: cover;">
+                <div class="m-dropdown__header m--align-center" v-bind:style="{backgroundImage : 'url('+backgroundimg+')' }">
                     <span class="m-dropdown__header-title iranyekan">{{notifications.length}}</span>
                     <span class="m-dropdown__header-subtitle">اعلان جدید</span>
                 </div>
@@ -48,6 +48,6 @@
 </template>
 <script>
     export default {
-        props:['notifications']
+        props:['notifications','backgroundimg'],
     }
 </script>

@@ -112,11 +112,14 @@ class EventController extends Controller
             'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',
         ]);
         $admin = \Auth::guard('admin')->user();
-        $request['operator_user_id'] = $admin->id;
+        $request['eventable_id'] = $admin->id;
+        $request['eventable_type'] = 'admin';
         $address_point=[$request->xplace,$request->yplace];
         $address_point=json_encode($address_point);
+
         $event=Event::create($request->except(['information','address_point']));
-        $event->update(['address_point'=>$address_point]);
+       $event->update(['address_point'=>$address_point]);
+       $event=$admin->events()->save($event);
 
         /*image upload*/
         $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
@@ -134,7 +137,7 @@ class EventController extends Controller
         //attach in eventImages table
         $event->images()->attach($image->id);  
 
-        flash('رویداد با موفقیت ثبت گردید');
+        flashs('رویداد با موفقیت ثبت گردید');
         return redirect()->route('admin.event.index');
     }
 
@@ -158,7 +161,7 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         /*har admin faghat betoone oon event ke khodesh sabt karde ro edit kone*/
-        if($event->operator_user_id == \Auth::guard('admin')->user()->id) {
+        if($event->eventable_id == \Auth::guard('admin')->user()->id) {
             $cities = City::where('province_id', $event->province_id)->get();
             $event_subjects = EventSubject::where('status', 1)->get();
             $event_types = EventType::where('status', 1)->get();
@@ -168,9 +171,10 @@ class EventController extends Controller
             $event['information'] = json_decode($event->information);
             $event->load('images');
             return view('admin.event.edit', compact('event', 'cities', 'event_subjects', 'event_types', 'event_statuses', 'provinces', 'cores'));
+
         }
         else{/*in event baraye in admin nist, dastresi nade*/
-            flash('شما قادر به ویرایش این رویداد نمی باشید');
+            flashs('شما قادر به ویرایش این رویداد نمی باشید');
             return redirect()->route('admin.event.index');
         }
 
@@ -271,7 +275,7 @@ class EventController extends Controller
             $event->images()->sync($image->id);  
         }
 
-        flash('تغییرات با موفقیت اعمال گردید');
+        flashs('تغییرات با موفقیت اعمال گردید');
         return redirect()->route('admin.event.index');
     }
 
@@ -294,12 +298,12 @@ class EventController extends Controller
                 Event::destroy($event->id);
             }
             else{
-                flash('شما قادر به حذف این رویداد نمی باشید');
+                flashs('شما قادر به حذف این رویداد نمی باشید');
                 return redirect()->route('admin.event.index');
             }
         }
 
-        flash('رویداد حذف گردید');
+        flashs('رویداد حذف گردید');
         return redirect()->route('admin.event.index');
     }
 

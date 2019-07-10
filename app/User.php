@@ -90,5 +90,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Event::class , 'event_users' , 'user_id');
     }
+//createdEvents
+    public function createdEvents()
+    {
+        return $this->morphMany(Event::class,'eventable');
+    }
 
 }

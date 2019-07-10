@@ -7,13 +7,30 @@
     </style>
 @endsection
 @section('content')
-
-
     <!-- BEGIN: Subheader -->
     <div class="m-subheader ">
         <div class="d-flex align-items-center">
-            <div class="mr-auto">
-                <h3 class="m-subheader__title ">افزودن رویداد</h3>
+            <div class="margin-right-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">ویرایش رویداد</h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a href="#" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">رویداد ها</span>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">ویرایش رویداد</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
 
         </div>
@@ -26,7 +43,7 @@
                 <div class="m-portlet__head-caption">
                     <div class="m-portlet__head-title">
                         <h3 class="m-portlet__head-text">
-                            افزودن رویداد
+                            ویرایش رویداد
                         </h3>
                     </div>
                 </div>
@@ -35,8 +52,9 @@
 
             <div class="col-xl-12 col-lg-12">
 
-                <form class="m-form m-form--fit m-form--label-align-right" action="{{route('user.events.store')}}" novalidate="novalidate" id="create_event" method="post">
+                <form class="m-form m-form--fit m-form--label-align-right" action="{{route('user.events.update',$event)}}" novalidate="novalidate" id="create_event" method="post">
                     {{csrf_field()}}
+                    {{method_field('patch')}}
                     <div class="m-portlet__body">
                         {{-- <div class="form-group m-form__group row">
                                                                            <div class="col-10 ml-auto">
@@ -46,7 +64,7 @@
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">نام رویداد</label>
                             <div class="col-10">
-                                <input class="form-control m-input" name="name" type="text" value="{{old('name')}}" >
+                                <input class="form-control m-input" name="name" type="text" value="{{$event->name}}" >
                                 @if($errors->first('name'))
                                     <label style="color:red">{{$errors->first('name')}}</label>
                                 @endif
@@ -56,7 +74,7 @@
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-1 col-form-label">توضیحات مختصر</label>
                             <div class="col-5">
-                                <textarea name="description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;">{{old('description')}}</textarea>
+                                <textarea name="description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;">{{$event->description}}</textarea>
                                 @if($errors->first('description'))
                                     <label style="color:red">{{$errors->first('description')}}</label>
                                 @endif
@@ -65,7 +83,7 @@
 
                             <label for="example-text-input" class="col-1 col-form-label">توضیحات تکمیلی</label>
                             <div class="col-5">
-                                <textarea name="long_description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;">{{old('long_description')}}</textarea>
+                                <textarea name="long_description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;">{{$event->long_description}}</textarea>
                                 @if($errors->first('long_description'))
                                     <label style="color:red">{{$errors->first('long_description')}}</label>
                                 @endif
@@ -75,14 +93,14 @@
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-1 col-form-label">تاریخ شروع</label>
                             <div class="col-5">
-                                <input class="form-control m-input start_date" name="start_date" type="text" value="{{old('start_date')}}" >
+                                <input class="form-control m-input start_date" name="start_date" type="text" value="{{$event->start_date}}" >
                                 @if($errors->first('start_date'))
                                     <label style="color:red">{{$errors->first('start_date')}}</label>
                                 @endif
                             </div>
                             <label for="example-text-input" class="col-1 col-form-label">تاریخ پایان</label>
                             <div class="col-5">
-                                <input class="form-control m-input end-date" name="end_date" type="text" value="{{old('end_date')}}">
+                                <input class="form-control m-input end-date" name="end_date" type="text" value="{{$event->end_date}}">
                                 @if($errors->first('end_date'))
                                     <label style="color:red">{{$errors->first('end_date')}}</label>
                                 @endif
@@ -92,7 +110,7 @@
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">تاریخ پایان ثبت نام</label>
                             <div class="col-10">
-                                <input class="form-control m-input" name="end_date_signup" type="text" value="{{old('end_date_signup')}}">
+                                <input class="form-control m-input" name="end_date_signup" type="text" value="{{$event->end_date_signup}}">
                                 @if($errors->first('end_date_signup'))
                                     <label style="color:red">{{$errors->first('end_date_signup')}}</label>
                                 @endif
@@ -102,14 +120,14 @@
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-1 col-form-label">قیمت</label>
                             <div class="col-5">
-                                <input class="form-control m-input" name="price" type="number" value="{{old('price')}}">
+                                <input class="form-control m-input" name="price" type="number" value="{{$event->price}}">
                                 @if($errors->first('price'))
                                     <label style="color:red">{{$errors->first('price')}}</label>
                                 @endif
                             </div>
                             <label for="example-text-input" class="col-1 col-form-label">ظرفیت</label>
                             <div class="col-5">
-                                <input class="form-control m-input" name="capacity" type="number" value="{{old('capacity')}}">
+                                <input class="form-control m-input" name="capacity" type="number" value="{{$event->capacity}}">
                                 @if($errors->first('capacity'))
                                     <label style="color:red">{{$errors->first('capacity')}}</label>
                                 @endif
@@ -120,7 +138,7 @@
                             <div class="col-10">
                                 <select class="form-control m-input m-input--square" name="event_subject_id"  id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
-                                    @foreach($event_subjects as $event_subject)                            <option value="{{$event_subject->id}}">{{$event_subject->name}}</option>
+                                    @foreach($event_subjects as $event_subject)                            <option @if($event->event_subject_id==$event_subject->id) selected @endif value="{{$event_subject->id}}">{{$event_subject->name}}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->first('event_subject_id'))
@@ -143,7 +161,7 @@
                                 <select class="form-control m-input m-input--square" name="event_type_id"  id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($event_types as $event_type)
-                                        <option value="{{$event_type->id}}">{{$event_type->name}}</option>
+                                        <option @if($event->event_type_id==$event_type->id) selected @endif value="{{$event_type->id}}">{{$event_type->name}}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->first('event_type_id'))
@@ -156,7 +174,7 @@
                                 <select class="form-control m-input m-input--square" name="event_status_id"  id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($event_statuses as $event_status)
-                                        <option value="{{$event_status->id}}">{{$event_status->name}}</option>
+                                        <option @if($event->event_status_id==$event_status->id) selected @endif  value="{{$event_status->id}}">{{$event_status->name}}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->first('event_status_id'))
@@ -178,7 +196,7 @@
                                 <select class="form-control m-input m-input--square" name="province_id"  id="province">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($provinces as $province)
-                                        <option value="{{$province->id}}">{{$province->name}}</option>
+                                        <option @if($event->province_id==$province->id) selected @endif  value="{{$province->id}}">{{$province->name}}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->first('province_id'))
@@ -188,7 +206,8 @@
                             <label for="exampleSelect1" class="col-1 col-form-label">شهر</label>
                             <div class="col-5">
                                 <select class="form-control m-input m-input--square" name="city_id"  id="city_id">
-                                    <option value="">انتخاب کنید.</option>
+                                    <option value="{{$event->city_id}}">{{$event->cities->name}}</option>
+
                                 </select>
                                 @if($errors->first('city_id'))
                                     <label style="color:red">{{$errors->first('city_id')}}</label>
@@ -199,7 +218,7 @@
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-1 col-form-label">آدرس</label>
                             <div class="col-5">
- <textarea class="form-control" type="text" name="address" rows="3">{{old('address')}}
+ <textarea class="form-control" type="text" name="address" rows="3">{{$event->address}}
  </textarea>
                                 @if($errors->first('address'))
                                     <label style="color:red">{{$errors->first('address')}}</label>
@@ -208,14 +227,14 @@
 
                             <label for="" class="col-1 col-from-label">مختصات x</label>
                             <div class="col-2">
-                                <input class="form-control m-input" name="xplace" type="text" value="{{old('xplace')}}" >
+                                <input class="form-control m-input" name="xplace" type="text" value="{{$xplace}}" >
                                 @if($errors->first('xplace'))
                                     <label style="color:red">{{$errors->first('xplace')}}</label>
                                 @endif
                             </div>
                             <label for="" class="col-1 col-from-label">مختصات y</label>
                             <div class="col-2">
-                                <input class="form-control m-input" name="yplace" type="text" value="{{old('yplace')}}" >
+                                <input class="form-control m-input" name="yplace" type="text" value="{{$yplace}}" >
                                 @if($errors->first('yplace'))
                                     <label style="color:red">{{$errors->first('yplace')}}</label>
                                 @endif
@@ -227,7 +246,7 @@
                                 <select class="form-control m-input m-input--square" name="center_core_id" id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($cores as $core)
-                                        <option value="{{$core->id}}">{{$core->name}}</option>
+                                        <option @if($event->center_core_id==$core->id) selected @endif  value="{{$core->id}}">{{$core->name}}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->first('center_core_id'))

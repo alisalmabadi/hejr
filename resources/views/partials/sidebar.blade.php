@@ -53,7 +53,15 @@
                 <div class="m-menu__submenu "><span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
                         <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">نمایش رویدادهای مجاز</span></a></li>
+
+
+
                         <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events.showAllRegistered')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text"> رویدادهای ثبت نام شده</span></a></li>
+
+                        @can('create-event') <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events.create')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">افزودن رویداد</span></a></li>
+                        <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events.index')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">رویدادهای افزوده شده</span></a></li>
+                        @endcan
+
                     </ul>
                 </div>
             </li>

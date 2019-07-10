@@ -1,6 +1,5 @@
 @extends('layouts.app_master')
 @section('styles')
-    <link rel="stylesheet" href="{{asset('pass/password_strength.css')}}">
     <style>
         .form-control-feedback {
             color: red;
@@ -30,7 +29,6 @@
         }
         .owl-prev i, .owl-next i {transform : scale(6,6); color: #ccc;}
     </style>
-
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
 @endsection
@@ -39,13 +37,34 @@
     <!-- BEGIN: Subheader -->
     <div class="m-subheader ">
         <div class="d-flex align-items-center">
-            <div class="mr-auto">
-                <h3 class="m-subheader__title ">رویدادها</h3>
+            <div class="margin-right-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">تمامی رویدادها</h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a href="#" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">رویداد ها</span>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">تمامی رویدادها</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
+
         </div>
     </div>
 
     <!-- END: Subheader -->
+
     <div class="m-content">
         <div class="row">
 
@@ -95,7 +114,7 @@
                                     </div>
                                     {{--body1 place--}}
                                     <div class="m-widget19__body body1_{{$event->id}} text-center" style="display:block;">
-                                        <p>{!! $event->description !!}</p><hr/>
+                                        <p>{!! str_limit($event->description,200,'...') !!}</p><hr/>
                                         <label>تاریخ دوره</label><br>
                                         {{--<p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">از {{$event->start_dates}} تا {{$event->end_dates}}</p>
                                         <label>تاریخ پایان ثبت نام</label><br>
@@ -117,12 +136,12 @@
                                     {{--end of body1 place--}}
 
                                     {{--body2 place--}}
-                                    <div class="m-widget19__body body2_{{$event->id}}" style="display:none;">
+                                  {{--  <div class="m-widget19__body body2_{{$event->id}}" style="display:none;">
                                         <label>توضیحات</label>
                                         <p>{{$event->long_description}}</p><hr/>
                                         <label>آدرس</label>
                                         <p>{{$event->provinces->name}}, {{$event->cities->name}}, {{$event->address}}</p>
-                                    </div>
+                                    </div>--}}
                                     {{--end of body2 place--}}
 
                                 </div>
@@ -146,7 +165,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">توضیحات رویداد {{$event->name}}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -162,7 +181,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-4 imagePlace">
-                            <img class="modalImage" style="width: 100%;height: 100%;" src="{{asset('images/tik.png')}}">
+                            <img class="modalImage" style="width: 100%;" src="{{asset('images/tik.png')}}">
                         </div>
                     </div>
                 </div>
