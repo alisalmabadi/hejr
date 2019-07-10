@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Core;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -24,7 +25,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
+        Gate::define('create-event',function($user){
+           return $user->id === $user->core->admin_id;
+        });
         //
     }
 }
