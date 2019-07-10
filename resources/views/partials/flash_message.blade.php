@@ -4,10 +4,11 @@
 
 @if(session()->has('flash_message'))
 
-    <div class="customisedalert m-alert m-alert--outline alert alert-{{session()->get('flash_message_level')}} alert-dismissible fade show alert-dismissable" role="alert" style="opacity: .5;">
-    <span  class="close" data-dismiss="alert">
+    <div class="customisedalert m-alert m-alert--outline alert alert-{{session()->get('flash_message_level')}} alert-dismissible fade show" role="alert" style="opacity: .5;">
+ {{--   <span  class="close" data-dismiss="alert">
         &times;
-    </span>
+    </span>--}}
+        <strong>موفقیت آمیز!</strong>
         {{session()->get('flash_message')}}
     </div>
 
