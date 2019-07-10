@@ -60,7 +60,7 @@ class ImageController extends Controller
             'image_path' => $url . $imagename,
         ]);     
 
-        flash('تصویر با موفقیت ذخیره شد');
+        flashs('تصویر با موفقیت ذخیره شد');
         return redirect()->route('admin.image.index');
     }
 
