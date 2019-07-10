@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/user');
 });
 
 Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
@@ -296,8 +296,17 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::post('notification/get',['uses'=>'NotificationController@get','as'=>'notification.get']);
     /***user events ***/
     Route::get('events',['uses'=>'UserController@show_events','as'=>'events']);
-
+    
+/*** event Create For Spec Users ***/
     Route::get('events/create',['uses'=>'UserController@createEvent','as'=>'events.create']);
+
+    Route::post('events/store',['uses'=>'UserController@storeEvent','as'=>'events.store']);
+    
+    Route::get('events/index',['uses'=>'UserController@indexCreatedEvents','as'=>'events.index']);
+
+    Route::get('events/{event}/edit',['uses'=>'UserController@editCreatedEvents','as'=>'events.edit']);
+/*** event Create For Spec Users ***/
+
     Route::post('events/register',['uses'=>'UserController@registerEvent','as'=>'events.register']);
     Route::get('events/registered/{user_event}',['uses'=>'UserController@showregistered_event','as'=>'events.registered']);
     Route::get('events/showAllRegistered', ['uses'=>'UserController@showAllRegistered','as'=>'events.showAllRegistered']);
