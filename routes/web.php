@@ -15,6 +15,12 @@ Route::get('/', function () {
     return redirect('/user');
 });
 
+/**payment routes **/
+Route::get('payment/verify','PaymentController@verify')->name('payment.verify');
+Route::get('payment/verify-melat','PaymentController@verify_melat')->name('payment.verify-melat');
+Route::Post('payment/request','PaymentController@request')->name('payment.request');
+
+
 Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
 //Login Routes...
     Route::get('/','AdminController@index')->name('index');
@@ -34,6 +40,7 @@ Route::group(['prefix'=>'users','as'=>'user.'],function (){
 
 
 });
+
 /** admin area  **/
 Route::resource('area','AreaController',['except'=>['show','destroy']]);
 Route::delete('area/destroy','AreaController@destroy');
