@@ -314,6 +314,13 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::get('events/showAllRegistered', ['uses'=>'UserController@showAllRegistered','as'=>'events.showAllRegistered']);
     Route::post('event/getDetails' , ['uses'=>'EventController@getDetails' , 'as'=>'event.details']);
 
+    /***peyment routes ***/
+
+    Route::get('payment/verify','PaymentController@verify')->name('payment.verify');
+    Route::Post('payment/request','PaymentController@request')->name('payment.request');
+
+    /***peyment routes ***/
+
 });
 
 /*****public routes**********/
