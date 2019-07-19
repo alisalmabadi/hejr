@@ -9,7 +9,6 @@
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-
     <!-- BEGIN: Subheader -->
     <div class="m-subheader ">
         <div class="d-flex align-items-center">
@@ -38,12 +37,25 @@
 
         </div>
     </div>
+    {{session('failPay') or ''}}
 
     <!-- END: Subheader -->
     <div class="m-content" style="background-color:white;">
         <div class="row">
              <label class="col-md-2">اطلاعات کاربری</label>
              <div class="col-md-10">
+
+                 <div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-dismissible fade show" role="alert">
+                     <div class="m-alert__icon">
+                         <i class="la la-warning"></i>
+                     </div>
+                     <div class="m-alert__text">
+                         <strong class="titlealert">وضعیت ثبت نام: </strong> ثبت نام شما در وضعیت رزرو شده قرار دارد و پرداخت انجام نشده است.
+                     </div>
+
+                 </div>
+
+
                 <table class="table table-bordered table-condenced">
                     <thead>
                         <th>نام</th>
@@ -61,6 +73,8 @@
              </div>
         </div>
         <div class="row">
+
+
              <label class="col-md-2">اطلاعات رویداد</label>
              <div class="col-md-10">
                 <table class="table table-bordered table-condenced">
@@ -79,17 +93,43 @@
                 </table>
              </div>
         </div>
-        {{--pay button--}}
-        <div class="col-md-12 col-sm-12">
-        <form id="frm_payment_req" action="{{route('payment.request')}}" method="post" enctype="multipart/form-data">
+
+        <form action="{{route('user.payment.request')}}" method="post" id="gateway">
+            <input class="event_user_id" type="hidden" value="{{$eventUser->id}}" name="event_user_id">
         {{csrf_field()}}
-            <input type="submit" class="btn btn-success form-control" value="پرداخت">
         </form>
-        </div>
+
+        {{--pay button--}}
+
+        <div class="col-md-12 col-sm-12 centertextalign">
+       {{-- <button type="button" class="btn btn-success form-control payment">پرداخت</button>
+        </div>--}}
+            <a href="#" class="btn btn-success m-btn m-btn--icon m-btn--wide payment">
+															<span>
+																<i class="fa flaticon-coins"></i>
+																<span>پرداخت</span>
+															</span>
+            </a>
         {{--end of pay button--}}
+        </div>
     </div>
 
 @endsection
 @section('scripts')
+    <script type="text/javascript">
+        $('.payment').click(function(e){
+            e.preventDefault();
+            mApp.blockPage({
+                overlayColor: '#000000',
+                type: 'loader',
+                state: 'primary',
+                message: 'در حال انتقال به درگاه'
+            });
 
+            setTimeout(function() {
+                mApp.unblockPage();
+                $('#gateway').submit();
+            }, 2000);
+        });
+    </script>
 @endsection

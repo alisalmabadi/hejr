@@ -164,6 +164,7 @@ return [
         UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Hekmatinasser\Verta\VertaServiceProvider::class,
+        Larabookir\Gateway\GatewayServiceProvider::class,
 
     ],
 
@@ -216,7 +217,8 @@ return [
         'Setting' => Akaunting\Setting\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Verta' => Hekmatinasser\Verta\Verta::class,
-        'Gateway' => Larabookir\Gateway\Gateway::class,
+        'Gateway' => Larabookir\Gateway\Gateway::class
+
     ],
 
 ];
