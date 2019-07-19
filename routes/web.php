@@ -297,6 +297,9 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
    Route::get('/',['as'=>'panel','uses'=>'UserController@panel']);
     Route::get('profile',['as'=>'profile','uses'=>'UserController@profile']);
     Route::post('update',['as'=>'update','uses'=>'UserController@profile_edit']);
+    Route::post('/prodile/edit/uniDetails', ['as'=>'uni_details', 'uses'=>'UserController@uni_details']);
+    Route::post('/profile/edit/updateUni', ['as'=>'university.updates', 'uses'=>'UserController@university_update']);
+    Route::post('/profile/edit/addUni', ['as'=>'university.add', 'uses'=>'UserController@university_add']);
     Route::post('checkemail',['as'=>'checkemail','uses'=>'UserController@checkemail']);
     Route::post('checkusername',['as'=>'checkusername','uses'=>'UserController@checkusername']);
     Route::post('uploadpic',['uses'=>'UserController@uploadpic','as'=>'uploadpic']);
