@@ -14291,3 +14291,12 @@ label.error {
   margin: 0 auto;
 }
 
+.titlealert {
+  font-size: 17px;
+  padding-left: 12px;
+}
+
+.centertextalign {
+  text-align: center !important;
+}
+
