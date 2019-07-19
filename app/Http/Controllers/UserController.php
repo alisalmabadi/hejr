@@ -257,7 +257,8 @@ if(isset($request->birthday)) {
         $universities=University::where('status',1)->get();
         $soldier_services=SoldierServices::all();
         $jobs=Job::where('status',1)->get();
-        return view('user.profile',compact('areas','grades','universities','soldier_services','jobs'));
+        $provinces = Province::all();
+        return view('user.profile',compact('areas','grades','universities','soldier_services','jobs', 'provinces'));
     }
 
     public function checkemail(Request $request)
@@ -677,5 +678,45 @@ $this->validate($request,[
         $events = $user->events;
        // dd($events);
         return view('user.event.show_AllRegistered' , compact('user','events'));
+    }
+
+    public function uni_details(Request $request)
+    {
+        $uni = University::find($request['uni_id']);
+        return response($uni);
+    }
+
+    public function university_update(Request $request)
+    {
+        $this->validate($request, [
+            'province_id' =>'required',
+            'bio'=>'max:255'
+        ],[
+            'province_id.required' => 'استان و شهر را انتخاب کنید',
+            'bio.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است'
+        ]);
+        
+        $uni = University::find($request['id']);
+        $uni->update($request->all());
+        return response('updated');
+    }
+
+    public function university_add(Request $request)
+    {
+        $this->validate($request, [
+            'name'=>'required|max:255|unique:universities',
+            'province_id' =>'required',
+            'bio'=>'max:255'
+        ],[
+            'name.required'=>'لطفا نام دانشگاه را وارد کنید',
+            'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز',
+            'name.unique'=>'این دانشگاه قبلا وارد شده است',
+            'province_id.required' => 'استان و شهر را انتخاب کنید',
+            'bio.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است'
+        ]);
+        
+        $uni = new University();
+        $uni = $uni->create($request->all());
+        return response($uni);
     }
 }
