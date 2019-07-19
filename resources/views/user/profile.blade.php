@@ -1,5 +1,8 @@
 @extends('layouts.app_master')
 @section('styles')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="{{asset('pass/password_strength.css')}}">
 <style>
     .form-control-feedback {
@@ -364,14 +367,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group m-form__group row">
-                                                    <label for="exampleSelect1" class="col-2 col-form-label">دانشگاه</label>
+                                                    <label for="exampleSelect1" class="col-2 
+                                                    col-form-label">دانشگاه</label>
                                                     <div class="col-7">
-                                                        <select class="form-control m-input m-input--square" name="university_id" id="exampleSelect1">
+                                                        <select class="form-control js-example-basic-multiple change_uni m-input m-input--square" name="university_id" id="exampleSelect1">
                                                             <option value="">انتخاب کنید.</option>
                                                             @foreach($universities as $university)
                                                                 <option @if($university->id == $cuser->university_id) selected @endif value="{{$university->id}}">{{$university->name}}</option>
                                                             @endforeach
                                                         </select>
+                                                        <button type="button" id="create_new_uni" class="pull-right btn btn-info form-control">افزودن دانشگاه جدید</button>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <button type="button" class="btn btn-info form-control btn-show-details" style="display:none;">تکمیل اطلاعات دانشگاه</button>
                                                     </div>
                                                 </div>
 
@@ -473,7 +481,53 @@
                                             </div>
                                             </div>
                                         </form>
-
+                                        <!-- Modal edit-uni -->
+                                        <div class="modal fade" id="uniDetailsModal" role="dialog">
+                                            <form action="{{route('user.university.updates')}}" method="POST" id="frm-edit_uni">
+                                            <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Modal Header</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="id" id="modal_id">
+                                                    <label class="col-2">استان</label>
+                                                    <div class="col-12">
+                                                        <select name="province_id" class="form-control provinces" id="provinces">
+                                                        <option value="">انتخاب کنید</option>
+                                                            @foreach($provinces as $province)
+                                                                <option value="{{$province->id}}">{{$province->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <label style="color:red; display:none;" id="modal_province_error"></label>
+                                                    </div>
+                                                    <label class="col-2">شهر</label>
+                                                    <div class="col-12">
+                                                        <select name="city_id" class="form-control cities"></select>
+                                                    </div>
+                                                    <label class="col-4">نوع دانشگاه</label>
+                                                    <div class="col-12">
+                                                        <select name="university_type_id" class="form-control university_type_id">
+                                                                <option value="1">تست</option>
+                                                        </select>
+                                                    </div>
+                                                    <label class="col-2">بیو دانشگاه</label>
+                                                    <div class="col-12">
+                                                        <textarea name="bio" class="form-control bio"></textarea>
+                                                        <label style="color:red; display:none;" id="modal_bio_error"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                <input type="submit" class="btn btn-success" value="ذخیره تغییرات">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                                                </div>
+                                            </div>
+                                            
+                                            </div>
+                                        </div>
+                                        <!-- end of modal -->
                                     </div>
                                     <div class="tab-pane " id="m_user_profile_tab_2">
                                         <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show m--hide" role="alert" id="errormessage2" style="width: 80%;margin: 0 auto;margin-top: 2%;">
@@ -533,10 +587,68 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Modal add-new-uni -->
+                        <div class="modal fade" id="add_new_uni" role="dialog">
+                            <form action="{{route('user.university.add')}}" method="POST" id="frm-add_uni">
+                            <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <label class="col-2">نام</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" name="name" id="name">
+                                        <label style="color:red; display:none;" id="modal_name_error"></label>
+                                    </div>
+                                    <label class="col-2">استان</label>
+                                    <div class="col-12">
+                                        <select name="province_id" class="form-control provinces" id="provinces">
+                                        <option value="">انتخاب کنید</option>
+                                            @foreach($provinces as $province)
+                                                <option value="{{$province->id}}">{{$province->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <label style="color:red; display:none;" id="modal_province_error"></label>
+                                    </div>
+                                    <label class="col-2">شهر</label>
+                                    <div class="col-12">
+                                        <select name="city_id" class="form-control cities"></select>
+                                    </div>
+                                    <label class="col-10">نوع دانشگاه</label>
+                                    <div class="col-12">
+                                        <select name="university_type_id" class="form-control university_type_id">
+                                                <option value="1">تست</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-2">بیو دانشگاه</label>
+                                    <div class="col-12">
+                                        <textarea name="bio" class="form-control bio" id="bio"></textarea>
+                                        <label style="color:red; display:none;" id="modal_bio_error"></label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                <input type="submit" class="btn btn-success" value="ذخیره اطلاعات">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                                </div>
+                            </div>
+                            
+                            </div>
+                        </div>
+                        <!-- end of modal -->
+
                     </div>
 
     @endsection
 @section('scripts')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+<script>$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});</script>
 
 {{--    <!--begin::Page Vendors -->
     <script src="assets/vendors/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
@@ -545,6 +657,7 @@
 
     <!--begin::Page Scripts -->
 <script src="{{asset('vendors/jquery-validation/dist/localization/messages_fa.js')}}" type="text/javascript"></script>
+
 
     <!--end::Page Scripts -->
 <script type="text/javascript">
@@ -824,4 +937,187 @@
 
 
     </script>
+
+    {{-- change uni --}}
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(".change_uni").on("change", function(){
+            var uni_id = $(this).val();
+            var url = "{{route('user.uni_details')}}";
+            $.ajax({
+                data:{'uni_id':uni_id},
+                url:url,
+                type:"POST",
+                success:function(uni){
+                    console.log(uni);
+
+                    $("#uniDetailsModal").find(".modal-title").text(uni.name);
+                    $("#uniDetailsModal").find("#modal_id").val(uni.id);
+                    $("#uniDetailsModal").find(".bio").val(uni.bio);
+
+                    $(".btn-show-details").fadeIn("slow");
+                },
+                error:function(){
+                    console.log('error in getting uni details');
+                }
+            });
+        });
+    </script>
+    <script>
+        $(".btn-show-details").on("click", function(){
+            $("#uniDetailsModal").modal("show");
+        });
+    </script>
+    {{-- end of change uni --}}
+
+    {{-- provinces change - cities show - modal --}}
+    <script>
+        $("#uniDetailsModal").on('change', "#provinces" , function(){
+            var province_id = $(this).val();
+            var url = "{{route('show_cities')}}";
+            $.ajax({
+                data:{'id':province_id},
+                url:url,
+                type:"POST",
+                success:function(cities){
+                    $("#uniDetailsModal").find(".cities").html('');
+                    $.each(cities, function(city){
+                        $("#uniDetailsModal").find(".cities").append('<option value="'+cities[city].id+'">'+cities[city].name+'</option>');
+                    });
+                },
+                error:function(){
+                    console.log('error in getting the cities in modal');
+                }
+            });
+        });
+    </script>
+     <script>
+        $("#add_new_uni").on('change', "#provinces" , function(){
+            var province_id = $(this).val();
+            var url = "{{route('show_cities')}}";
+            $.ajax({
+                data:{'id':province_id},
+                url:url,
+                type:"POST",
+                success:function(cities){
+                    $("#add_new_uni").find(".cities").html('');
+                    $.each(cities, function(city){
+                        $("#add_new_uni").find(".cities").append('<option value="'+cities[city].id+'">'+cities[city].name+'</option>');
+                    });
+                },
+                error:function(){
+                    console.log('error in getting the cities in modal');
+                }
+            });
+        });
+    </script>
+    {{-- end of provinces change - cities show - moal --}}
+
+    {{--edit uni in modal--}}
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $("#frm-edit_uni").on("submit", function(e){
+            e.preventDefault();
+
+            $("#uniDetailsModal").find("#modal_province_error").fadeOut("slow");
+            $("#uniDetailsModal").find("#modal_bio_error").fadeOut("slow");
+
+            var data = $(this).serialize();
+            var url = $(this).attr("action");
+            var type = $(this).attr("method");
+            $.ajax({
+                data:data,
+                url:url,
+                type:type,
+                success:function(data){
+                    Swal.fire(
+                        'موفقیت آمیز',
+                        'تغییرات اعمال گردید !',
+                        'success'
+                        );
+                    $("#uniDetailsModal").modal("hide");
+                },
+                error:function(errors){
+                    console.log(errors.responseJSON.errors);
+                    if(errors.responseJSON.errors.province_id){
+                        $("#uniDetailsModal").find("#modal_province_error").text(errors.responseJSON.errors.province_id[0]);
+                        $("#uniDetailsModal").find("#modal_province_error").fadeIn("slow");
+                    }
+                    if(errors.responseJSON.errors.bio){
+                        $("#uniDetailsModal").find("#modal_province_error").text(errors.responseJSON.errors.bio[0]);
+                        $("#uniDetailsModal").find("#modal_province_error").fadeIn("slow");
+                    }
+                    console.log('error in frm-edit_uni');
+                }
+            });
+        });
+    </script>
+    {{--end of edit uni in modal--}}
+
+    {{-- add new uni --}}
+    <script>
+        $("#create_new_uni").click(function(){
+            $("#add_new_uni").find("#name").val('');
+            $("#add_new_uni").find("#bio").val('');
+            $("#add_new_uni").modal("show");
+        });
+    </script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $("#frm-add_uni").on("submit", function(e){
+            e.preventDefault();
+
+            $("#add_new_uni").find("#modal_province_error").fadeOut("slow");
+            $("#add_new_uni").find("#modal_name_error").fadeOut("slow");
+            $("#add_new_uni").find("#modal_bio_error").fadeOut("slow");
+
+            var data = $(this).serialize();
+            var url = $(this).attr('action');
+            var type = $(this).attr("method");
+            $.ajax({
+                data:data,
+                url:url,
+                type:type,
+                success:function(data){
+                    Swal.fire(
+                        'موفقیت آمیز',
+                        'دانشگاه جدید اضافه شد !',
+                        'success'
+                        );
+                    $("#add_new_uni").modal("hide");
+                    $(".change_uni").append('<option value="'+data.id+'" selected>'+data.name+'</option>');
+                },
+                error:function(errors){
+                    console.log('error in store new uni');
+                    if(errors.responseJSON.errors.province_id){
+                        $("#add_new_uni").find("#modal_province_error").text(errors.responseJSON.errors.province_id[0]);
+                        $("#add_new_uni").find("#modal_province_error").fadeIn("slow");
+                    }
+                    if(errors.responseJSON.errors.name){
+                        $("#add_new_uni").find("#modal_name_error").text(errors.responseJSON.errors.name[0]);
+                        $("#add_new_uni").find("#modal_name_error").fadeIn("slow");
+                    }
+                    if(errors.responseJSON.errors.bio){
+                        $("#add_new_uni").find("#modal_bio_error").text(errors.responseJSON.errors.bio[0]);
+                        $("#add_new_uni").find("#modal_bio_error").fadeIn("slow");
+                    }
+                }
+            });
+        });
+    </script>
+    {{-- add new uni --}}
+
+
     @endsection
