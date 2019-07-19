@@ -81,7 +81,10 @@
         </div>
         {{--pay button--}}
         <div class="col-md-12 col-sm-12">
-        <button class="btn btn-success form-control">پرداخت</button>
+        <form id="frm_payment_req" action="{{route('payment.request')}}" method="post" enctype="multipart/form-data">
+        {{csrf_field()}}
+            <input type="submit" class="btn btn-success form-control" value="پرداخت">
+        </form>
         </div>
         {{--end of pay button--}}
     </div>
