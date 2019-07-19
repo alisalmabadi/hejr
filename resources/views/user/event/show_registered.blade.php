@@ -100,6 +100,7 @@
         </form>
 
         {{--pay button--}}
+
         <div class="col-md-12 col-sm-12 centertextalign">
        {{-- <button type="button" class="btn btn-success form-control payment">پرداخت</button>
         </div>--}}

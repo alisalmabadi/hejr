@@ -15,6 +15,12 @@ Route::get('/', function () {
     return redirect('/user');
 });
 
+/**payment routes **/
+Route::get('payment/verify','PaymentController@verify')->name('payment.verify');
+Route::get('payment/verify-melat','PaymentController@verify_melat')->name('payment.verify-melat');
+Route::Post('payment/request','PaymentController@request')->name('payment.request');
+
+
 Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
 //Login Routes...
     Route::get('/','AdminController@index')->name('index');
@@ -34,6 +40,7 @@ Route::group(['prefix'=>'users','as'=>'user.'],function (){
 
 
 });
+
 /** admin area  **/
 Route::resource('area','AreaController',['except'=>['show','destroy']]);
 Route::delete('area/destroy','AreaController@destroy');
@@ -290,6 +297,9 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
    Route::get('/',['as'=>'panel','uses'=>'UserController@panel']);
     Route::get('profile',['as'=>'profile','uses'=>'UserController@profile']);
     Route::post('update',['as'=>'update','uses'=>'UserController@profile_edit']);
+    Route::post('/prodile/edit/uniDetails', ['as'=>'uni_details', 'uses'=>'UserController@uni_details']);
+    Route::post('/profile/edit/updateUni', ['as'=>'university.updates', 'uses'=>'UserController@university_update']);
+    Route::post('/profile/edit/addUni', ['as'=>'university.add', 'uses'=>'UserController@university_add']);
     Route::post('checkemail',['as'=>'checkemail','uses'=>'UserController@checkemail']);
     Route::post('checkusername',['as'=>'checkusername','uses'=>'UserController@checkusername']);
     Route::post('uploadpic',['uses'=>'UserController@uploadpic','as'=>'uploadpic']);
