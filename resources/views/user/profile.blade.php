@@ -487,9 +487,10 @@
                                             <div class="modal-dialog">
                                             <!-- Modal content-->
                                             <div class="modal-content">
+                                            <img src="{{asset('gif/waiter.gif')}}" id="waiter_gif" style="position: absolute;z-index: 10;width: 150px;height: 150px;right: 35%;top: 35%; display:none;">
                                                 <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Modal Header</h4>
+                                                <h4 class="modal-title">ویرایش دانشگاه</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <input type="hidden" name="id" id="modal_id">
@@ -510,10 +511,16 @@
                                                     <label class="col-4">نوع دانشگاه</label>
                                                     <div class="col-12">
                                                         <select name="university_type_id" class="form-control university_type_id">
-                                                                <option value="1">تست</option>
+                                                                <option value="">انتخاب کنید</option>
+                                                                @if(!empty($uni_types))
+                                                                    @foreach($uni_types as $uni_type)
+                                                                        <option value="{{$uni_type->id}}">{{$uni_type->name}}</option>
+                                                                    @endforeach
+                                                                @endif
                                                         </select>
+                                                        <label style="color:red; display:none;" id="modal_type_error"></label>
                                                     </div>
-                                                    <label class="col-2">بیو دانشگاه</label>
+                                                    <label class="col-2">توضیحات</label>
                                                     <div class="col-12">
                                                         <textarea name="bio" class="form-control bio"></textarea>
                                                         <label style="color:red; display:none;" id="modal_bio_error"></label>
@@ -594,9 +601,10 @@
                             <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
+                            <img src="{{asset('gif/waiter.gif')}}" id="waiter_gif" style="position: absolute;z-index: 10;width: 150px;height: 150px;right: 35%;top: 35%; display:none;">
                                 <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
+                                <h4 class="modal-title">افزودن دانشگاه</h4>
                                 </div>
                                 <div class="modal-body">
                                     <label class="col-2">نام</label>
@@ -621,10 +629,16 @@
                                     <label class="col-10">نوع دانشگاه</label>
                                     <div class="col-12">
                                         <select name="university_type_id" class="form-control university_type_id">
-                                                <option value="1">تست</option>
+                                        <option value="">انتخاب کنید</option>
+                                            @if(!empty($uni_types))
+                                                @foreach($uni_types as $uni_type)
+                                                    <option value="{{$uni_type->id}}">{{$uni_type->name}}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
+                                        <label style="color:red; display:none;" id="modal_type_error"></label>
                                     </div>
-                                    <label class="col-2">بیو دانشگاه</label>
+                                    <label class="col-2">توضیحات</label>
                                     <div class="col-12">
                                         <textarea name="bio" class="form-control bio" id="bio"></textarea>
                                         <label style="color:red; display:none;" id="modal_bio_error"></label>
@@ -1027,8 +1041,10 @@
         $("#frm-edit_uni").on("submit", function(e){
             e.preventDefault();
 
+            $("#uniDetailsModal").find("#waiter_gif").fadeIn("slow");
             $("#uniDetailsModal").find("#modal_province_error").fadeOut("slow");
             $("#uniDetailsModal").find("#modal_bio_error").fadeOut("slow");
+            $("#uniDetailsModal").find("#modal_type_error").fadeOut("slow");
 
             var data = $(this).serialize();
             var url = $(this).attr("action");
@@ -1044,6 +1060,7 @@
                         'success'
                         );
                     $("#uniDetailsModal").modal("hide");
+                    $("#uniDetailsModal").find("#waiter_gif").fadeOut("slow");
                 },
                 error:function(errors){
                     console.log(errors.responseJSON.errors);
@@ -1055,6 +1072,11 @@
                         $("#uniDetailsModal").find("#modal_province_error").text(errors.responseJSON.errors.bio[0]);
                         $("#uniDetailsModal").find("#modal_province_error").fadeIn("slow");
                     }
+                    if(errors.responseJSON.errors.university_type_id){
+                        $("#uniDetailsModal").find("#modal_type_error").text(errors.responseJSON.errors.university_type_id[0]);
+                        $("#uniDetailsModal").find("#modal_type_error").fadeIn("slow");
+                    }
+                    $("#uniDetailsModal").find("#waiter_gif").fadeOut("slow");
                     console.log('error in frm-edit_uni');
                 }
             });
@@ -1079,9 +1101,11 @@
         $("#frm-add_uni").on("submit", function(e){
             e.preventDefault();
 
+            $("#add_new_uni").find("#waiter_gif").fadeIn("slow");
             $("#add_new_uni").find("#modal_province_error").fadeOut("slow");
             $("#add_new_uni").find("#modal_name_error").fadeOut("slow");
             $("#add_new_uni").find("#modal_bio_error").fadeOut("slow");
+            $("#add_new_uni").find("#modal_type_error").fadeOut("slow");
 
             var data = $(this).serialize();
             var url = $(this).attr('action');
@@ -1098,6 +1122,7 @@
                         );
                     $("#add_new_uni").modal("hide");
                     $(".change_uni").append('<option value="'+data.id+'" selected>'+data.name+'</option>');
+                    $("#add_new_uni").find("#waiter_gif").fadeOut("slow");
                 },
                 error:function(errors){
                     console.log('error in store new uni');
@@ -1113,6 +1138,11 @@
                         $("#add_new_uni").find("#modal_bio_error").text(errors.responseJSON.errors.bio[0]);
                         $("#add_new_uni").find("#modal_bio_error").fadeIn("slow");
                     }
+                    if(errors.responseJSON.errors.university_type_id){
+                        $("#add_new_uni").find("#modal_type_error").text(errors.responseJSON.errors.university_type_id[0]);
+                        $("#add_new_uni").find("#modal_type_error").fadeIn("slow");
+                    }
+                    $("#add_new_uni").find("#waiter_gif").fadeOut("slow");
                 }
             });
         });

@@ -258,7 +258,8 @@ if(isset($request->birthday)) {
         $soldier_services=SoldierServices::all();
         $jobs=Job::where('status',1)->get();
         $provinces = Province::all();
-        return view('user.profile',compact('areas','grades','universities','soldier_services','jobs', 'provinces'));
+        $uni_types = UniversityTypes::where('status', 1)->get();
+        return view('user.profile',compact('areas','grades','universities','soldier_services','jobs', 'provinces','uni_types'));
     }
 
     public function checkemail(Request $request)
@@ -690,10 +691,12 @@ $this->validate($request,[
     {
         $this->validate($request, [
             'province_id' =>'required',
-            'bio'=>'max:255'
+            'bio'=>'max:255',
+            'university_type_id'=>'required'
         ],[
             'province_id.required' => 'استان و شهر را انتخاب کنید',
-            'bio.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است'
+            'bio.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'university_type_id.required'=>'نوع دانشگاه را انتخاب کنید'
         ]);
         
         $uni = University::find($request['id']);
@@ -706,13 +709,15 @@ $this->validate($request,[
         $this->validate($request, [
             'name'=>'required|max:255|unique:universities',
             'province_id' =>'required',
-            'bio'=>'max:255'
+            'bio'=>'max:255',
+            'university_type_id'=>'required'
         ],[
             'name.required'=>'لطفا نام دانشگاه را وارد کنید',
             'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز',
             'name.unique'=>'این دانشگاه قبلا وارد شده است',
             'province_id.required' => 'استان و شهر را انتخاب کنید',
-            'bio.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است'
+            'bio.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'university_type_id.required'=>'نوع دانشگاه را انتخاب کنید'
         ]);
         
         $uni = new University();
