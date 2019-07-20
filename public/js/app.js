@@ -14336,7 +14336,7 @@ var app = new Vue({
 });
 
 $(document).ready(function () {
-    $('.alert').delay(2500).slideUp(200);
+    $('.alertflash').delay(2500).slideUp(200);
 });
 
 /***/ }),
