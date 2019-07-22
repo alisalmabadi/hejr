@@ -19,42 +19,29 @@ class PaymentController extends Controller
             $gateway = \Gateway::make(new Zarinpal());
              $gateway->setCallback(route('user.payment.verify'));
             $gateway
-                ->price($eventuser->event->price)
-                // setShipmentPrice(10) // optional - just for paypal
-                // setProductName("My Product") // optional - just for paypal
+                ->price((int)$eventuser->event->price.'0')
                 ->ready();
 
             $refId =  $gateway->refId(); // شماره ارجاع بانک
-       // dd($refId);
             $transID = $gateway->transactionId(); // شماره تراکنش
 
-            // در اینجا
-            //  شماره تراکنش  بانک را با توجه به نوع ساختار دیتابیس تان
-            //  در جداول مورد نیاز و بسته به نیاز سیستم تان
-            // ذخیره کنید .
-           // dd($gateway);
             $paym=Payment::firstOrCreate(
                 ['event_user_id'=>Input::get('event_user_id')],
                 [
                     'user_id'=>$user->id,
                     'amount'=>$eventuser->event->price,
                     'type'=>2,
-                    'payment_method_id'=>1,
-                    'authority'=>Input::get('Authority'),
+                    'authority'=>$refId,
+                    'transaction_id'=>$transID,
                     'state'=>'0',
-
                 ]
             );
 
             $paym->update([
-                'authority'=>Input::get('Authority'),
-                'user_id'=>$user->id,
                 'event_user_id'=>Input::get('event_user_id'),
-                'amount'=>$eventuser->event->price,
                 'payment_method_id'=>1,
                 'type'=>2,
                 'refid'=>$refId,
-               // 'state'=>'0',
             ]);
 
             return $gateway->redirect();
@@ -67,6 +54,29 @@ class PaymentController extends Controller
 
     public function verify(Request $request)
     {
-        dd($request->all());
+        $status=Input::get('Status');
+        try {
+            $gateway = \Gateway::verify();
+            $trackingCode = $gateway->trackingCode();
+            $refId = $gateway->refId();
+            $cardNumber = $gateway->cardNumber();
+            $paym=Payment::where([['refid','=',$refId],['state','=','0']])->firstOrFail();
+            $payment=$paym->update(['state'=>1,'refid'=>$refId,'authority'=>0,'trackingCode',$trackingCode]);
+            flashs('تراکنش با موفقیت انجام شد و ثبت نام شما تکمیل شده است.','success');
+            return redirect(route('user.events.registered',$paym->event_user_id));
+        } catch (\Larabookir\Gateway\Exceptions\RetryException $e) {
+            // تراکنش قبلا سمت بانک تاییده شده است و
+            // کاربر احتمالا صفحه را مجددا رفرش کرده است
+            // لذا تنها فاکتور خرید قبل را مجدد به کاربر نمایش میدهیم
+            $paym=Payment::where([['refid','=',Input::get('Authority')],['state','=','0']])->first();
+            if(!empty($paym)){
+                return redirect(route('user.events.registered',$paym->event_user_id))->with('failPay',$e->getMessage());
+            }
+            dd($e->getMessage(),$paym,'لطفا دوباره تلاش کنید سپس با پشتیبانی ارتباط برقرار کنید!');
+        } catch (\Exception $e) {
+            // نمایش خطای بانک
+            $paym=Payment::where([['refid','=',Input::get('Authority')],['state','=','0']])->firstOrFail();
+            return redirect(route('user.events.registered',$paym->event_user_id))->with('failPay',$e->getMessage());
+        }
     }
 }
