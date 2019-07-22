@@ -325,7 +325,7 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::post('event/getDetails' , ['uses'=>'EventController@getDetails' , 'as'=>'event.details']);
 
     /***peyment routes ***/
-
+    
     Route::get('payment/verify','PaymentController@verify')->name('payment.verify');
     Route::Post('payment/request','PaymentController@request')->name('payment.request');
 

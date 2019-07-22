@@ -2425,11 +2425,6 @@ pre code {
   opacity: 1;
 }
 
-.form-control::-moz-placeholder {
-  color: #6c757d;
-  opacity: 1;
-}
-
 .form-control::-ms-input-placeholder {
   color: #6c757d;
   opacity: 1;
@@ -5632,10 +5627,8 @@ input[type="button"].btn-block {
 @media (min-width: 576px) {
   .card-columns {
     -webkit-column-count: 3;
-       -moz-column-count: 3;
             column-count: 3;
     -webkit-column-gap: 1.25rem;
-       -moz-column-gap: 1.25rem;
             column-gap: 1.25rem;
     orphans: 1;
     widows: 1;
@@ -13158,12 +13151,6 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   color: #cccccc;
 }
 
-.swal2-input::-moz-placeholder,
-.swal2-file::-moz-placeholder,
-.swal2-textarea::-moz-placeholder {
-  color: #cccccc;
-}
-
 .swal2-input::-ms-input-placeholder,
 .swal2-file::-ms-input-placeholder,
 .swal2-textarea::-ms-input-placeholder {
@@ -14304,6 +14291,13 @@ label.error {
   margin: 0 auto;
 }
 
+@media screen and (max-width: 700px) {
+  .logohejr {
+    width: 30%;
+    margin: 0 auto;
+  }
+}
+
 .titlealert {
   font-size: 17px;
   padding-left: 12px;
@@ -14311,5 +14305,9 @@ label.error {
 
 .centertextalign {
   text-align: center !important;
+}
+
+.secondPlace {
+  margin-top: 10px;
 }
 

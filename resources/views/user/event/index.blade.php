@@ -70,7 +70,7 @@
 
              <div id="owl-example" class="owl-carousel">
                 @foreach($events as $event)
-                <div class="col-xl-12 col-md-12">
+                <div class="col-xl-12 col-sm-12 col-md-12">
                     <!--begin:: Widgets/Blog-->
                     <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
                         <div class="m-portlet__head m-portlet__head--fit">
@@ -173,9 +173,11 @@
                             <div class="col-md-12 col-lg-12 firstPlace">
                                 tozihate 1
                             </div>
+
                             <div class="col-md-12 col-lg-12 secondPlace">
                                 tozihate 2
                             </div>
+
                             <div class="col-md-12 col-lg-12 thirdPlace">
                                 tozihate 3
                             </div>
@@ -214,7 +216,27 @@
                 singleItem : true,
                 rtl:true,
                 nav:true,
-                navText : ['<i class="fa fa-angle-right" aria-hidden="true"></i>','<i class="fa fa-angle-left" aria-hidden="true"></i>']
+                navText : ['<i class="fa fa-angle-right" aria-hidden="true"></i>','<i class="fa fa-angle-left" aria-hidden="true"></i>'],
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: true,
+                        margin:0,
+                    },
+                    600: {
+                        items: 1,
+                        nav: true,
+                        margin: 5,
+                        loop: false
+                    },
+                    1000: {
+                        items: 3,
+                        nav: true,
+                        navRewind:true,
+                        loop: false,
+                        margin: 1
+                    }
+                }
             });
         });
     </script>
@@ -237,7 +259,7 @@
                 type:'POST',
                 success:function(data){
                     $("#myModal").find(".firstPlace").html(data.long_description);
-                    $("#myModal").find(".secondPlace").html(data.province + ' ' + data.city +  ' ' + data.address);
+                    $("#myModal").find(".secondPlace").html('<button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">آدرس محل برگزاری :</button>  '+'   '+data.province + ' ' + data.city +  ' ' + data.address);
                     $("#myModal").find(".thirdPlace").html(data.address_point);
                     $("#myModal").find(".imagePlace").find(".modalImage").prop('src' , $(".image_"+data.id).prop('src'));
                     $("#myModal").find(".event_id").val(data.id);
@@ -260,7 +282,7 @@
     {{-- namayeshe sweet alert e YES va NO --}}
     <script>
         $(".btn-success-modal").click(function(){
-            swal.fire({
+            Swal.fire({
                 title: 'ثبت نام',
                 text: "مایل به ثبت نام در این رویداد هستید ؟",
                 type: 'question',

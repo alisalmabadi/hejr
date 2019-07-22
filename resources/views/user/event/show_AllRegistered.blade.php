@@ -1,12 +1,9 @@
 @extends('layouts.app_master')
 @section('styles')
     <link rel="stylesheet" href="{{asset('pass/password_strength.css')}}">
-    <style>
+    <link href="{{asset('js/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
 
-    </style>
 
-    <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
 
@@ -41,6 +38,7 @@
 
     <!-- END: Subheader -->
     <div class="m-content" style="background-color:white;">
+{{--
         <div class="row">
             <label class="col-md-2">اطلاعات کاربری</label>
             <div class="col-md-10">
@@ -60,34 +58,62 @@
                 </table>
             </div>
         </div>
+--}}
         <div class="row">
-            @foreach($events as $event)
-                <label class="col-md-2">
-                    <a href="{{route('user.events.registered',$event->event_user_id)}}">
-                    اطلاعات رویداد
-                    {{$event->name}}
-                    </a>
-                </label>
-                <div class="col-md-10">
-                    <table class="table table-bordered table-condenced">
+
+                <div class="col-md-12">
+                    <table class="table table-bordered table-condenced table-hover responsive no-wrap" id="m_table_1">
                         <thead>
+                        <th>شماره</th>
                         <th>نام</th>
-                        <th>توضیحات</th>
+                        <th>توضیحات مختصر</th>
+                        <th>شروع</th>
+                        <th>پایان</th>
                         <th>قیمت</th>
+                        <th>وضعیت ثبت نام</th>
+                        <th>وضعیت پرداخت</th>
                         <th>عملیات</th>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>{{$event->name}}</td>
-                            <td>{!! $event->description !!}</td>
-                            <td>{{$event->price}}</td>
+                        @foreach($events as $event)
+                            <tr>
+                            <td>{{$event->id}}</td>
+                            <td>{{$event->event->name}}</td>
+                            <td>{!! str_limit($event->event->description,120,'...') !!}</td>
+                                <td>{{$event->event->start_dates}}</td>
+                                <td>{{$event->event->end_dates}}</td>
+
+                                <td>{{$event->event->price}}   تومان</td>
+                                <td><button type="button" class="{{$event->userstatus->class}}">{{$event->userstatus->name}}</button></td>
+
+
+                                <td>
+   @if($event->payment()->exists())
+     @if($event->payment->status == 1)
+ <button type="button" class="btn m-btn--pill m-btn--air         btn-success m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت شده</button>
+      @else
+                                            <button type="button" class="btn m-btn--pill m-btn--air         btn-warning m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت ناموفق</button>                                        @endif
+
+                                    @else
+
+    <button type="button" class="btn m-btn--pill m-btn--air         btn-danger m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت نشده</button>
+
+                                    @endif
+
+                                </td>
                             <td>
-                                <a href="{{route('user.events.registered',$event->event_user_id)}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="نمایش">
+                                <a href="{{route('user.events.registered',$event->id)}}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="نمایش">
                                     <i class="la la-eye"></i>
                                 </a>
 
                             </td>
+{{--
+                                <td nowrap></td>
+--}}
+
                         </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -96,11 +122,21 @@
                    <button class="btn btn-success form-control">پرداخت</button>
                    </div>--}}
                 {{--end of pay button--}}
-            @endforeach
         </div>
     </div>
 
 @endsection
 @section('scripts')
+    <script src="{{asset('js/datatables/datatables.bundle.js')}}" type="text/javascript"></script>
+
+{{--
+    <script src="{{asset('js/datatables/extensions/responsive.js')}}" type="text/javascript"></script>
+--}}
+<script type="text/javascript">
+    var table = $('#m_table_1');
+    table.DataTable({
+        responsive: true,
+    });
+</script>
 
 @endsection

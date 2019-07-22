@@ -41,6 +41,16 @@ label.error {
   width: 53%;
   margin: 0 auto;
 }
+
+
+@media screen and (max-width: 700px) {
+  .logohejr {
+    width: 30%;
+    margin: 0 auto;
+  }
+}
+
+
 .titlealert{
   font-size: 17px;
   padding-left:12px;
@@ -49,3 +59,8 @@ label.error {
 .centertextalign{
   text-align: center !important;
 }
+.secondPlace{
+  margin-top: 10px;
+}
+
+

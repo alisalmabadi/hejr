@@ -677,6 +677,8 @@ $this->validate($request,[
     {
         $user = \Auth::guard('web')->user();
         $events = $user->events;
+
+
        // dd($events);
         return view('user.event.show_AllRegistered' , compact('user','events'));
     }

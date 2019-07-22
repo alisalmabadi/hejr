@@ -661,9 +661,9 @@
 {{--
 <script src="{{asset('vendors/jquery-form/dist/jquery.form.min.js')}}" type="text/javascript"></script>
 --}}
-{{--
+
 <script src="{{asset('vendors/block-ui/jquery.blockUI.js')}}" type="text/javascript"></script>
---}}
+
 {{--
 <script src="{{asset('vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
 --}}

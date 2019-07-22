@@ -30378,7 +30378,7 @@ select.m-select2 {
     color: #716aca;
     border: 0;
     background-color: transparent;
-    font-family: iransanse;
+    font-family: 'LineAwesome';
     text-decoration: inherit;
     text-rendering: optimizeLegibility;
     text-transform: none;
@@ -30387,7 +30387,7 @@ select.m-select2 {
     font-smoothing: antialiased;
     content: ""; }
   .dataTables_wrapper table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before {
-    font-family: iransanse;
+    font-family: 'LineAwesome';
     text-decoration: inherit;
     text-rendering: optimizeLegibility;
     text-transform: none;

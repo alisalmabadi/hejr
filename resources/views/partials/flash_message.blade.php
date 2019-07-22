@@ -4,7 +4,7 @@
 
 @if(session()->has('flash_message'))
 
-    <div class="customisedalert m-alert m-alert--outline alert alert-{{session()->get('flash_message_level')}} alert-dismissible fade show" role="alert" style="opacity: .5;">
+    <div class="customisedalert m-alert m-alert--outline alert alert-{{session()->get('flash_message_level')}} alert-dismissible fade show alertflash" role="alert" style="opacity: .5;">
  {{--   <span  class="close" data-dismiss="alert">
         &times;
     </span>--}}
