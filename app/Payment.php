@@ -8,7 +8,7 @@ class Payment extends Model
 {
     protected  $fillable=['user_id','amount',
         'event_user_id','authority','type','refid','payment_method_id',
-        'state','transactionId'];
+        'state','transaction_id'];
 
     public function event_user()
     {
