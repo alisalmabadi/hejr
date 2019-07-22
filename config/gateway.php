@@ -13,12 +13,12 @@ return [
     //--------------------------------
     'zarinpal' => [
         'merchant-id'  => '2d50cbba-fb71-11e7-802a-005056a205be',
-        'type'         => 'zarin-gate',             // Types: [zarin-gate || normal]
+        'type'         => 'normal',             // Types: [zarin-gate || normal]
         'callback-url' => '/',
-        'server'       => 'germany',                // Servers: [germany || iran || test]
+        'server'       => 'test',                // Servers: [germany || iran || test]
         'email'        => 'email@gmail.com',
         'mobile'       => '09xxxxxxxxx',
-        'description'  => 'description',
+        'description'  => 'پرداخت هزینه کلاس ها',
     ],
 
     //--------------------------------
