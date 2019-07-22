@@ -54,6 +54,14 @@ class Event extends Model
         return $res;
     }
 
+    public function getFulledCapacityAttribute()
+    {
+
+        $event_user_count=EventUser::where('event_id',$this->id)->count();
+        $fulled_count=(int)$this->capacity-(int)$event_user_count;
+        return $fulled_count;
+    }
+
     public function images()
     {
         return $this->belongsToMany(Image::class , 'event_images');
