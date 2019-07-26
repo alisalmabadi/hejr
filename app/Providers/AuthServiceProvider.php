@@ -31,9 +31,13 @@ class AuthServiceProvider extends ServiceProvider
         });
         //
 
-        Gate::define('edit-event', function($user, Event $event){
+        /*Gate::define('edit-event', function($user, Event $event){
             $user = \Auth::guard('admin')->user();
             return $user->id === $event->eventable_id;
+        });*/
+
+        Gate::define('show-users', function($user){
+            return $user->id === $user->core->admin_id;
         });
     }
 }
