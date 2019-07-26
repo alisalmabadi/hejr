@@ -14055,6 +14055,7 @@ __webpack_require__(15);
 window.PerfectScrollbar = __webpack_require__(38).default;
 __webpack_require__(39);
 __webpack_require__(40);
+__webpack_require__(16);
 window.Vue = __webpack_require__(41);
 
 /*
@@ -60680,7 +60681,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['notifications', 'backgroundimg']
+    props: ['notifications', 'backgroundimg'],
+    methods: {
+        readnotify: function readnotify(id) {
+            axios.post('/user/notification/read', { id: id }).then(function (response) {
+                Swal.fire({
+                    // type: 'error',
+                    title: JSON.parse(response.data.data).message.title,
+                    html: JSON.parse(response.data.data).message.text,
+                    confirmButtonText: ' خواندم! <i class="fa fa-thumbs-up"></i>'
+                    /*
+                                            footer: '<a href>Why do I have this issue?</a>'
+                    */
+                });
+            }).catch(function (error) {
+                return console.log(error);
+            });
+        },
+        readnotification: function readnotification(read) {
+            if (read != null) {
+                return 'm-list-timeline__item m-list-timeline__item--read';
+            } else {
+                return 'm-list-timeline__item';
+            }
+        }
+
+    },
+    computed: {
+        /*  sortedArray: function() {
+            return this.notifications.sort(this.compare);
+        }*/
+        sortedArray: function sortedArray() {
+            return _.orderBy(this.notifications, 'read_at', 'desc');
+        }
+    }
 });
 
 /***/ }),
@@ -60780,10 +60814,19 @@ var render = function() {
                             _c(
                               "div",
                               { staticClass: "m-list-timeline__items" },
-                              _vm._l(_vm.notifications, function(notification) {
+                              _vm._l(_vm.sortedArray, function(notification) {
                                 return _c(
                                   "div",
-                                  { staticClass: "m-list-timeline__item" },
+                                  {
+                                    class: _vm.readnotification(
+                                      notification.read_at
+                                    ),
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.readnotify(notification.id)
+                                      }
+                                    }
+                                  },
                                   [
                                     _c("span", {
                                       staticClass:
@@ -60805,7 +60848,7 @@ var render = function() {
                                     _c(
                                       "span",
                                       { staticClass: "m-list-timeline__time" },
-                                      [_vm._v(_vm._s(notification.created_at))]
+                                      [_vm._v(_vm._s(notification.created))]
                                     )
                                   ]
                                 )
@@ -60859,7 +60902,7 @@ var staticRenderFns = [
             },
             [
               _vm._v(
-                "\n                                آخرین اعلان ها\n                            "
+                "\n                                تمامی اعلان ها\n                            "
               )
             ]
           )
