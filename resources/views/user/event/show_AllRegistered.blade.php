@@ -92,7 +92,7 @@
      @if($event->payment->status == 1)
  <button type="button" class="btn m-btn--pill m-btn--air         btn-success m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت شده</button>
       @else
-                                            <button type="button" class="btn m-btn--pill m-btn--air         btn-warning m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت ناموفق</button>                                        @endif
+                                            <button type="button" class="btn m-btn--pill m-btn--air         btn-warning m-btn m-btn--custom m-btn--bolder m-btn--uppercase colorwhite">پرداخت ناموفق</button>                                        @endif
 
                                     @else
 

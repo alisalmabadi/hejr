@@ -639,9 +639,8 @@
 {{--
 <script src="{{asset('vendors/tooltip.js/dist/umd/tooltip.min.js')}}" type="text/javascript"></script>
 --}}
-{{--
-<script src="{{asset('vendors/perfect-scrollbar/dist/perfect-scrollbar.js')}}" type="text/javascript"></script>
---}}
+{{--<script src="{{asset('vendors/perfect-scrollbar/dist/perfect-scrollbar.js')}}" type="text/javascript"></script>--}}
+
 {{--
 <script src="{{asset('vendors/wnumb/wNumb.js')}}" type="text/javascript"></script>
 --}}

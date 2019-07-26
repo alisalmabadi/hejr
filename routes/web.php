@@ -303,7 +303,11 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::post('checkemail',['as'=>'checkemail','uses'=>'UserController@checkemail']);
     Route::post('checkusername',['as'=>'checkusername','uses'=>'UserController@checkusername']);
     Route::post('uploadpic',['uses'=>'UserController@uploadpic','as'=>'uploadpic']);
+    /**notification ***/
+    
     Route::post('notification/get',['uses'=>'NotificationController@get','as'=>'notification.get']);
+    Route::post('notification/read',['uses'=>'NotificationController@read','as'=>'notification.get']);
+
     /***user events ***/
     Route::get('events',['uses'=>'UserController@show_events','as'=>'events']);
     

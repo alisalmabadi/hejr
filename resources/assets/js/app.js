@@ -9,6 +9,7 @@ require('./bootstrap');
 window.PerfectScrollbar = require('perfect-scrollbar').default;
 require('jquery-validation');
 require('select2');
+require('lodash');
 window.Vue = require('vue');
 
 /*
