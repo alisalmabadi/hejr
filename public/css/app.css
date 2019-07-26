@@ -14311,3 +14311,11 @@ label.error {
   margin-top: 10px;
 }
 
+.colorwhite {
+  color: white !important;
+}
+
+.ps__thumb-x {
+  display: none !important;
+}
+
