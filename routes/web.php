@@ -335,6 +335,15 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
 
     /***peyment routes ***/
 
+    /***** core_users_routes ******/
+    Route::get('coreUsers', ['as'=>'coreUsers.index', 'uses'=>'UserController@core_users_index']);
+    Route::get('coreUsers/create', ['as'=>'coreUsers.create', 'uses'=>'UserController@core_users_create']);
+    Route::post('coreUsers/store', ['as'=>'coreUsers.store', 'uses'=>'UserController@core_users_store']);
+    Route::get('coreUsers/edit/{user}', ['as'=>'coreUsers.edit', 'uses'=>'UserController@core_users_edit']);
+    Route::get('coreUsers/show/{user}', ['as'=>'coreUsers.show', 'uses'=>'UserController@core_users_show']);
+    Route::patch('coreUsers/update/{user}', ['as'=>'coreUsers.update', 'uses'=>'UserController@core_users_update']);
+    /***** core_users_routes ******/
+
 });
 
 /*****public routes**********/

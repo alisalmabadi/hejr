@@ -14,6 +14,7 @@ use App\Core;
 use App\User;
 use App\Image;
 use App\EventImage;
+use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
 {
@@ -161,7 +162,7 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         /*har admin faghat betoone oon event ke khodesh sabt karde ro edit kone*/
-        if($event->eventable_id == \Auth::guard('admin')->user()->id) {
+        if(Gate::allows('edit-event',$event)) {
             $cities = City::where('province_id', $event->province_id)->get();
             $event_subjects = EventSubject::where('status', 1)->get();
             $event_types = EventType::where('status', 1)->get();
@@ -171,12 +172,12 @@ class EventController extends Controller
             $event['information'] = json_decode($event->information);
             $event->load('images');
             return view('admin.event.edit', compact('event', 'cities', 'event_subjects', 'event_types', 'event_statuses', 'provinces', 'cores'));
-
         }
-        else{/*in event baraye in admin nist, dastresi nade*/
+        else{
             flashs('شما قادر به ویرایش این رویداد نمی باشید');
             return redirect()->route('admin.event.index');
         }
+        
 
     }
 
