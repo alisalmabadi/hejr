@@ -65,7 +65,7 @@
     <!-- END: Subheader -->
 
     <div class="m-content">
-        <div class="row">
+        <div class="row" style="background-color:white;">
 
             <div class="table-responsive">
             <form action="{{route('user.coreUsers.update', $user)}}" class="form-horizontal" method="post" enctype="multipart/form-data" id="form-material">
@@ -79,7 +79,7 @@
                                 <input id="name" name="name" value="{{$user->name}}" placeholder="نام فرد"  class="form-control" type="text">
                                 @if($errors->has('name'))
                                     <span class="help-block">
-                                        <strong>{{$errors->first('name')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('name')}}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -88,7 +88,7 @@
                                 <input id="name" name="lastname" value="{{$user->lastname}}" placeholder="نام خانوادگی فرد"  class="form-control" type="text">
                                 @if($errors->has('lastname'))
                                     <span class="help-block">
-                                            <strong>{{$errors->first('lastname')}}</strong>
+                                            <strong style="color:red;">{{$errors->first('lastname')}}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -100,7 +100,7 @@
                             <input id="name" name="nationcode" value="{{$user->nationcode}}" placeholder="کدملی"  class="form-control" type="number">
                             @if($errors->has('nationcode'))
                                 <span class="help-block">
-                                        <strong>{{$errors->first('nationcode')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('nationcode')}}</strong>
                                 </span>
                             @endif
                         </div>
@@ -109,7 +109,7 @@
                             <input id="name" name="username" value="{{$user->username}}" placeholder="نام کاربری"  class="form-control" type="text">
                             @if($errors->has('username'))
                                 <span class="help-block">
-                                        <strong>{{$errors->first('username')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('username')}}</strong>
                                 </span>
                             @endif
                         </div>
@@ -121,7 +121,7 @@
                             <input id="name" name="email" value="{{$user->email}}" placeholder="ایمیل"  class="form-control" type="text">
                             @if($errors->has('email'))
                                 <span class="help-block">
-                                        <strong>{{$errors->first('email')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('email')}}</strong>
                                 </span>
                             @endif
                         </div>
@@ -130,7 +130,7 @@
                             <input id="name" name="password" value="{{$user->password}}" placeholder="نام کاربری"  class="form-control" type="password">
                             @if($errors->has('password'))
                                 <span class="help-block">
-                                        <strong>{{$errors->first('password')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('password')}}</strong>
                                 </span>
                             @endif
                         </div>
@@ -143,7 +143,7 @@
                             <input id="name" name="father_name" value="{{$user->father_name}}" placeholder="نام پدر"  class="form-control" type="text">
                             @if($errors->has('father_name'))
                                 <span class="help-block">
-                                        <strong>{{$errors->first('father_name')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('father_name')}}</strong>
                                 </span>
                             @endif
                         </div>
@@ -152,7 +152,7 @@
                             <input id="name" name="address" value="{{$user->address}}" placeholder="آدرس"  class="form-control" type="text">
                             @if($errors->has('address'))
                                 <span class="help-block">
-                                        <strong>{{$errors->first('address')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('address')}}</strong>
                                 </span>
                             @endif
                         </div>
@@ -166,7 +166,7 @@
                             <input id="name" name="konkor_grade" value="{{$user->konkor_grade}}" placeholder="رتبه کنکور"  class="form-control" type="number">
                             @if($errors->has('konkor_grade'))
                                 <span class="help-block">
-                                        <strong>{{$errors->first('konkor_grade')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('konkor_grade')}}</strong>
                                 </span>
                             @endif
                         </div>
@@ -175,7 +175,7 @@
                             <input id="name" name="phonenumber" value="{{$user->phonenumber}}" placeholder="شماره مبایل"  class="form-control" type="number">
                             @if($errors->has('phonenumber'))
                                 <span class="help-block">
-                                        <strong>{{$errors->first('phonenumber')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('phonenumber')}}</strong>
                                 </span>
                             @endif
                         </div>
@@ -188,7 +188,7 @@
                             <input id="name" name="birthday" value="{{$user->birthday}}" placeholder="تاریخ تولد"  class="form-control" type="text">
                             @if($errors->has('birthday'))
                                 <span class="help-block">
-                                        <strong>{{$errors->first('birthday')}}</strong>
+                                        <strong style="color:red;">{{$errors->first('birthday')}}</strong>
                                 </span>
                             @endif
                         </div>
