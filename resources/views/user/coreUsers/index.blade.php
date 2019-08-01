@@ -66,7 +66,7 @@
     <!-- END: Subheader -->
 
     <div class="m-content">
-        <div class="row">
+        <div class="row" style="background-color:white;">
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
@@ -116,28 +116,28 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <label>نام و نام خانوادگی</label>
                         <div class="col-12">
+                        <label>نام و نام خانوادگی</label>
                             <input type="text" id="modal_name" readonly class="form-control">
                         </div>
-                        <label>ایمیل</label>
                         <div class="col-12">
+                        <label>ایمیل</label>
                             <input type="text" id="modal_email" readonly class="form-control">
                         </div>
-                        <label>نام کاربری</label>
                         <div class="col-12">
+                        <label>نام کاربری</label>
                             <input type="text" id="modal_username" readonly class="form-control">
                         </div>
-                        <label>شماره تلفن</label>
                         <div class="col-12">
+                        <label>شماره تلفن</label>
                             <input type="text" id="modal_phonenumber" readonly class="form-control">
                         </div>
-                        <label>آدرس</label>
                         <div class="col-12">
+                        <label>آدرس</label>
                             <input type="text" id="modal_address" readonly class="form-control">
                         </div>
-                        <label>نام پدر</label>
                         <div class="col-12">
+                        <label>نام پدر</label>
                             <input type="text" id="modal_fathername" readonly class="form-control">
                         </div>
                     </div>
