@@ -22,7 +22,7 @@ class NotificationController extends Controller
           $notifications=\Auth::user()->notifications()->orderby('created_at')->get()->toArray();
 
 
-
+        if(!empty($notifications)){
           foreach($notifications as $notify){
               $v=new Verta($notify['created_at']);
               $res=$v->format('%d %B %Y');
@@ -30,6 +30,10 @@ class NotificationController extends Controller
           }
         //  dd($result);
           return $result;
+        }
+        else{
+            return null;
+        }
 
 
     }
