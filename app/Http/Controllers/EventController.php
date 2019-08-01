@@ -344,6 +344,11 @@ class EventController extends Controller
                 $event->registered_id = $event_user_id;
             }
         }
+        
+        //leaflet points
+        if(!empty($event->address_point)){
+            $event->address_point = json_decode($event->address_point);
+        }
         return response($event);
     }
 
