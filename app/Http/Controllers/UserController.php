@@ -729,6 +729,14 @@ $this->validate($request,[
 
     public function core_users_index()
     {
+        if(\Gate::denies('show-users')){
+            abort(404);
+            $data['title'] = '404';
+            $data['name'] = 'Page not found';
+            return response()
+                ->view('404',$data,404);
+        }
+        
         $admin_user = \Auth::guard('web')->user();
         $users = $admin_user->core->users;
         return view('user.coreUsers.index', compact('users'));
@@ -736,11 +744,25 @@ $this->validate($request,[
 
     public function core_users_show(User $user)
     {
+        if(\Gate::denies('show-users')){
+            abort(404);
+            $data['title'] = '404';
+            $data['name'] = 'Page not found';
+            return response()
+                ->view('404',$data,404);
+        }
         return response($user);
     }
 
     public function core_users_create()
     {
+        if(\Gate::denies('show-users')){
+            abort(404);
+            $data['title'] = '404';
+            $data['name'] = 'Page not found';
+            return response()
+                ->view('404',$data,404);
+        }
         $core = \Auth::guard('web')->user()->core_id;
         $areas=Area::all();
         $provinces=Province::all();
@@ -754,6 +776,13 @@ $this->validate($request,[
 
     public function core_users_store(Request $request)
     {
+        if(\Gate::denies('show-users')){
+            abort(404);
+            $data['title'] = '404';
+            $data['name'] = 'Page not found';
+            return response()
+                ->view('404',$data,404);
+        }
         $this->validate($request,[
             'name'=>'required',
             'lastname'=>'required',
@@ -811,6 +840,14 @@ $this->validate($request,[
 
     public function core_users_edit(User $user)
     {
+        if(\Gate::denies('show-users')){
+            abort(404);
+            $data['title'] = '404';
+            $data['name'] = 'Page not found';
+            return response()
+                ->view('404',$data,404);
+        }
+
         $core = \Auth::guard('web')->user()->core_id;
         $areas=Area::all();
         $provinces=Province::all();
@@ -824,6 +861,14 @@ $this->validate($request,[
 
     public function core_users_update(Request $request, User $user)
     {
+        if(\Gate::denies('show-users')){
+            abort(404);
+            $data['title'] = '404';
+            $data['name'] = 'Page not found';
+            return response()
+                ->view('404',$data,404);
+        }
+        
         $this->validate($request,[
             'name'=>'required',
             'lastname'=>'required',

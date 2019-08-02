@@ -186,6 +186,10 @@
                             <img class="modalImage" style="width: 100%;" src="{{asset('images/tik.png')}}">
                         </div>
                     </div>
+                    <hr/>
+                    <div class="row map_place" id="map_place" style="height:150px;">
+
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
@@ -197,6 +201,7 @@
 
 @endsection
 @section('scripts')
+
 
     {{-- calling owlcarrousel --}}
     <script src="{{asset('vendors/owl.carousel/dist/owl.carousel.js')}}" type="text/javascript"></script>
@@ -251,6 +256,11 @@
             }
         });
         $(".btn-read-more").on('click' , function(){
+
+            $("#myModal").find(".firstPlace").html('');
+            $("#myModal").find(".firstPlace").html('');
+            $("#myModal").find(".map_place").html('');
+
             var id = $(this).data('id');
             var url = "{{route('user.event.details')}}";
             $.ajax({
@@ -260,9 +270,23 @@
                 success:function(data){
                     $("#myModal").find(".firstPlace").html(data.long_description);
                     $("#myModal").find(".secondPlace").html('<button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">آدرس محل برگزاری :</button>  '+'   '+data.province + ' ' + data.city +  ' ' + data.address);
-                    $("#myModal").find(".thirdPlace").html(data.address_point);
                     $("#myModal").find(".imagePlace").find(".modalImage").prop('src' , $(".image_"+data.id).prop('src'));
                     $("#myModal").find(".event_id").val(data.id);
+                    
+                    //map - leafletJS
+                    if(data.address_point != null){
+                        var leaflet_points = data.address_point;
+                        // console.log(leaflet_points);
+                        map = L.map('map_place').setView(leaflet_points, 13);
+
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+
+                        L.marker(leaflet_points).addTo(map)
+                            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                            .openPopup();
+                    }
+                    //end of map - leafletJS
+
                     /*** agar ghablan in rooydad ro register karde bood, nazare dobare oon ro register kone ***/
                     if(data.registered_me == 'YES'){//ghablan register karde too in event
                         $("#myModal").find(".btn-success-modal").css('display','none');
