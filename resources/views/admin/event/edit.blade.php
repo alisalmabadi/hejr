@@ -222,6 +222,7 @@
                     </div>
 --}}
 
+{{--
                     <div class="form-group required">
                         <label class="col-md-2 col-lg-2">تصویر</label>
                         <div class="col-md-4 col-lg-4">
@@ -239,6 +240,7 @@
                             @endif
                         </div>
                     </div>
+--}}
 
                 </form>
 
