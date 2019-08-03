@@ -121,9 +121,9 @@
                                     <div class="m-widget19__body body1_{{$event->id}} text-center" style="display:block;">
                                         <p>{!! str_limit($event->description,200,'...') !!}</p><hr/>
                                         <label>تاریخ دوره</label><br>
-                                        {{--<p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">از {{$event->start_dates}} تا {{$event->end_dates}}</p>
+                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">از {{$event->start_dates}} تا {{$event->end_dates}}</p>
                                         <label>تاریخ پایان ثبت نام</label><br>
-                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">{{$event->end_date_sign}}</p>--}}
+                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">{{$event->end_date_sign}}</p>
                                         <br/>
                                         <hr/>
                                         <p>موضوع دوره:
@@ -136,7 +136,7 @@
                                         </p>
                                       {{--  <p>وضعیت دوره: {{$event->event_status->name}}</p>--}}
                                         <hr/>
-                                        <p>آدرس: {{$event->provinces->name}} - {{$event->cities->name}} ...</p>
+                                    {{--    <p>آدرس: {{$event->provinces->name}} - {{$event->cities->name}} ...</p>--}}
                                     </div>
                                     {{--end of body1 place--}}
 
@@ -169,8 +169,8 @@
             <input type="hidden" value="" class="event_id">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">توضیحات رویداد {{$event->name}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" style="float: right;margin-right: 0;border: 1px solid;border-radius: 100%;background: #16171f;color: white;">&times;</button>
+                    <h4 class="modal-title" style="text-align: center;float: none;margin: 0 auto;">توضیحات رویداد {{$event->name}}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -183,9 +183,9 @@
                                 tozihate 2
                             </div>
 
-                            <div class="col-md-12 col-lg-12 thirdPlace">
+                           {{-- <div class="col-md-12 col-lg-12 thirdPlace">
                                 tozihate 3
-                            </div>
+                            </div>--}}
                         </div>
                         <div class="col-md-4 col-lg-4 imagePlace">
                             <img class="modalImage" style="width: 100%;" src="{{asset('images/tik.png')}}">
