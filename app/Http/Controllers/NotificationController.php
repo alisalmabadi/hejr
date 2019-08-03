@@ -41,7 +41,9 @@ class NotificationController extends Controller
     public function read(Request $request)
     {
         $notification=Notification::find($request->id);
-        auth()->user()->unreadnotifications->find($request->id)->markAsRead();
+        if($notification->read_at == null) {
+            auth()->user()->unreadnotifications->find($request->id)->markAsRead();
+        }
         return $notification;
     }
 }
