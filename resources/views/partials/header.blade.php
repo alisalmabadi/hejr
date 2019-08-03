@@ -468,9 +468,9 @@
                                 m-dropdown-toggle="click">
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-topbar__userpic">
-													<img src="{{$cuser->thumbnail}}" class="m--img-rounded m--marginless" alt="" />
+													<img src="@if($cuser->thumbnail != ''){{$cuser->thumbnail}}@else{{asset('images/profile.jpg')}} @endif" class="m--img-rounded m--marginless" alt="" />
 												</span>
-                                    <span class="m-topbar__username m--hide">Nick</span>
+                                    <span class="m-topbar__username m--hide">{{$cuser->name}} {{$cuser->lastname}}</span>
                                 </a>
                                 <div class="m-dropdown__wrapper">
                                     <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
@@ -497,7 +497,7 @@
                                                         <span class="m-nav__section-text">Section</span>
                                                     </li>
                                                     <li class="m-nav__item">
-                                                        <a href="header/profile.html" class="m-nav__link">
+                                                        <a href="{{route('user.profile')}}" class="m-nav__link">
                                                             <i class="m-nav__link-icon flaticon-profile-1"></i>
                                                             <span class="m-nav__link-title">
 																			<span class="m-nav__link-wrap">
@@ -509,13 +509,13 @@
                                                     </li>
 
 
-                                                  {{--  <li class="m-nav__item">
+                                                {{--    <li class="m-nav__item">
                                                         <a href="header/profile.html" class="m-nav__link">
                                                             <i class="m-nav__link-icon flaticon-share"></i>
                                                             <span class="m-nav__link-text">Activity</span>
                                                         </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
+                                                    </li>--}}
+                                                {{--    <li class="m-nav__item">
                                                         <a href="header/profile.html" class="m-nav__link">
                                                             <i class="m-nav__link-icon flaticon-chat-1"></i>
                                                             <span class="m-nav__link-text">Messages</span>
