@@ -28,9 +28,15 @@
             border:0px solid black;
         }
         .owl-prev i, .owl-next i {transform : scale(6,6); color: #ccc;}
+
+        .detail_modal_label{
+            background-color: whitesmoke !important;
+            border-radius: 10px !important;
+        }
     </style>
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('js/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
 
@@ -68,8 +74,8 @@
     <div class="m-content">
         <div class="row" style="background-color:white;">
 
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+        <div class="table-responsive" style="overflow-x:hidden; padding:10px;">
+            <table class="table table-bordered table-hover" id="m_table_1">
                 <thead>
                 <tr>
                     <td class="text-center">#</td>
@@ -116,29 +122,29 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-6">
                         <label>نام و نام خانوادگی</label>
-                            <input type="text" id="modal_name" readonly class="form-control">
+                            <label id="modal_name" class="form-control detail_modal_label"></label>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                         <label>ایمیل</label>
-                            <input type="text" id="modal_email" readonly class="form-control">
+                            <label id="modal_email" class="form-control detail_modal_label"></label>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                         <label>نام کاربری</label>
-                            <input type="text" id="modal_username" readonly class="form-control">
+                            <label id="modal_username" class="form-control detail_modal_label"></label>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                         <label>شماره تلفن</label>
-                            <input type="text" id="modal_phonenumber" readonly class="form-control">
+                            <label id="modal_phonenumber" class="form-control detail_modal_label"></label>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                         <label>آدرس</label>
-                            <input type="text" id="modal_address" readonly class="form-control">
+                            <label id="modal_address" class="form-control detail_modal_label"></label>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                         <label>نام پدر</label>
-                            <input type="text" id="modal_fathername" readonly class="form-control">
+                            <label id="modal_fathername" class="form-control detail_modal_label"></label>
                         </div>
                     </div>
                 </div>
@@ -151,17 +157,25 @@
 
 @endsection
 @section('scripts')
+    <script src="{{asset('js/datatables/datatables.bundle.js')}}" type="text/javascript"></script>
+    <script type="text/javascript">
+        var table = $('#m_table_1');
+        table.DataTable({
+            responsive: true,
+        });
+    </script>
+
         {{-- show detail modal --}}
         <script>
-            $(".btn-show-coreUser").on('click', function(e){
+            $(document).on("click", ".btn-show-coreUser", function(e){
                 e.preventDefault();
 
-                $("#myModal").find("#modal_name").val('');
-                $("#myModal").find("#modal_email").val('');
-                $("#myModal").find("#modal_username").val('');
-                $("#myModal").find("#modal_phonenumber").val('');
-                $("#myModal").find("#modal_address").val('');
-                $("#myModal").find("#modal_fathername").val('');
+                $("#myModal").find("#modal_name").text('');
+                $("#myModal").find("#modal_email").text('');
+                $("#myModal").find("#modal_username").text('');
+                $("#myModal").find("#modal_phonenumber").text('');
+                $("#myModal").find("#modal_address").text('');
+                $("#myModal").find("#modal_fathername").text('');
 
                 var url = $(this).attr('href');
                 $.ajax({
@@ -169,12 +183,12 @@
                     url:url,
                     type:"GET",
                     success:function(user){
-                        $("#myModal").find("#modal_name").val(user.name + ' ' + user.lastname);
-                        $("#myModal").find("#modal_email").val(user.email);
-                        $("#myModal").find("#modal_username").val(user.username);
-                        $("#myModal").find("#modal_phonenumber").val(user.phonenumber);
-                        $("#myModal").find("#modal_address").val(user.address);
-                        $("#myModal").find("#modal_fathername").val(user.fathername);
+                        $("#myModal").find("#modal_name").text(user.name + ' ' + user.lastname);
+                        $("#myModal").find("#modal_email").text(user.email);
+                        $("#myModal").find("#modal_username").text(user.username);
+                        $("#myModal").find("#modal_phonenumber").text(user.phonenumber);
+                        $("#myModal").find("#modal_address").text(user.address);
+                        $("#myModal").find("#modal_fathername").text(user.fathername);
 
                         $("#myModal").modal("show");
                     },
