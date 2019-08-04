@@ -216,7 +216,7 @@
                         </div>
                     </div>
 --}}
-                    <div class="form-group required">
+                 {{--   <div class="form-group required">
                         <label class="col-md-2 col-lg-2">تصویر</label>
                         <div class="col-md-10 col-lg-10">
                             <input type="file" class="form-control" name="image">
@@ -224,7 +224,7 @@
                                 <label style="color:red;">{{$errors->first('image')}}</label>
                             @endif
                         </div>
-                    </div>
+                    </div>--}}
                 </form>
 
             </div>

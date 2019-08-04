@@ -74,7 +74,7 @@ class EventController extends Controller
             'center_core_id'=>'required|numeric',
             'xplace'=>'nullable|numeric',
             'yplace'=>'nullable|numeric',
-            'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',
+             /*'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
 
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
@@ -109,8 +109,8 @@ class EventController extends Controller
             'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
             'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
             'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
-            'image.image'=>'لطفا فقط عکس انتخاب کنید',
-            'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',
+           /* 'image.image'=>'لطفا فقط عکس انتخاب کنید',
+            'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',*/
         ]);
         $admin = \Auth::guard('admin')->user();
         $request['eventable_id'] = $admin->id;
@@ -123,11 +123,10 @@ class EventController extends Controller
        $event=$admin->events()->save($event);
 
         /*image upload*/
-        $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
+    /*    $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
         $main_folder = 'images/events/'.$request['name'].'/';
         $url = $main_folder;
         $request['image']->move($url, $imagename);
-        //store in images table
         $image = new Image();
         $image = $image->create([
             'image_type' => $request['image']->getClientOriginalExtension(),
@@ -135,8 +134,7 @@ class EventController extends Controller
             'image_path' => $url . $imagename,
         ]);     
 
-        //attach in eventImages table
-        $event->images()->attach($image->id);  
+        $event->images()->attach($image->id); */
 
         flashs('رویداد با موفقیت ثبت گردید');
         return redirect()->route('admin.event.index');
@@ -162,7 +160,7 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         /*har admin faghat betoone oon event ke khodesh sabt karde ro edit kone*/
-        if(Gate::allows('edit-event',$event)) {
+       // if(Gate::allows('edit-event',$event)) {
             $cities = City::where('province_id', $event->province_id)->get();
             $event_subjects = EventSubject::where('status', 1)->get();
             $event_types = EventType::where('status', 1)->get();
@@ -172,11 +170,11 @@ class EventController extends Controller
             $event['information'] = json_decode($event->information);
             $event->load('images');
             return view('admin.event.edit', compact('event', 'cities', 'event_subjects', 'event_types', 'event_statuses', 'provinces', 'cores'));
-        }
+        /*}
         else{
             flashs('شما قادر به ویرایش این رویداد نمی باشید');
             return redirect()->route('admin.event.index');
-        }
+        }*/
         
 
     }

@@ -229,7 +229,12 @@ if(isset($request->birthday)) {
 
     public function panel()
     {
-        return view('user.dashboard');
+        $data = array();
+        $data['users_count']= User::all()->count();
+        $data['cores_count']= Core::all()->count();
+        $data['events_count']= Event::all()->count();
+        $data['events_registered_count']= EventUser::where('user_id',auth()->user()->id)->count();
+        return view('user.dashboard',['data'=>$data]);
     }
 
     public function multiple()

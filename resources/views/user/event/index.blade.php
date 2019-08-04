@@ -29,6 +29,11 @@
         }
         .owl-prev i, .owl-next i {transform : scale(6,6); color: #ccc;}
     </style>
+
+    <link rel="stylesheet" href="{{asset('css/leaflet.css')}}"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
 @endsection
@@ -116,9 +121,9 @@
                                     <div class="m-widget19__body body1_{{$event->id}} text-center" style="display:block;">
                                         <p>{!! str_limit($event->description,200,'...') !!}</p><hr/>
                                         <label>تاریخ دوره</label><br>
-                                        {{--<p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">از {{$event->start_dates}} تا {{$event->end_dates}}</p>
+                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">از {{$event->start_dates}} تا {{$event->end_dates}}</p>
                                         <label>تاریخ پایان ثبت نام</label><br>
-                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">{{$event->end_date_sign}}</p>--}}
+                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">{{$event->end_date_sign}}</p>
                                         <br/>
                                         <hr/>
                                         <p>موضوع دوره:
@@ -131,7 +136,7 @@
                                         </p>
                                       {{--  <p>وضعیت دوره: {{$event->event_status->name}}</p>--}}
                                         <hr/>
-                                        <p>آدرس: {{$event->provinces->name}} - {{$event->cities->name}} ...</p>
+                                    {{--    <p>آدرس: {{$event->provinces->name}} - {{$event->cities->name}} ...</p>--}}
                                     </div>
                                     {{--end of body1 place--}}
 
@@ -164,8 +169,8 @@
             <input type="hidden" value="" class="event_id">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">توضیحات رویداد {{$event->name}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" style="float: right;margin-right: 0;border: 1px solid;border-radius: 100%;background: #16171f;color: white;">&times;</button>
+                    <h4 class="modal-title" style="text-align: center;float: none;margin: 0 auto;">توضیحات رویداد {{$event->name}}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -178,16 +183,17 @@
                                 tozihate 2
                             </div>
 
-                            <div class="col-md-12 col-lg-12 thirdPlace">
+                           {{-- <div class="col-md-12 col-lg-12 thirdPlace">
                                 tozihate 3
-                            </div>
+                            </div>--}}
                         </div>
                         <div class="col-md-4 col-lg-4 imagePlace">
                             <img class="modalImage" style="width: 100%;" src="{{asset('images/tik.png')}}">
                         </div>
                     </div>
                     <hr/>
-                    <div class="row map_place" id="map_place" style="height:150px;">
+                    <div class="leaflet-map">
+
 
                     </div>
                 </div>
@@ -205,6 +211,7 @@
 
     {{-- calling owlcarrousel --}}
     <script src="{{asset('vendors/owl.carousel/dist/owl.carousel.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/leaflet.js')}}" type="text/javascript"></script>
     <script>
         $(document).ready(function() { 
             $("#owl-example").owlCarousel({
@@ -259,7 +266,15 @@
 
             $("#myModal").find(".firstPlace").html('');
             $("#myModal").find(".firstPlace").html('');
-            $("#myModal").find(".map_place").html('');
+            $("#myModal").find(".leaflet-map").html('');
+            $( " <div class=\"row map_place\" id=\"map_place\" style=\"height: 226px;position: relative;outline: none;width: 65%;margin: 0 auto;\"></div>" ).appendTo(".leaflet-map");
+            var map = null;
+            var interval= null;
+            if(map != undefined || map != null || interval != null){
+                map.remove();
+                clearInterval(interval);
+            }
+
 
             var id = $(this).data('id');
             var url = "{{route('user.event.details')}}";
@@ -272,17 +287,22 @@
                     $("#myModal").find(".secondPlace").html('<button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">آدرس محل برگزاری :</button>  '+'   '+data.province + ' ' + data.city +  ' ' + data.address);
                     $("#myModal").find(".imagePlace").find(".modalImage").prop('src' , $(".image_"+data.id).prop('src'));
                     $("#myModal").find(".event_id").val(data.id);
-                    
                     //map - leafletJS
                     if(data.address_point != null){
-                        var leaflet_points = data.address_point;
+                    var leaflet_points = data.address_point;
                         // console.log(leaflet_points);
-                        map = L.map('map_place').setView(leaflet_points, 13);
+     // alert(leaflet_points);
 
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+                        map = L.map('map_place');
+                       var interval = setInterval(function () {
+                            map.invalidateSize();
+                        },1000);
+                        map.setView(L.latLng(leaflet_points), 13);
+
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
                         L.marker(leaflet_points).addTo(map)
-                            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                            .bindPopup(' محل برگزاری '+data.name)
                             .openPopup();
                     }
                     //end of map - leafletJS
