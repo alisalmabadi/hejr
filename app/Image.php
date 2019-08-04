@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     protected $table = "images";
-    protected $fillable = ['image_path' , 'image_type' , 'image_original'];
+    protected $fillable = ['image_path' , 'image_type' , 'image_original','thumbnail_path'];
 
     public function events()
     {
