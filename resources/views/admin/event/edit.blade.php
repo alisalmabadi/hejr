@@ -1,5 +1,14 @@
 @extends('layouts.admin_master_full')
-
+@section('style')
+    <style>
+        .tab-content > .tab-pan{
+            display: none;
+        }
+        .tab-content > .active{
+            display: block;
+        }
+    </style>
+@endsection
 @section('content-header')
     <section class="content-header">
         <div class="pull-left">
@@ -27,6 +36,22 @@
                 <form action="{{route('admin.event.update',$event)}}" class="form-horizontal" method="post" enctype="multipart/form-data" id="form-material">
                     {{csrf_field()}}
                     {{method_field('Patch')}}
+
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+
+                        <li class="active"><a href="#general" data-toggle="tab">عمومی</a></li>
+
+                        <li><a href="#gallery" data-toggle="tab">گالری</a></li>
+
+
+                    </ul>
+
+
+                    <div class="tab-content">
+                        <!-- general tab content -->
+                        <div class="tab-pan fade in active" id="general">
+                            <h3>عمومی</h3>
+
                     <div class="form-group required">
                         <label class="col-md-2 col-lg-2">نام</label>
                         <div class="col-md-10 col-lg-10">
@@ -241,7 +266,47 @@
                         </div>
                     </div>
 --}}
+                        </div>
+                        <div class="tab-pan fade in" id="gallery">
+                            <h3>تصویرهای رویداد</h3>
 
+                            <div class="col-md-12 col-lg-10">
+                                <div class="col-md-10">
+                                    <div class="form-group required">
+
+
+                                        <table class="table">
+                                            <tbody id="imagefield">
+                                            <tr>
+                                                <td>
+                                                    <input class="form-control" type="file" name="image[]">
+                                                </td>
+                                                <td>
+                                                </td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-success center" type="button" id="addphoto">افزودن فیلد عکس</button>
+                            </div>
+                          <div class="images col-md-12">
+                              <table class="table table-responsive">
+                              @foreach($event->images as $image)
+                                  <tr><td><img class="img-responsive" src="{{asset($image->image_path)}}"> </td></tr>
+                              @endforeach
+                              </table>
+                          </div>
+
+                        </div>
+
+                    </div>
                 </form>
 
             </div>
@@ -317,4 +382,22 @@
         CKEDITOR.replace( 'long_description' );
     </script>
     {{--end of textareas ckEditor--}}
+
+    <script>
+        $('#addphoto').click(function () {
+            $('#imagefield').append(' <tr>\n' +
+                '                            <td>\n' +
+                ' <input class="form-control" type="file" name="image[]">\n' +
+                '                            </td>\n' +
+                '                            <td>\n' +
+                '<button type="button" class="btn btn-danger deleterow">حذف</button>\n' +
+                '                            </td>\n' +
+                '\n' +
+                '                        </tr>');
+            $('.deleterow').click(function () {
+                $(this).parents('tr').remove();
+            });
+        });
+
+    </script>
 @stop
