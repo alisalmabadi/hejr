@@ -15,6 +15,7 @@ use App\User;
 use App\Image;
 use App\EventImage;
 use Illuminate\Support\Facades\Gate;
+use Intervention\Image\Facades\Image as ImageChange;
 
 class EventController extends Controller
 {
@@ -74,7 +75,7 @@ class EventController extends Controller
             'center_core_id'=>'required|numeric',
             'xplace'=>'nullable|numeric',
             'yplace'=>'nullable|numeric',
-             /*'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
+          /*   'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
 
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
@@ -109,7 +110,7 @@ class EventController extends Controller
             'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
             'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
             'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
-           /* 'image.image'=>'لطفا فقط عکس انتخاب کنید',
+        /*    'image.image'=>'لطفا فقط عکس انتخاب کنید',
             'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',*/
         ]);
         $admin = \Auth::guard('admin')->user();
@@ -123,18 +124,26 @@ class EventController extends Controller
        $event=$admin->events()->save($event);
 
         /*image upload*/
-    /*    $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
-        $main_folder = 'images/events/'.$request['name'].'/';
+        foreach ($request->image as $image) {
+        $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
+        $main_folder = 'images/events/';
         $url = $main_folder;
-        $request['image']->move($url, $imagename);
-        $image = new Image();
-        $image = $image->create([
-            'image_type' => $request['image']->getClientOriginalExtension(),
-            'image_original' => $imagename,
-            'image_path' => $url . $imagename,
-        ]);     
+        $image->move($url, $imagename);
+/***thumbnail ***/
+                $path = public_path('images/events/thumbnails') . "/" . $imagename;
+                $img = ImageChange::make(public_path('images/events/') . $imagename)->resize(324,202)->save($path);
+            $images = Image::create([
+                'image_type' => $image->getClientOriginalExtension(),
+                'image_original' => $imagename,
+                'image_path' => $url . $imagename,
+                'thumbnail_path'=>$img->basename,
+            ]);
+            /***thumbnail ***/
+            $event->images()->attach($images->id);
 
-        $event->images()->attach($image->id); */
+        }
+
+
 
         flashs('رویداد با موفقیت ثبت گردید');
         return redirect()->route('admin.event.index');
@@ -257,21 +266,22 @@ class EventController extends Controller
         $event->update(['address_point'=>$address_point]);
 
         if(!empty($request['image'])){
-            /*image upload*/
-            $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
-            $main_folder = 'images/events/'.$request['name'].'/';
-            $url = $main_folder;
-            $request['image']->move($url, $imagename);
-            //store in images table
-            $image = new Image();
-            $image = $image->create([
-                'image_type' => $request['image']->getClientOriginalExtension(),
-                'image_original' => $imagename,
-                'image_path' => $url . $imagename,
-            ]);     
-
-            //attach in eventImages table
-            $event->images()->sync($image->id);  
+            foreach ($request->image as $image) {
+                $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
+                $main_folder = 'images/events/';
+                $url = $main_folder;
+                $image->move($url, $imagename);
+                /***thumbnail ***/
+                $path = public_path('images/events/thumbnails') . "/" . $imagename;
+                $img = ImageChange::make(public_path('images/events/') . $imagename)->resize(324,202)->save($path);
+                $images = Image::create([
+                    'image_type' => $image->getClientOriginalExtension(),
+                    'image_original' => $imagename,
+                    'image_path' => $url . $imagename,
+                    'thumbnail_path'=>$img->basename,
+                ]);
+                $event->images()->attach($images->id);
+            }
         }
 
         flashs('تغییرات با موفقیت اعمال گردید');
