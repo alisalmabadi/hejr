@@ -65,9 +65,9 @@
     <!-- END: Subheader -->
 
     <div class="m-content">
-        <div class="row" style="background-color:white;">
+        <div class="row" style="background-color:white; width:100%;">
 
-            <div class="table-responsive">
+            <div class="table-responsive" style="overflow-x:hidden; padding:10px;">
             <form action="{{route('user.coreUsers.store')}}" class="form-horizontal" method="post" enctype="multipart/form-data" id="form-material">
                     {{csrf_field()}}
                         <input type="hidden" value="{{$core}}" name="core_id">
