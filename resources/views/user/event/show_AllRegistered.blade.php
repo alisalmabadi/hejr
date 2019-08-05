@@ -80,26 +80,25 @@
                             <td>{{$event->id}}</td>
                             <td>{{$event->event->name}}</td>
                             <td>{!! str_limit($event->event->description,120,'...') !!}</td>
-                                <td>{{--{{$event->event->start_dates}}--}}</td>
-                                <td>{{--{{$event->event->end_dates}}--}}</td>
+                                <td>{{$event->event->start_dates}}</td>
+                                <td>{{$event->event->end_dates}}</td>
 
                                 <td>{{$event->event->price}}   تومان</td>
-                                <td>{{--<button type="button" class="{{$event->userstatus->class}}">{{$event->userstatus->name}}</button>--}}</td>
+                                <td><button type="button" class="{{$event->userstatus->class}}">{{$event->userstatus->name}}</button></td>
 
 
                                 <td>
-                                @if($event->payment()->exists())
-                                    @if($event->payment->status == 1)
-                                        <button type="button" class="btn m-btn--pill m-btn--air         btn-success m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت شده</button>
+   @if($event->payment()->exists())
+     @if($event->payment->status == 1)
+ <button type="button" class="btn m-btn--pill m-btn--air         btn-success m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت شده</button>
+      @else
+                                            <button type="button" class="btn m-btn--pill m-btn--air         btn-warning m-btn m-btn--custom m-btn--bolder m-btn--uppercase colorwhite">پرداخت ناموفق</button>                                        @endif
+
                                     @else
-                                        <button type="button" class="btn m-btn--pill m-btn--air         btn-warning m-btn m-btn--custom m-btn--bolder m-btn--uppercase colorwhite">پرداخت ناموفق</button>                                        
+
+    <button type="button" class="btn m-btn--pill m-btn--air         btn-danger m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت نشده</button>
+
                                     @endif
-
-                                @else
-
-                                    <button type="button" class="btn m-btn--pill m-btn--air         btn-danger m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت نشده</button>
-
-                                @endif
 
                                 </td>
                             <td>
