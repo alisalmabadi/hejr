@@ -94,11 +94,12 @@
                                     @else
                                         <button type="button" class="btn m-btn--pill m-btn--air         btn-warning m-btn m-btn--custom m-btn--bolder m-btn--uppercase colorwhite">پرداخت ناموفق</button>                                        @endif
 
-                                @else
 
-                                    <button type="button" class="btn m-btn--pill m-btn--air         btn-danger m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت نشده</button>
+                                    @else
 
-                                @endif
+    <button type="button" class="btn m-btn--pill m-btn--air         btn-danger m-btn m-btn--custom m-btn--bolder m-btn--uppercase">پرداخت نشده</button>
+
+                                    @endif
 
                             </td>
                             <td>
