@@ -89,7 +89,14 @@
                         <div class="m-portlet__body">
                             <div class="m-widget19">
                                 <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
-                                    <img class="image_{{$event->id}}" src="{{asset('img//blog/blog1.jpg')}}" alt="">
+             <div class="owl-carousel owl_image">
+            @foreach($event->images as $eventimage)
+                 <div class="imageitem">
+                                    <img class="image" src="{{asset('images/events/thumbnails/'.$eventimage->thumbnail_path)}}" alt="">
+                 </div>
+            @endforeach
+
+             </div>
                                     <h3 class="m-widget19__title m--font-light">
                                         {{$event->name}}
                                     </h3>
@@ -174,7 +181,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-8 col-lg-8">
+                        <div class="col-md-12 col-lg-12 imagePlace">
+
+                            <div class="owl-carousel owl_imagemodal">
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <h3>توضیحات رویداد: </h3>
                             <div class="col-md-12 col-lg-12 firstPlace">
                                 tozihate 1
                             </div>
@@ -186,9 +201,6 @@
                            {{-- <div class="col-md-12 col-lg-12 thirdPlace">
                                 tozihate 3
                             </div>--}}
-                        </div>
-                        <div class="col-md-4 col-lg-4 imagePlace">
-                            <img class="modalImage" style="width: 100%;" src="{{asset('images/tik.png')}}">
                         </div>
                     </div>
                     <hr/>
@@ -250,6 +262,45 @@
                     }
                 }
             });
+
+
+        $(".owl_image").owlCarousel({
+            // Most important owl features
+            items : 1,
+            touchDrag: true,
+            nav:true,
+            autoplay:true,
+            dots:false,
+          /*  itemsDesktop : [1199,4],
+            itemsDesktopSmall : [980,3],
+            itemsTablet: [768,2],
+            itemsTabletSmall: false,
+            itemsMobile : [479,1],*/
+            singleItem : true,
+            rtl:true,
+            nav:true,
+            navText : ['<i class="fa fa-angle-right smallicon" aria-hidden="true"></i>','<i class="fa fa-angle-left smallicon" aria-hidden="true"></i>'],
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true,
+                    margin:0,
+                },
+                600: {
+                    items: 1,
+                    nav: true,
+                    margin: 5,
+                    loop: false
+                },
+                1000: {
+                    items: 1,
+                    nav: true,
+                    navRewind:true,
+                    loop: false,
+                    margin: 1
+                }
+            }
+           });
         });
     </script>
     {{-- end of calling owlcarrousel --}}
@@ -265,9 +316,11 @@
         $(".btn-read-more").on('click' , function(){
 
             $("#myModal").find(".firstPlace").html('');
-            $("#myModal").find(".firstPlace").html('');
+            $("#myModal").find(".secondPlace").html('');
             $("#myModal").find(".leaflet-map").html('');
-            $( " <div class=\"row map_place\" id=\"map_place\" style=\"height: 226px;position: relative;outline: none;width: 65%;margin: 0 auto;\"></div>" ).appendTo(".leaflet-map");
+
+
+          //  $('#myModal').find('.owl_imagemodal').html('');
             var map = null;
             var interval= null;
             if(map != undefined || map != null || interval != null){
@@ -283,27 +336,74 @@
                 url:url,
                 type:'POST',
                 success:function(data){
+                    for(i=0; i< 10 ; i++) {
+                        $('.owl_imagemodal').trigger('remove.owl.carousel',[i]).trigger('refresh.owl.carousel');
+                    }
+           // console.log(data);
+
+                    $(".owl_imagemodal").owlCarousel({
+                        // Most important owl features
+                        items : 1,
+                        touchDrag: true,
+                        nav:true,
+                        autoplay:true,
+                        dots:false,
+                        /*  itemsDesktop : [1199,4],
+                          itemsDesktopSmall : [980,3],
+                          itemsTablet: [768,2],
+                          itemsTabletSmall: false,
+                          itemsMobile : [479,1],*/
+                        singleItem : true,
+                        rtl:true,
+                        nav:true,
+                        navText : ['<i class="fa fa-angle-right smallicon" aria-hidden="true"></i>','<i class="fa fa-angle-left smallicon" aria-hidden="true"></i>'],
+                        responsive: {
+                            0: {
+                                items: 1,
+                                nav: true,
+                                margin:0,
+                            },
+                            600: {
+                                items: 1,
+                                nav: true,
+                                margin: 5,
+                                loop: false
+                            },
+                            1000: {
+                                items: 1,
+                                nav: true,
+                                navRewind:true,
+                                loop: false,
+                                margin: 1
+                            }
+                        }
+                    });
+                    $.each(data.images,function (index,value) {
+                       $('.owl_imagemodal').trigger('refresh.owl.carousel');
+        $('.owl_imagemodal').trigger('add.owl.carousel','<div class="imageitem"><img class="image" src="../'+data.images[index].image_path+'"></div>').trigger('refresh.owl.carousel');
+                    });
+
                     $("#myModal").find(".firstPlace").html(data.long_description);
-                    $("#myModal").find(".secondPlace").html('<button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">آدرس محل برگزاری :</button>  '+'   '+data.province + ' ' + data.city +  ' ' + data.address);
-                    $("#myModal").find(".imagePlace").find(".modalImage").prop('src' , $(".image_"+data.id).prop('src'));
+                    $("#myModal").find(".secondPlace").html('<div class="infobox"><button type="button" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning pull-left">'+'  ظرفیت باقی مانده:  '+ data.fulled +' نفر'+'</button>'+'<button type="button" class="btn m-btn m-btn--gradient-from-metal m-btn--gradient-to-accent">'+data.start + ' تا ' + data.end +'</button> '+'<button type="button" class="btn m-btn m-btn--gradient-from-info m-btn--gradient-to-accent">'+data.subject +'</button> '+' '+'<button type="button" class="btn m-btn m-btn--gradient-from-success m-btn--gradient-to-accent">'+data.type +'</button> '+'</div><br><button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">آدرس محل برگزاری :</button> &nbsp;&nbsp; '+'   '+data.province + ' ' + data.city +  ' ' + data.address);
+              /*      $("#myModal").find(".imagePlace").find(".modalImage").prop('src' , $(".image_"+data.id).prop('src'));*/
                     $("#myModal").find(".event_id").val(data.id);
                     //map - leafletJS
-                    if(data.address_point != null){
+                    if(data.address_point[0] != null){
                     var leaflet_points = data.address_point;
-                        // console.log(leaflet_points);
-     // alert(leaflet_points);
-
+                        $( " <div class=\"row map_place\" id=\"map_place\" style=\"height: 226px;position: relative;outline: none;width: 65%;margin: 0 auto;\"></div>" ).appendTo(".leaflet-map");
                         map = L.map('map_place');
                        var interval = setInterval(function () {
                             map.invalidateSize();
-                        },1000);
+                        },500);
                         map.setView(L.latLng(leaflet_points), 13);
 
                         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                        setTimeout(function () {
+                            L.marker(leaflet_points).addTo(map)
+                                .bindPopup(' محل برگزاری '+data.name)
+                                .openPopup();
+                        },2000);
 
-                        L.marker(leaflet_points).addTo(map)
-                            .bindPopup(' محل برگزاری '+data.name)
-                            .openPopup();
                     }
                     //end of map - leafletJS
 
