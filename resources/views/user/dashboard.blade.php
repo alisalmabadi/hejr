@@ -263,7 +263,7 @@
     <!--end::Page Vendors -->--}}
 
     <!--begin::Page Scripts -->
-    <script src="{{asset('js/dashboard.js')}}" type="text/javascript"></script>
+   {{-- <script src="{{asset('js/dashboard.js')}}" type="text/javascript"></script>--}}
 
     <!--end::Page Scripts -->
 
