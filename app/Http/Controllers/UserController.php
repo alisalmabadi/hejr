@@ -13,11 +13,13 @@ use App\Field;
 use App\Grade;
 use App\Imports\UsersImport;
 use App\Job;
+use App\Notifications\NotifySignedUpEvent;
 use App\Province;
 use App\SoldierServices;
 use App\University;
 use App\UniversityTypes;
 use App\User;
+use Carbon\Carbon;
 use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -435,98 +437,106 @@ $this->validate($request,[
 
     public function storeEvent(Request $request)
     {
-        $request['start_date'] = Convertnumber2english($request['start_date']);
-        $request['end_date'] = Convertnumber2english($request['end_date']);
-        $request['end_date_signup'] = Convertnumber2english($request['end_date_signup']);
+        $user=\Auth::user();
+        if($user->can('create-event')) {
 
-        $this->validate($request , [
-            'name'=>'required|max:255',
-            'description'=>'required|max:60000',
-            'long_description'=>'required',
-            'start_date'=>'required|date',
-            'end_date'=>'required|date',
-            'end_date_signup'=>'required|date',
-            'price'=>'required|numeric',
-            'capacity'=>'required|numeric',
-            'event_subject_id'=>'required|numeric',
-            'event_type_id'=>'required|numeric',
-            'event_status_id'=>'required|numeric',
-            'province_id'=>'required|numeric',
-            'city_id'=>'required|numeric',
-            'address'=>'required|max:255',
-            'center_core_id'=>'required|numeric',
-            'xplace'=>'nullable|numeric',
-            'yplace'=>'nullable|numeric',
-           // 'image'=>'nullable|mimes:png,jpg,jpeg|max:10000000000',
+            $request['start_date'] = Convertnumber2english($request['start_date']);
+            $request['end_date'] = Convertnumber2english($request['end_date']);
+            $request['end_date_signup'] = Convertnumber2english($request['end_date_signup']);
 
-        ],[
-            'name.required'=>'لطفا نام را وارد کنید',
-            'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
-            'description.required'=>'لطفا این فیلد را پر کنید',
-            'description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
-            'long_description.required'=>'لطفا این فیلد را پر کنید',
-            'long_description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
-            'start_date.required'=>'لطفا تاریخ شروع را وارد کنید',
-            'start_date.date'=>'فرمت وارد شده اشتباه است',
-            'end_date.required'=>'لطفا تاریخ اتمام را وارد کنید',
-            'end_date.date'=>'فرمت وارد شده اشتباه است',
-            'end_date_signup.required'=>'لطفا تاریخ اتمام ثبت نام را وارد کنید',
-            'end_date_signup.date'=>'فرمت وارد شده اشتباه است',
-            'price.required'=>'لطفا قیمت را وارد کنید',
-            'price.numeric'=>'فقط عدد وارد کنید',
-            'capacity.required'=>'ظرفیت را وارد کنید',
-            'capacity.numeric'=>'فقط عدد وارد کنید',
-            'evend_subject_id.required'=>'این فیلد را خالی رها نکنید',
-            'event_subject_id.numeric'=>'از لیست بالا انتخاب کنید',
-            'event_type_id.required'=>'این فیلد را خالی رها نکنید',
-            'event_type_id.numeric'=>'از لیست بالا انتخاب کنید',
-            'event_status_id.required'=>'این فیلد را خالی رها نکنید',
-            'event_status_id.numeric'=>'از لیست بالا انتخاب کنید',
-            'province_id.required'=>'این فیلد را خالی رها نکنید',
-            'province_id.numeric'=>'از لیست بالا انتخاب کنید',
-            'city_id.required'=>'این فیلد را خالی رها نکنید',
-            'city_id.numeric'=>'از لیست بالا انتخاب کنید',
-            'center_core_id.required'=>'این فیلد را خالی رها نکنید',
-            'center_core_id.numeric'=>'از لیست بالا انتخاب کنید',
-            'address.required'=>'لطفا ادرس را وارد کنید',
-            'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
-            'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
-            'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
-            'image.image'=>'لطفا فقط عکس انتخاب کنید',
-          //  'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',
-        ]);
-        $user = \Auth::guard('web')->user();
-        $request['eventable_id'] = $user->id;
-        $request['eventable_type'] = 'user';
-        $address_point=[$request->xplace,$request->yplace];
-        $address_point=json_encode($address_point);
-        $event=Event::create($request->except(['information','address_point']));
-        $event->update(['address_point'=>$address_point]);
-        $event=$user->createdEvents()->save($event);
+            $this->validate($request, [
+                'name' => 'required|max:255',
+                'description' => 'required|max:60000',
+                'long_description' => 'required',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date',
+                'end_date_signup' => 'required|date',
+                'price' => 'required|numeric',
+                'capacity' => 'required|numeric',
+                'event_subject_id' => 'required|numeric',
+                'event_type_id' => 'required|numeric',
+                'event_status_id' => 'required|numeric',
+                'province_id' => 'required|numeric',
+                'city_id' => 'required|numeric',
+                'address' => 'required|max:255',
+                'center_core_id' => 'required|numeric',
+                'xplace' => 'nullable|numeric',
+                'yplace' => 'nullable|numeric',
+                // 'image'=>'nullable|mimes:png,jpg,jpeg|max:10000000000',
+
+            ], [
+                'name.required' => 'لطفا نام را وارد کنید',
+                'name.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+                'description.required' => 'لطفا این فیلد را پر کنید',
+                'description.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+                'long_description.required' => 'لطفا این فیلد را پر کنید',
+                'long_description.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+                'start_date.required' => 'لطفا تاریخ شروع را وارد کنید',
+                'start_date.date' => 'فرمت وارد شده اشتباه است',
+                'end_date.required' => 'لطفا تاریخ اتمام را وارد کنید',
+                'end_date.date' => 'فرمت وارد شده اشتباه است',
+                'end_date_signup.required' => 'لطفا تاریخ اتمام ثبت نام را وارد کنید',
+                'end_date_signup.date' => 'فرمت وارد شده اشتباه است',
+                'price.required' => 'لطفا قیمت را وارد کنید',
+                'price.numeric' => 'فقط عدد وارد کنید',
+                'capacity.required' => 'ظرفیت را وارد کنید',
+                'capacity.numeric' => 'فقط عدد وارد کنید',
+                'evend_subject_id.required' => 'این فیلد را خالی رها نکنید',
+                'event_subject_id.numeric' => 'از لیست بالا انتخاب کنید',
+                'event_type_id.required' => 'این فیلد را خالی رها نکنید',
+                'event_type_id.numeric' => 'از لیست بالا انتخاب کنید',
+                'event_status_id.required' => 'این فیلد را خالی رها نکنید',
+                'event_status_id.numeric' => 'از لیست بالا انتخاب کنید',
+                'province_id.required' => 'این فیلد را خالی رها نکنید',
+                'province_id.numeric' => 'از لیست بالا انتخاب کنید',
+                'city_id.required' => 'این فیلد را خالی رها نکنید',
+                'city_id.numeric' => 'از لیست بالا انتخاب کنید',
+                'center_core_id.required' => 'این فیلد را خالی رها نکنید',
+                'center_core_id.numeric' => 'از لیست بالا انتخاب کنید',
+                'address.required' => 'لطفا ادرس را وارد کنید',
+                'address.max' => 'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+                'xplace.numeric' => 'لطفا به صورت عددی وارد کنید',
+                'yplace.numeric' => 'لطفا به صورت عددی وارد کنید',
+/*                'image.image' => 'لطفا فقط عکس انتخاب کنید',*/
+                //  'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',
+            ]);
+            $user = \Auth::guard('web')->user();
+            $request['eventable_id'] = $user->id;
+            $request['eventable_type'] = 'user';
+            $event = Event::create($request->except(['information', 'address_point']));
+            if($request->xplace != null) {
+                $address_point = [$request->xplace, $request->yplace];
+                $address_point = json_encode($address_point);
+                $event->update(['address_point' => $address_point]);
+            }
+            $event = $user->createdEvents()->save($event);
 
 
-        /*image upload*/
+            /*image upload*/
 
-        /*$imagename = time() . '.' . $request['image']->getClientOriginalExtension();
-        $main_folder = 'images/events/'.$request['name'].'/';
-        $url = $main_folder;
-        $request['image']->move($url, $imagename);*/
+            /*$imagename = time() . '.' . $request['image']->getClientOriginalExtension();
+            $main_folder = 'images/events/'.$request['name'].'/';
+            $url = $main_folder;
+            $request['image']->move($url, $imagename);*/
 
-        //store in images table
+            //store in images table
 
-        /*$image = new \App\Image();
-        $image = $image->create([
-            'image_type' => $request['image']->getClientOriginalExtension(),
-            'image_original' => $imagename,
-            'image_path' => $url . $imagename,
-        ]);*/
+            /*$image = new \App\Image();
+            $image = $image->create([
+                'image_type' => $request['image']->getClientOriginalExtension(),
+                'image_original' => $imagename,
+                'image_path' => $url . $imagename,
+            ]);*/
 
-        //attach in eventImages table
+            //attach in eventImages table
 
-        //$event->images()->attach($image->id);
+            //$event->images()->attach($image->id);
 
-        flashs('رویداد مورد نظر با موفقیت ثبت گردید','success');
-        return redirect()->route('user.events.index');
+            flashs('رویداد مورد نظر با موفقیت ثبت گردید', 'success');
+            return redirect()->route('user.events.index');
+        }else{
+            abort(404);
+        }
     }
 
     public function updateEvent(Request $request,Event $event)
@@ -554,7 +564,7 @@ $this->validate($request,[
             'center_core_id'=>'required|numeric',
             'xplace'=>'nullable|numeric',
             'yplace'=>'nullable|numeric',
-            'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',
+           /* 'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
 
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
@@ -589,16 +599,18 @@ $this->validate($request,[
             'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
             'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
             'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
-            'image.image'=>'لطفا فقط عکس انتخاب کنید',
-            'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',
+          /*  'image.image'=>'لطفا فقط عکس انتخاب کنید',
+            'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',*/
         ]);
 
         $event->update($request->except(['information','address_point']));
-        $address_point=[$request->xplace,$request->yplace];
-        $address_point=json_encode($address_point);
-        $event->update(['address_point'=>$address_point]);
+        if($request->xplace != null) {
+            $address_point = [$request->xplace, $request->yplace];
+            $address_point = json_encode($address_point);
+            $event->update(['address_point' => $address_point]);
+        }
 
-      /*  if(!empty($request['image'])){
+         /*  if(!empty($request['image'])){
             $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
             $main_folder = 'images/events/'.$request['name'].'/';
             $url = $main_folder;
@@ -650,6 +662,12 @@ $this->validate($request,[
             'event_information'=>$event_information,
             'status'=>1,
         ]);
+
+        $when = Carbon::now()->addSecond();
+        $res = \Notification::send(\Auth::user(),(new NotifySignedUpEvent($event,'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'))->delay($when));
+
+      //  dd($res);
+
         return response($eventUser);
     }
 
@@ -674,7 +692,7 @@ $this->validate($request,[
             return view('user.event.show_registered', compact('eventUser'));
         }
         else{/**ya safhe peyda nashode, ya male in shakhs nist**/
-            dd('safhe 404 biad');
+           abort(404);
         }
     }
 
