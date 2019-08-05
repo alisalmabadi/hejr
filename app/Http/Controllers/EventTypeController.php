@@ -49,7 +49,7 @@ class EventTypeController extends Controller
         $eventType = new EventType();
         $eventType->create($request->all());
 
-        flash('با موفقیت ذخیره شد');
+        flashs('با موفقیت ذخیره شد');
         return redirect()->route('admin.eventType.index');
     }
 
@@ -98,7 +98,7 @@ class EventTypeController extends Controller
         $eventType = EventType::find($id);
         $eventType->update($request->all());
 
-        flash('با موفقیت به روزرسانی شد');
+        flashs('با موفقیت به روزرسانی شد');
         return redirect()->route('admin.eventType.index');
     }
 
@@ -125,7 +125,7 @@ class EventTypeController extends Controller
             $event_type->update(['status' => 0]);
         }
 
-        flash('تغییر وضعیت انجام شد');
+        flashs('تغییر وضعیت انجام شد');
         return redirect()->route('admin.eventType.index');
     }
 }

@@ -53,9 +53,36 @@
                 <div class="m-menu__submenu "><span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
                         <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">نمایش رویدادهای مجاز</span></a></li>
+
+
+
+                        <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events.showAllRegistered')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text"> رویدادهای ثبت نام شده</span></a></li>
+
+                        @can('create-event') 
+                        <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events.create')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">افزودن رویداد</span></a></li>
+                        <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events.index')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">رویدادهای افزوده شده</span></a></li>
+                        @endcan
+
                     </ul>
                 </div>
             </li>
+            {{--users --}}
+            @can('show-users')
+                <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">کاربران</span><i
+                                class="m-menu__ver-arrow la la-angle-right"></i></a>
+                    <div class="m-menu__submenu "><span class="m-menu__arrow"></span>
+                        <ul class="m-menu__subnav">
+                            <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.coreUsers.index')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">نمایش کاربران هسته</span></a></li>
+
+
+
+                            <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.coreUsers.create')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">ایجاد کاربر جدید</span></a></li>
+
+                        </ul>
+                    </div>
+                </li>
+            @endcan
+            {{-- end of users --}}
           {{--  <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">Icons</span><i
                             class="m-menu__ver-arrow la la-angle-right"></i></a>
                 <div class="m-menu__submenu "><span class="m-menu__arrow"></span>

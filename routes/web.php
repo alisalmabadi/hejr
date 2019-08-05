@@ -12,8 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/user');
 });
+
+/**payment routes **/
+Route::get('payment/verify','PaymentController@verify')->name('payment.verify');
+Route::get('payment/verify-melat','PaymentController@verify_melat')->name('payment.verify-melat');
+Route::Post('payment/request','PaymentController@request')->name('payment.request');
+
 
 Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
 //Login Routes...
@@ -21,7 +27,7 @@ Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
 Route::get('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@showLoginForm']);
 Route::post('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@login']);
 Route::get('/logout',['as'=>'logout','uses'=>'AdminAuth\LoginController@logout']);
-Route::GET('/post/isaac',['as'=>'post.isaac','uses'=>'PostController@isaac']);
+/*Route::GET('/post/isaac',['as'=>'post.isaac','uses'=>'PostController@isaac']);*/
 
 Route::group(['prefix'=>'users','as'=>'user.'],function (){
     Route::get('/',['uses'=>'UserController@index','as'=>'all']);
@@ -34,6 +40,7 @@ Route::group(['prefix'=>'users','as'=>'user.'],function (){
 
 
 });
+
 /** admin area  **/
 Route::resource('area','AreaController',['except'=>['show','destroy']]);
 Route::delete('area/destroy','AreaController@destroy');
@@ -111,6 +118,7 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::get('event/changeStatus/{event}' , ['uses'=>'EventController@changeStatus' , 'as'=>'eventStatus.changeStatus']);
     Route::delete('event/destroy','EventController@destroy');
     Route::resource('event' , 'EventController' , ['except'=>'show','destroy']);
+    Route::post('event/showAllEvents', ['uses'=>'EventController@showAllEvents','as'=>'event.showAllEvents']);
     /*** admin event ***/
 
     /*** admin event user ***/
@@ -119,11 +127,30 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::resource('eventUser' , 'EventUserController' , ['except'=>'show','destroy','create','edit','store','update']);
     /*** admin event user ***/
 
+    /*** add user to event ***/
+    Route::get('event/addUser' , ['uses'=>'EventController@addUser' , 'as'=>'event.addUser']);
+    Route::post('event/addUser' ,['uses'=>'EventController@selectEvent' , 'as'=>'event.addUser.selectEvent']);
+    Route::post('event/addUser/loadUsersByCore' , ['uses'=>'EventController@loadUsersByCore', 'as'=>'event.addUser.loadUsersByCore']);
+    Route::post('event/addUser/store' , ['uses'=>'EventController@storeUser' , 'as'=>'event.addUser.store']);
+    Route::post('event/addUser/remove' , ['uses'=>'EventController@removeUser' , 'as'=>'event.addUser.remove']);
+    Route::post('event/addUser/showResult' , ['uses'=>'EventController@showResult' , 'as'=>'event.addUser.showResult']);
+    Route::post('event/addUser/selectAll' , ['uses'=>'EventController@selectAll' , 'as'=>'event.addUser.selectAll']);
+    Route::post('event/addUser/loadUsersByCore', ['uses'=>'EventController@loadUsersByCore', 'as'=>'event.loadUsersByCore']);
+    /*** add user to event ***/
+
     /*** discounts ***/
     Route::get('discount/changeStatus/{item}' , ['uses'=>'DiscountController@changeStatus' , 'as'=>'discount.changeStatus']);
     Route::get('discount/delete/{id}' , ['uses'=>'DiscountController@delete' , 'as'=>'discount.delete']);
     Route::resource('discount' , 'DiscountController' , ['except' => 'destroy']);
     /*** discounts ***/
+
+    /*** images ***/
+    Route::delete('image/delete' , ['uses'=>'ImageController@delete','as'=>'image.delete']);    
+    Route::resource('image' , 'ImageController', ['except'=>'destroy']);    
+    Route::post('image/showEventImages' , ['uses'=>'ImageController@show_event_images' , 'as'=>'image.show_event_images']);
+    Route::post('image/addEventImage' , ['uses'=>'ImageController@add_event_image', 'as'=>'image.add_event_image']);
+    Route::post('image/deleteEventImage', ['uses'=>'ImageController@delete_event_image', 'as'=>'image.delete_event_image']);
+    /*** end of images ***/
 
 });
 
@@ -270,11 +297,52 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
    Route::get('/',['as'=>'panel','uses'=>'UserController@panel']);
     Route::get('profile',['as'=>'profile','uses'=>'UserController@profile']);
     Route::post('update',['as'=>'update','uses'=>'UserController@profile_edit']);
+    Route::post('/prodile/edit/uniDetails', ['as'=>'uni_details', 'uses'=>'UserController@uni_details']);
+    Route::post('/profile/edit/updateUni', ['as'=>'university.updates', 'uses'=>'UserController@university_update']);
+    Route::post('/profile/edit/addUni', ['as'=>'university.add', 'uses'=>'UserController@university_add']);
     Route::post('checkemail',['as'=>'checkemail','uses'=>'UserController@checkemail']);
     Route::post('checkusername',['as'=>'checkusername','uses'=>'UserController@checkusername']);
     Route::post('uploadpic',['uses'=>'UserController@uploadpic','as'=>'uploadpic']);
-    Route::get('notification/get',['uses'=>'NotificationController@get','as'=>'notification.get']);
+    /**notification ***/
+    
+    Route::post('notification/get',['uses'=>'NotificationController@get','as'=>'notification.get']);
+    Route::post('notification/read',['uses'=>'NotificationController@read','as'=>'notification.get']);
+
+    /***user events ***/
     Route::get('events',['uses'=>'UserController@show_events','as'=>'events']);
+    
+/*** event Create For Spec Users ***/
+    Route::get('events/create',['uses'=>'UserController@createEvent','as'=>'events.create']);
+
+    Route::post('events/store',['uses'=>'UserController@storeEvent','as'=>'events.store']);
+    
+    Route::get('events/index',['uses'=>'UserController@indexCreatedEvents','as'=>'events.index']);
+
+    Route::patch('events/{event}',['uses'=>'UserController@updateEvent','as'=>'events.update']);
+
+    Route::get('events/{event}/edit',['uses'=>'UserController@editCreatedEvents','as'=>'events.edit']);
+/*** event Create For Spec Users ***/
+
+    Route::post('events/register',['uses'=>'UserController@registerEvent','as'=>'events.register']);
+    Route::get('events/registered/{user_event}',['uses'=>'UserController@showregistered_event','as'=>'events.registered']);
+    Route::get('events/showAllRegistered', ['uses'=>'UserController@showAllRegistered','as'=>'events.showAllRegistered']);
+    Route::post('event/getDetails' , ['uses'=>'EventController@getDetails' , 'as'=>'event.details']);
+
+    /***peyment routes ***/
+    
+    Route::get('payment/verify','PaymentController@verify')->name('payment.verify');
+    Route::Post('payment/request','PaymentController@request')->name('payment.request');
+
+    /***peyment routes ***/
+
+    /***** core_users_routes ******/
+    Route::get('coreUsers', ['as'=>'coreUsers.index', 'uses'=>'UserController@core_users_index']);
+    Route::get('coreUsers/create', ['as'=>'coreUsers.create', 'uses'=>'UserController@core_users_create']);
+    Route::post('coreUsers/store', ['as'=>'coreUsers.store', 'uses'=>'UserController@core_users_store']);
+    Route::get('coreUsers/edit/{user}', ['as'=>'coreUsers.edit', 'uses'=>'UserController@core_users_edit']);
+    Route::get('coreUsers/show/{user}', ['as'=>'coreUsers.show', 'uses'=>'UserController@core_users_show']);
+    Route::patch('coreUsers/update/{user}', ['as'=>'coreUsers.update', 'uses'=>'UserController@core_users_update']);
+    /***** core_users_routes ******/
 
 });
 

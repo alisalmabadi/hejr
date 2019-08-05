@@ -86,4 +86,14 @@ class User extends Authenticatable
         return $this->belongsToMany('App\messages', 'tuser_id');
     }
 
+    public function events()
+    {
+        return $this->hasMany(EventUser::class);
+    }
+//createdEvents
+    public function createdEvents()
+    {
+        return $this->morphMany(Event::class,'eventable');
+    }
+
 }

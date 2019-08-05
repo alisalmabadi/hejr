@@ -1,6 +1,6 @@
 @if(session()->has('flash_message'))
 
-<div class="alert alert-{{session()->get('flash_message_level')}} alert-dismissable" role="alert" style="opacity: .5;">
+<div class="alert alert-{{session()->get('flash_message_level')}} alertflash alert-dismissable" role="alert" style="opacity: .5;">
     <span  class="close" data-dismiss="alert">
         &times;
     </span>

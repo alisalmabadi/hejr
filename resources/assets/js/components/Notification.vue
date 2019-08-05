@@ -8,7 +8,7 @@
         <div class="m-dropdown__wrapper">
             <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
             <div class="m-dropdown__inner">
-                <div class="m-dropdown__header m--align-center" style="background: url(../img/misc/notification_bg.jpg); background-size: cover;">
+                <div class="m-dropdown__header m--align-center" v-bind:style="{backgroundImage : 'url('+backgroundimg+')' }">
                     <span class="m-dropdown__header-title iranyekan">{{notifications.length}}</span>
                     <span class="m-dropdown__header-subtitle">اعلان جدید</span>
                 </div>
@@ -17,7 +17,7 @@
                         <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
                             <li class="nav-item m-tabs__item">
                                 <a class="nav-link m-tabs__link active" data-toggle="tab" href="#topbar_notifications_notifications" role="tab">
-                                    آخرین اعلان ها
+                                    تمامی اعلان ها
                                 </a>
                             </li>
 
@@ -27,10 +27,10 @@
                                 <div class="m-scrollable" data-scrollable="true" data-height="250" data-mobile-height="200">
                                     <div class="m-list-timeline m-list-timeline--skin-light">
                                         <div class="m-list-timeline__items">
-       <div class="m-list-timeline__item" v-for="notification in notifications">
+       <div v-for="notification in sortedArray" :class='readnotification(notification.read_at)' @click="readnotify(notification.id)">
                                             <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
                                             <span class="m-list-timeline__text">{{notification.data.message.title}}</span>
-                        <span class="m-list-timeline__time">{{notification.created_at}}</span>
+                        <span class="m-list-timeline__time">{{notification.created}}</span>
                                         </div>
 
                                         </div>
@@ -48,6 +48,39 @@
 </template>
 <script>
     export default {
-        props:['notifications']
+        props:['notifications','backgroundimg'],
+        methods:{
+            readnotify:function(id){
+                axios.post('/user/notification/read',{id:id}).then(response => {
+                    Swal.fire({
+                       // type: 'error',
+                        title: JSON.parse(response.data.data).message.title,
+                        html: JSON.parse(response.data.data).message.text,
+                        confirmButtonText:
+                            ' خواندم! <i class="fa fa-thumbs-up"></i>',
+/*
+                        footer: '<a href>Why do I have this issue?</a>'
+*/
+                    });
+                }).catch(error => console.log(error));
+            },
+            readnotification:function(read){
+                if(read != null){
+                    return 'm-list-timeline__item m-list-timeline__item--read'
+                }else{
+                    return 'm-list-timeline__item'
+                }
+            },
+
+    },
+        computed:{
+            /*  sortedArray: function() {
+                return this.notifications.sort(this.compare);
+            }*/
+          sortedArray: function(){
+              return _.orderBy(this.notifications, 'read_at', 'desc');
+          }
+        }
     }
+
 </script>

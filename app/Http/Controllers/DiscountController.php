@@ -57,7 +57,7 @@ class DiscountController extends Controller
 
         $discount = new Discount();
         $discount->create($request->all());
-        flash('ثبت شد');
+        flashs('ثبت شد');
         return redirect()->route('admin.discount.index');
     }
 
@@ -116,7 +116,7 @@ class DiscountController extends Controller
         {
             $discount->update($request->all());
         }
-        flash('تغییرات با موفقیت اعمال شد');
+        flashs('تغییرات با موفقیت اعمال شد');
         return redirect()->route('admin.discount.index');
     }
 
@@ -137,7 +137,7 @@ class DiscountController extends Controller
         {
             Discount::destroy($id);
         }
-        flash('حذف گردید');
+        flashs('حذف گردید');
         return redirect()->route('admin.discount.index');
     }
 

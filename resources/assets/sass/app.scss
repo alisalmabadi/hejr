@@ -4,11 +4,70 @@
 
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+//sweetalert
+@import '~sweetalert2/src/sweetalert2.scss';
+//scrollbar
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+//select2
+@import "~select2/src/scss/core.scss";
+/*
+@import "~select2/src/scss/_multiple.scss";
+@import "~select2/src/scss/_single.scss";
+@import "~select2/src/scss/_dropdown.scss";
+*/
+
+
+label.error {
+  color: red;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.margin-right-auto{
+  margin-left: auto !important;
+}
+
+.customisedalert {
+  margin-top: 2% !important;
+  width: 74%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.logohejr{
+  width: 53%;
+  margin: 0 auto;
+}
+
+
+@media screen and (max-width: 700px) {
+  .logohejr {
+    width: 30%;
+    margin: 0 auto;
+  }
+}
+
+
+.titlealert{
+  font-size: 17px;
+  padding-left:12px;
+}
+
+.centertextalign{
+  text-align: center !important;
+}
+.secondPlace{
+  margin-top: 10px;
+}
+
+
+.colorwhite{
+  color:white !important;
+}
+
+.ps__thumb-x{
+  display:none !important;
 }

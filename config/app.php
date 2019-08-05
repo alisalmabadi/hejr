@@ -146,6 +146,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Larabookir\Gateway\GatewayServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -162,6 +163,9 @@ return [
         Akaunting\Setting\Provider::class,
         UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Hekmatinasser\Verta\VertaServiceProvider::class,
+        Larabookir\Gateway\GatewayServiceProvider::class,
+
     ],
 
     /*
@@ -212,6 +216,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Setting' => Akaunting\Setting\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Verta' => Hekmatinasser\Verta\Verta::class,
+        'Gateway' => Larabookir\Gateway\Gateway::class
 
     ],
 

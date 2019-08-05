@@ -9,8 +9,8 @@
             <div class="m-stack__item m-brand  m-brand--skin-dark ">
                 <div class="m-stack m-stack--ver m-stack--general">
                     <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                        <a href="index.html" class="m-brand__logo-wrapper">
-                            <img alt="" src="assets/demo/media/img/logo/logo_default_dark.png" />
+                        <a href="{{url('/')}}" class="m-brand__logo-wrapper">
+                            <img class="logohejr" alt="هجر" src="{{asset('images/logo.png')}}" />
                         </a>
                     </div>
                     <div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -30,9 +30,9 @@
                         <!-- END -->
 
                         <!-- BEGIN: Responsive Header Menu Toggler -->
-                        <a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
+                       {{-- <a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
                             <span></span>
-                        </a>
+                        </a>--}}
 
                         <!-- END -->
 
@@ -328,7 +328,7 @@
                 <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general m-stack--fluid">
                     <div class="m-stack__item m-topbar__nav-wrapper">
                         <ul class="m-topbar__nav m-nav m-nav--inline">
-  <notification v-bind:notifications="notifications"></notification>
+  <notification v-bind:notifications="notifications" backgroundimg="{{url('/')}}/img/misc/notification_bg.jpg"></notification>
 
                             <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" m-dropdown-toggle="click"
                                 m-dropdown-persistent="1">
@@ -468,14 +468,14 @@
                                 m-dropdown-toggle="click">
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-topbar__userpic">
-													<img src="{{$cuser->thumbnail}}" class="m--img-rounded m--marginless" alt="" />
+													<img src="@if($cuser->thumbnail != ''){{$cuser->thumbnail}}@else{{asset('images/profile.jpg')}} @endif" class="m--img-rounded m--marginless" alt="" />
 												</span>
-                                    <span class="m-topbar__username m--hide">Nick</span>
+                                    <span class="m-topbar__username m--hide">{{$cuser->name}} {{$cuser->lastname}}</span>
                                 </a>
                                 <div class="m-dropdown__wrapper">
                                     <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
                                     <div class="m-dropdown__inner">
-                                        <div class="m-dropdown__header m--align-center" style="background: url(../img/misc/user_profile_bg.jpg); background-size: cover;">
+                                        <div class="m-dropdown__header m--align-center" style="background: url({{url('/')}}/img/misc/user_profile_bg.jpg); background-size: cover;">
                                             <div class="m-card-user m-card-user--skin-dark">
                                                 <div class="m-card-user__pic">
                                                     <img src="{{$cuser->thumbnail}}" class="m--img-rounded m--marginless" alt="" />
@@ -497,7 +497,7 @@
                                                         <span class="m-nav__section-text">Section</span>
                                                     </li>
                                                     <li class="m-nav__item">
-                                                        <a href="header/profile.html" class="m-nav__link">
+                                                        <a href="{{route('user.profile')}}" class="m-nav__link">
                                                             <i class="m-nav__link-icon flaticon-profile-1"></i>
                                                             <span class="m-nav__link-title">
 																			<span class="m-nav__link-wrap">
@@ -509,13 +509,13 @@
                                                     </li>
 
 
-                                                  {{--  <li class="m-nav__item">
+                                                {{--    <li class="m-nav__item">
                                                         <a href="header/profile.html" class="m-nav__link">
                                                             <i class="m-nav__link-icon flaticon-share"></i>
                                                             <span class="m-nav__link-text">Activity</span>
                                                         </a>
-                                                    </li>
-                                                    <li class="m-nav__item">
+                                                    </li>--}}
+                                                {{--    <li class="m-nav__item">
                                                         <a href="header/profile.html" class="m-nav__link">
                                                             <i class="m-nav__link-icon flaticon-chat-1"></i>
                                                             <span class="m-nav__link-text">Messages</span>
@@ -566,3 +566,4 @@
 </header>
 </div>
 <!-- END: Header -->
+
