@@ -14340,3 +14340,9 @@ h3.headerdisc {
   margin: 0 auto;
 }
 
+.owl-carousel.owl_imagemodal.owl-rtl.owl-loaded.owl-drag {
+  width: 500px;
+  height: 298px;
+  margin: 0 auto;
+}
+

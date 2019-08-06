@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="m-card-profile__pic">
                                             <div class="m-card-profile__pic-wrapper">
-                                                <img src="{{$cuser->thumbnails or asset('images/user.jpg')}}" alt="" />
+                                                <img class="user_image" src="{{$cuser->thumbnail or asset('images/user.jpg')}}" alt="" />
                                             </div>
                                         </div>
                                         <div class="m-card-profile__details">
@@ -533,6 +533,8 @@
                                             </div>
                                             
                                             </div>
+
+                                            </form>
                                         </div>
                                         <!-- end of modal -->
                                     </div>
@@ -552,6 +554,10 @@
                                         </div>
                                         <form class="m-form m-form--fit m-form--label-align-right" novalidate="novalidate" id="imageupdate" action="{{route('user.uploadpic')}}">
                                             <div class="m-portlet__body">
+  <div id="validation-errors">
+
+  </div>
+
 
                                                {{-- <div class="form-group m-form__group row">
                                                     <div class="col-10 ml-auto">
@@ -566,7 +572,7 @@
                                                         <input class="form-control m-input" name="image" type="file">
                                                         <span class="m-form__help">
 
- <img class="image-responsive" src="{{$cuser->thumbnail}}">
+ <img class="image-responsive user_image" src="{{$cuser->thumbnail}}">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -579,7 +585,7 @@
                                                     <div class="col-2">
                                                     </div>
                                                     <div class="col-7">
-                                                        <button id="submit_edituser" type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom iranyekan"> آپلود </button>&nbsp;&nbsp;
+                                                        <button id="submit_uploaduser" type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom iranyekan"> آپلود </button>&nbsp;&nbsp;
                                                         {{--                                 <button type="reset" class="btn btn-secondary m-btn m-btn--air m-btn--custom">Cancel</button>--}}
                                                     </div>
                                                 </div>
@@ -651,7 +657,9 @@
                             </div>
                             
                             </div>
+                            </form>
                         </div>
+
                         <!-- end of modal -->
 
                     </div>
@@ -917,9 +925,10 @@
                /* objArr.push({"title": $(this).find('input[name=title]').val(),"name": $(this).find('input[name=name]').val(), "lastname": $(this).find('input[name=lastname]').val(),"phonenumber": $(this).find('input[name=phonenumber]').val(),"pluckname": $(this).find('input[name=pluckname]').val(),"text": $(this).find('textarea[name=text]').val(),"type": $(this).find('input[name=type]').val()});*/
                 formData.append('objArr', JSON.stringify( objArr ));
                 formData.append('_token',$(this).find("input[name=_token]").val());
-                console.log(formData);
-
+                //console.log(formData);
             }
+            $('#validation-errors').html('');
+
             $.ajax({
                 url:$(this).attr('action'),
                 type: 'post',
@@ -928,12 +937,14 @@
                 processData: false, //neccessory
                 contentType: false,//neccessory
                 success:function (response) {
-                    if(response == 1){
+                    if(response[0] == 1){
                         Swal.fire({
                             type: 'success',
                             text: 'تصویر با موفیت آپلود و تعویض شد.',
                             confirmButtonColor:'#22caff',
                         });
+            var image_path = response[1];
+            $('.user_image').attr('src',image_path);
                     }else{
                         Swal.fire({
                             type: 'error',
@@ -943,7 +954,10 @@
                     }
                 },
                 error:function (response) {
-                    return response;
+                    $('#validation-errors').html('');
+                    $.each(response.responseJSON.errors, function(key,value) {
+                        $('#validation-errors').append('<div class="alert alert-danger">'+value+'</div>');
+                    });
                 }
             });
         });

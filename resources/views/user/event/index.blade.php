@@ -380,7 +380,7 @@
                     });
                     $.each(data.images,function (index,value) {
                        $('.owl_imagemodal').trigger('refresh.owl.carousel');
-        $('.owl_imagemodal').trigger('add.owl.carousel','<div class="imageitem"><img class="image" src="../'+data.images[index].image_path+'"></div>').trigger('refresh.owl.carousel');
+        $('.owl_imagemodal').trigger('add.owl.carousel','<div class="imageitem"><img class="image" src="../images/events/thumbnails/'+data.images[index].thumbnail_path+'"></div>').trigger('refresh.owl.carousel');
                     });
 
                     $("#myModal").find(".firstPlace").html(data.long_description);
