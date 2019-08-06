@@ -32,24 +32,23 @@
                             <td class="text-center">توضیحات</td>
                       {{--      <td class="text-center">توضیح طولانی</td>--}}
                             <td class="text-center">تاریخ شروع</td>
-                            <td class="text-center">تاریخ پایان</td>
-                            <td class="text-center">تاریخ پایان ثبت نام</td>
                             <td class="text-center">قیمت</td>
                             <td class="text-center">ظرفیت</td>
                             <td class="text-center">موضوع رویداد</td>
                             <td class="text-center">نوع رویداد</td>
-                            <td class="text-center">وضعیت رویداد</td>
-                            <td class="text-center">استان</td>
+                            {{--    <td class="text-center">استان</td>
                             <td class="text-center">شهر</td>
-                            <td class="text-center">آدرس</td>
-{{--
-                            <td class="text-center">Operator</td>
---}}
+                            --}}
+                              <td class="text-center">آدرس</td>
+
+
                             <td class="text-center">هسته اصلی</td>
 {{--
                             <td class="text-center">اطلاعات</td>
 --}}
                             <td class="text-center">تصویر</td>
+                            <td class="text-center">وضعیت رویداد</td>
+
                             <td class="text-center">عملیات</td>
                         </tr>
                         </thead>
@@ -61,16 +60,13 @@
                                     <td class="text-center">{{$event->name}}</td>
                                     <td class="text-center">{!! $event->description !!}</td>
                                  {{--   <td class="text-center">{!! $event->longdescription !!}</td>--}}
-                                    <td class="text-center">{{-- {{$event->start_dates}} --}}</td>
-                                    <td class="text-center">{{-- {{$event->end_dates}} --}}</td>
-                                    <td class="text-center">{{-- {{$event->end_date_sign}} --}}</td>
+                                    <td class="text-center"> {{$event->start_dates}}  تا  {{$event->end_dates}}</td>
                                     <td class="text-center">{{$event->price}}</td>
-                                    <td class="text-center">{{$event->capacity}}</td>
+                                    <td class="text-center">{{$event->fulled_capacity}}/{{$event->capacity}}</td>
                                     <td class="text-center">{{$event->event_subject->name}}</td>
                                     <td class="text-center">{{$event->event_type->name}}</td>
-                                    <td class="text-center">{{$event->event_status->name}}</td>
-                                    <td class="text-center">{{$event->provinces->name}}</td>
-                                    <td class="text-center">{{$event->cities->name}}</td>
+{{--                                    <td class="text-center">{{$event->provinces->name}}</td>
+                                    <td class="text-center">{{$event->cities->name}}</td>--}}
                                     <td class="text-center">{{$event->address}}</td>
                                {{--     <td class="text-center">{{$event->address_point}}</td>--}}
                               {{--      <td class="text-center">{{$event->operator->name}}</td>--}}
@@ -85,6 +81,7 @@
                                             <label class="label label-danger">عکسی انتخاب نشده</label>
                                         @endif
                                     </td>
+                                    <td class="text-center">@if($event->event_status->id == 1) <div class="btn btn-success" type="button">{{$event->event_status->name}}</div>@else <div class="btn btn-danger" type="button">{{$event->event_status->name}}</div> @endif</td>
 
                                     <td class="text-center">
                                         <a href="{{route('admin.event.edit' , $event->id)}}"><button type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></button></a>

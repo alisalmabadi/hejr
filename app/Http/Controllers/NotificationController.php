@@ -38,6 +38,29 @@ class NotificationController extends Controller
 
     }
 
+    public function unreadget()
+    {
+        /* $notifications=\Auth::user()->notifications()->orderBy(DB::raw('read_at IS NOT NULL, read_at'), 'asc')->get();*/
+        $notifications=\Auth::user()->unreadnotifications()->orderby('created_at')->get()->toArray();
+
+
+        if(!empty($notifications)){
+            foreach($notifications as $notify){
+                $v=new Verta($notify['created_at']);
+                $res=$v->format('%d %B %Y');
+                $result[]=array_add($notify,'created',$res);
+            }
+            //  dd($result);
+            return $result;
+        }
+        else{
+            return null;
+        }
+
+
+    }
+
+
     public function read(Request $request)
     {
         $notification=Notification::find($request->id);
