@@ -24,18 +24,24 @@ Vue.component('notification',require('./components/Notification.vue'));
 const app = new Vue({
     el: '#app',
     data:{
-        notifications:''
+        notifications:'',
+        unreadnotifications: ''
     },
     methods: {
         btcTrkAPICall: function () {
             axios.post('/user/notification/get').then(response => {
                 this.notifications = response.data;
             }).catch(error => console.log(error));
+
+            axios.post('/user/notification/unread/get').then(response => {
+                this.unreadnotifications = response.data;
+            }).catch(error => console.log(error));
+
         },
         intervalFetchData: function () {
             setInterval(() => {
                 this.btcTrkAPICall();
-            }, 1000);
+            }, 3000);
         }
     },
     mounted () {
