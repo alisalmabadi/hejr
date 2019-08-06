@@ -306,6 +306,8 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     /**notification ***/
     
     Route::post('notification/get',['uses'=>'NotificationController@get','as'=>'notification.get']);
+    Route::post('notification/unread/get',['uses'=>'NotificationController@unreadget','as'=>'notification.unread.get']);
+
     Route::post('notification/read',['uses'=>'NotificationController@read','as'=>'notification.get']);
 
     /***user events ***/
