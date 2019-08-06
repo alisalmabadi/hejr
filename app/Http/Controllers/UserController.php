@@ -19,13 +19,14 @@ use App\SoldierServices;
 use App\University;
 use App\UniversityTypes;
 use App\User;
+use App\Image;
 use Carbon\Carbon;
 use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image as ImageChange;
 use Maatwebsite\Excel\Facades\Excel;
-use Intervention\Image\Facades\Image;
 use App\Event;
 use App\EventUser;
 
@@ -377,11 +378,9 @@ if($res->fails()){return response()->json('مشکل',200);}
 
     public function uploadpic(Request $request)
     {
-/*        dd($request->all());*/
-/*        return $request->File('image');*/
 $this->validate($request,[
     'image'=>'required|image|max:2048'
-],['image.image'=>'عکس انتخاب کنید.','image.max'=>'حداکثر 2 مگابایت ']);
+],['image.image'=>'عکس انتخاب کنید.','image.max'=>'لطفا عکسی با حجم کمتر از 2 مگابایت انتخاب کنید.']);
     $path='storage/photos';
 /*    $path2='storage/photos/thumbs2/';*/
        $tthumbs=public_path('tthumbs').'/';
@@ -402,7 +401,7 @@ $this->validate($request,[
 
                 /*        $img->save($path2,$filepath2);*/
 
-                return 1;
+                return [1,'/storage/photos/thumbs//'.$filename];
 
             }
     }
@@ -513,24 +512,30 @@ $this->validate($request,[
 
 
             /*image upload*/
+            foreach ($request->image as $key=>$image) {
+                $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
+                $main_folder = 'images/events/';
+                $url = $main_folder;
+                $image->move($url, $imagename);
+                /***thumbnail ***/
+                $path = public_path('images/events/thumbnails') . "/" . $imagename;
+                $img = ImageChange::make(public_path('images/events/') . $imagename)->resize(324,202)->save($path);
+                $images = \App\Image::create([
+                    'image_type' => $image->getClientOriginalExtension(),
+                    'image_original' => $imagename,
+                    'image_path' => $url . $imagename,
+                    'thumbnail_path'=>$img->basename,
+                ]);
 
-            /*$imagename = time() . '.' . $request['image']->getClientOriginalExtension();
-            $main_folder = 'images/events/'.$request['name'].'/';
-            $url = $main_folder;
-            $request['image']->move($url, $imagename);*/
+                if($key==0){
+                    $event->update(['thumbnail_id'=>$images->id]);
+                }
+                /***thumbnail ***/
+                $event->images()->attach($images->id);
 
-            //store in images table
+            }
 
-            /*$image = new \App\Image();
-            $image = $image->create([
-                'image_type' => $request['image']->getClientOriginalExtension(),
-                'image_original' => $imagename,
-                'image_path' => $url . $imagename,
-            ]);*/
 
-            //attach in eventImages table
-
-            //$event->images()->attach($image->id);
 
             flashs('رویداد مورد نظر با موفقیت ثبت گردید', 'success');
             return redirect()->route('user.events.index');
@@ -610,19 +615,29 @@ $this->validate($request,[
             $event->update(['address_point' => $address_point]);
         }
 
-         /*  if(!empty($request['image'])){
-            $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
-            $main_folder = 'images/events/'.$request['name'].'/';
-            $url = $main_folder;
-            $request['image']->move($url, $imagename);
-            $image = new \App\Image();
-            $image = $image->create([
-                'image_type' => $request['image']->getClientOriginalExtension(),
-                'image_original' => $imagename,
-                'image_path' => $url . $imagename,
-            ]);
-            $event->images()->sync($image->id);
-        }*/
+        if(!empty($request['image'])){
+            foreach ($request->image as $key=>$image) {
+                $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
+                $main_folder = 'images/events/';
+                $url = $main_folder;
+                $image->move($url, $imagename);
+                /***thumbnail ***/
+                $path = public_path('images/events/thumbnails') . "/" . $imagename;
+                $img = ImageChange::make(public_path('images/events/') . $imagename)->resize(324,202)->save($path);
+                $images = \App\Image::create([
+                    'image_type' => $image->getClientOriginalExtension(),
+                    'image_original' => $imagename,
+                    'image_path' => $url . $imagename,
+                    'thumbnail_path'=>$img->basename,
+                ]);
+                if($key==0){
+                    $event->update(['thumbnail_id'=>$images->id]);
+                }
+                $event->images()->attach($images->id);
+            }
+
+
+        }
 
         flashs('تغییرات با موفقیت اعمال گردید');
         return redirect()->route('user.events.index');
@@ -663,9 +678,11 @@ $this->validate($request,[
             'status'=>1,
         ]);
 
+        $title = "رزرو ثبت نام شما در رویداد NAME انجام شد.";
+        $message = "'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'";
+        $type = 4;
         $when = Carbon::now()->addSecond();
-        $res = \Notification::send(\Auth::user(),(new NotifySignedUpEvent($event,'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'))->delay($when));
-
+        \Notification::send(\Auth::user(),(new NotifySignedUpEvent($event,$title,$message,$type))->delay($when));
       //  dd($res);
 
         return response($eventUser);

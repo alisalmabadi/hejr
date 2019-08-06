@@ -35,15 +35,32 @@
 
             <div class="col-xl-12 col-lg-12">
 
-                <form class="m-form m-form--fit m-form--label-align-right" action="{{route('user.events.store')}}" novalidate="novalidate" id="create_event" method="post">
+                <form class="m-form m-form--fit m-form--label-align-right" action="{{route('user.events.store')}}" novalidate="novalidate" id="create_event" method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="m-portlet__body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active show" data-toggle="tab" href="#m_tabs_1_1">
+                                    <i class="la la-exclamation-triangle"></i> اطلاعات اولیه رویداد
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#m_tabs_1_2">
+                                    <i class="la la-cloud-download"></i> عکس های رویداد
+                                </a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content">
                         {{-- <div class="form-group m-form__group row">
                                                                            <div class="col-10 ml-auto">
                                                                     --}}{{--           <h3 class="m-form__section">اطلاعات اولیه</h3>--}}{{--
                                                                            </div>
                                                                        </div>--}}
-                        <div class="form-group m-form__group row">
+
+<div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+
+                            <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">نام رویداد</label>
                             <div class="col-10">
                                 <input class="form-control m-input" name="name" type="text" value="{{old('name')}}" >
@@ -249,23 +266,63 @@
                                                                                 </span>
                         --}}{{--
                                                                             </div>--}}
-                    </div>
 
 
-                    <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
-                    <div class="m-portlet__foot m-portlet__foot--fit">
-                        <div class="m-form__actions">
-                            <div class="row">
-                                <div class="col-2">
-                                </div>
-                                <div class="col-7">
-                                    <button id="submit_edituser" type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom iranyekan"> ذخیره تغییرات</button>&nbsp;&nbsp;
-                                    {{--                                 <button type="reset" class="btn btn-secondary m-btn m-btn--air m-btn--custom">Cancel</button>--}}
-                                </div>
+
+
+
+
+                             </div>
+<div class="tab-pane" id="m_tabs_1_2" role="tabpanel">
+
+    <div class="col-md-12 col-lg-12 row">
+
+    <div class="col-md-10 col-lg-10">
+        <div class="col-md-10">
+            <div class="form-group required">
+
+
+                <table class="table">
+                    <tbody id="imagefield">
+                    <tr>
+                        <td>
+                            <input class="form-control" type="file" name="image[]">
+                        </td>
+                        <td>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="col-md-2 col-lg-2">
+        <button class="btn btn-success pull-left" type="button" id="addphoto">افزودن فیلد عکس</button>
+    </div>
+
+    </div>
+    <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
+    <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions">
+            <div class="row">
+                <div class="col-2">
+                </div>
+                <div class="col-7">
+                    <button id="submit_edituser" type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom iranyekan"> ذخیره تغییرات</button>&nbsp;&nbsp;
+                    {{--                                 <button type="reset" class="btn btn-secondary m-btn m-btn--air m-btn--custom">Cancel</button>--}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+        </div>
                             </div>
-                        </div>
                     </div>
-
                 </form>
 
             </div>
@@ -384,6 +441,23 @@
                     }
                 });
             });
+
+
         });
+        $('#addphoto').click(function () {
+            $('#imagefield').append(' <tr>\n' +
+                '                            <td>\n' +
+                ' <input class="form-control" type="file" name="image[]">\n' +
+                '                            </td>\n' +
+                '                            <td>\n' +
+                '<button type="button" class="btn btn-danger deleterow">حذف</button>\n' +
+                '                            </td>\n' +
+                '\n' +
+                '                        </tr>');
+            $('.deleterow').click(function () {
+                $(this).parents('tr').remove();
+            });
+        });
+
     </script>
 @endsection
