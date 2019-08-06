@@ -432,11 +432,11 @@ class EventController extends Controller
             'event_information'=>$event_information,
             'status'=>1,
         ]);
+        $title = "رزرو ثبت نام شما در رویداد NAME انجام شد.";
+        $message = "'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'";
+        $type = 4;
         $when = Carbon::now()->addSecond();
-       \Notification::send(\Auth::user(),(new NotifySignedUpEvent($event,'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'))->delay($when));
-
-      // dd($res);
-
+       \Notification::send(\Auth::user(),(new NotifySignedUpEvent($event,$title,$message,$type))->delay($when));
         return response($eventUser);
     }
 
@@ -471,6 +471,13 @@ class EventController extends Controller
                         'status'=>1,
                     ]);
                 }
+                $title = "رزرو ثبت نام شما در رویداد NAME انجام شد.";
+                $message = "'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'";
+                $type = 4;
+                $event=Event::find($request['event_id']);
+                $when = Carbon::now()->addSecond();
+                \Notification::send($user,(new NotifySignedUpEvent($event,$title,$message,$type))->delay($when));
+
             }
         }
         return redirect()->route('admin.event.addUser');
