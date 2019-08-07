@@ -143,13 +143,13 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="/images/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <img src="/images/profile.jpg" class="user-image" alt="User Image">
                                 <span class="hidden-xs"> {{Auth::guard('admin')->user()->name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="/images/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <img src="/images/profile.jpg" class="img-circle" alt="User Image">
 
                                     <p>
                                         {{Auth::guard('admin')->user()->name}}
@@ -189,7 +189,7 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="/images/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="/images/profile.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
                         <p>{{Auth::guard('admin')->user()->name}}</p>
@@ -397,7 +397,7 @@
                             <li class="@if(strpos($current_route_name, 'eventSubject.index')===6) active @endif"><a href="{{route('admin.eventSubject.index')}}"><i class="fa fa-server"></i>مدیریت موضوعات</a></li>
                             <li class="@if(strpos($current_route_name, 'eventType.index')===6) active @endif"><a href="{{route('admin.eventType.index')}}"><i class="fa fa-sitemap"></i>مدیریت نوع ها</a></li>
                             <li class="@if(strpos($current_route_name, 'eventStatus.index')===6) active @endif"><a href="{{route('admin.eventStatus.index')}}"><i class="fa fa-toggle-on"></i>مدیریت وضعیت ها</a></li>
-                            <li class="@if(strpos($current_route_name, 'image')===6) active @endif"><a href="{{route('admin.image.index')}}"><i class="fa fa-picture-o"></i>مدیریت گالری</a></li>
+                          {{--  <li class="@if(strpos($current_route_name, 'image')===6) active @endif"><a href="{{route('admin.image.index')}}"><i class="fa fa-picture-o"></i>مدیریت گالری</a></li>--}}
                         </ul>
                     </li>
 

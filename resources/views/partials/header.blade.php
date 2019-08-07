@@ -328,7 +328,7 @@
                 <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general m-stack--fluid">
                     <div class="m-stack__item m-topbar__nav-wrapper">
                         <ul class="m-topbar__nav m-nav m-nav--inline">
-  <notification v-bind:notifications="notifications" backgroundimg="{{url('/')}}/img/misc/notification_bg.jpg"></notification>
+  <notification v-bind:notifications="notifications" v-bind:unreadnotifications="unreadnotifications" backgroundimg="{{url('/')}}/img/misc/notification_bg.jpg"></notification>
 
                             <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" m-dropdown-toggle="click"
                                 m-dropdown-persistent="1">
@@ -468,7 +468,7 @@
                                 m-dropdown-toggle="click">
                                 <a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-topbar__userpic">
-													<img src="@if($cuser->thumbnail != ''){{$cuser->thumbnail}}@else{{asset('images/profile.jpg')}} @endif" class="m--img-rounded m--marginless" alt="" />
+													<img src="@if($cuser->thumbnail != ''){{$cuser->thumbnail}}@else{{asset('images/profile.jpg')}} @endif" class="m--img-rounded m--marginless user_image" alt="" />
 												</span>
                                     <span class="m-topbar__username m--hide">{{$cuser->name}} {{$cuser->lastname}}</span>
                                 </a>

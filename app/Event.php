@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     protected $fillable = [
-        'name','description','long_description','start_date','end_date','end_date_signup','price','capacity','event_subject_id','event_type_id','event_status_id','province_id','city_id','address','address_point','eventable_id','center_core_id','information','eventable_type'
+        'name','description','long_description','start_date','end_date','end_date_signup','price','capacity','event_subject_id','event_type_id','event_status_id','province_id','city_id','address','address_point','eventable_id','center_core_id','information','eventable_type','thumbnail_id'
     ];
 
     protected $table = 'events';
@@ -59,7 +59,7 @@ class Event extends Model
 
         $event_user_count=EventUser::where('event_id',$this->id)->count();
         $fulled_count=(int)$this->capacity-(int)$event_user_count;
-        return $fulled_count;
+        return (int)$fulled_count;
     }
 
     public function images()

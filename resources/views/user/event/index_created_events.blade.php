@@ -144,6 +144,7 @@
                         <th>توضیح</th>
                         <th>هسته</th>
                         <th>تاریخ شروع و پایان</th>
+                        <th>ظرفیت</th>
                         <th>نوع</th>
                         <th>موضوع</th>
                         <th>وضعیت</th>
@@ -157,7 +158,8 @@
                         <td>{{$event->name}}</td>
                         <td>{{$event->description}}</td>
                         <td>{{$event->center_core->name}}</td>
-                        <td>{{$event->start_date}} - {{$event->end_date}}</td>
+                        <td>{{$event->start_dates}} تا {{$event->end_dates}}</td>
+                        <td>/{{$event->fulled_capacity}}  {{$event->capacity}}</td>
                         <td>{{$event->event_type->name}}</td>
                         <td>{{$event->event_subject->name}}</td>
                         <td class="focus"><span class="m-badge  m-badge--primary m-badge--wide">{{$event->event_status->name}}</span>

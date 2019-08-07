@@ -1,9 +1,9 @@
 @extends('layouts.app_master')
 @section('styles')
     <link rel="stylesheet" href="{{asset('pass/password_strength.css')}}">
-    <style>
-        
-    </style>
+    <link rel="stylesheet" href="{{asset('css/leaflet.css')}}"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
 
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
@@ -286,7 +286,7 @@
                         <td>{{$eventUser->event->end_date_sign}}</td>
                         <td> {{$eventUser->event->capacity}} / {{$eventUser->event->fulled_capacity}} </td>
 
-                        <td> تومان {{number_format($eventUser->event->price)}}</td>
+                        <td>  {{number_format($eventUser->event->price)}}  تومان </td>
                     </tr>
                     </tbody>
                 </table>
@@ -319,7 +319,7 @@
                             <button type="button" class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">{{$eventUser->event->event_type->name}}</button>
 
                         </td>
-                        <td>{{$eventUser->event->address}}</td>
+                        <td>{{$eventUser->event->address}} @if($eventUser->event->address_point != null)<div class="showonmap btn btn-secondary m-btn--wide" data-target="#myModal" data-toggle="modal"> نمایش روی نقشه <i class="flaticon-map-location"></i></div>  @endif</td>
                         <td>{{$eventUser->event->center_core->name}}</td>
                         <td>
             @if($eventUser->event->event_status->id == 1)
@@ -403,8 +403,46 @@
         @endif
     </div>
 
+
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <input type="hidden" value="" class="event_id">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" style="float: right;margin-right: 0;border: 1px solid;border-radius: 100%;background: #16171f;color: white;">&times;</button>
+                    <h4 class="modal-title" style="text-align: center;float: none;margin: 0 auto;">محل برگزاری رویداد {{$eventUser->event->name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">قیمت
+                        <div class="col-md-12 col-lg-12">
+                            <div class="col-md-12 col-lg-12 firstPlace">
+                                <div class="leaflet-map">
+                                    <div class="row map_place" id="map_place" style="height: 226px;position: relative;outline: none;width: 65%;margin: 0 auto;"></div>
+
+                                </div>                            </div>
+
+
+                        </div>
+                    </div>
+                    <hr/>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="addressevent">
+                   <button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-primary m-btn--gradient-to-info">آدرس محل برگزاری : </button>
+                    &nbsp;&nbsp;&nbsp;
+                    {{$eventUser->event->address}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('scripts')
+    <script src="{{asset('js/leaflet.js')}}" type="text/javascript"></script>
+
     <script type="text/javascript">
         $('.payment').click(function(e){
             e.preventDefault();
@@ -424,5 +462,21 @@
         $('.notallowed').click(function (e) {
             e.preventDefault();
         });
+        var address_point = <?=$eventUser->event->address_point ?>;
+        if(address_point !=null ){
+            map = L.map('map_place');
+            var interval = setInterval(function () {
+                map.invalidateSize();
+            },500);
+            map.setView(L.latLng(address_point), 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            setTimeout(function () {
+                L.marker(address_point).addTo(map)
+                    .bindPopup(' محل برگزاری ')
+                    .openPopup();
+            },2000);
+        }
+
     </script>
 @endsection

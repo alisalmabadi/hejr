@@ -2,14 +2,14 @@
     <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width" m-dropdown-toggle="click"
         m-dropdown-persistent="1">
         <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
-            <span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small m-badge--danger iranyekan">{{notifications.length}}</span>
+            <span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small m-badge--danger iranyekan">{{unreadnotifications.length}}</span>
             <span class="m-nav__link-icon"><i class="flaticon-alarm"></i></span>
         </a>
         <div class="m-dropdown__wrapper">
             <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
             <div class="m-dropdown__inner">
                 <div class="m-dropdown__header m--align-center" v-bind:style="{backgroundImage : 'url('+backgroundimg+')' }">
-                    <span class="m-dropdown__header-title iranyekan">{{notifications.length}}</span>
+                    <span class="m-dropdown__header-title iranyekan">{{unreadnotifications.length}}</span>
                     <span class="m-dropdown__header-subtitle">اعلان جدید</span>
                 </div>
                 <div class="m-dropdown__body">
@@ -18,6 +18,11 @@
                             <li class="nav-item m-tabs__item">
                                 <a class="nav-link m-tabs__link active" data-toggle="tab" href="#topbar_notifications_notifications" role="tab">
                                     تمامی اعلان ها
+                                </a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#topbar_unread_notifications" role="tab">
+                                    اعلان های خوانده نشده
                                 </a>
                             </li>
 
@@ -34,9 +39,29 @@
                                         </div>
 
                                         </div>
+
+
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="tab-pane" id="topbar_unread_notifications" role="tabpanel">
+                                <div class="m-scrollable" data-scrollable="true" data-height="250" data-mobile-height="200">
+                                    <div class="m-list-timeline m-list-timeline--skin-light">
+                                        <div class="m-list-timeline__items">
+                                            <div v-for="notify in unreadnotifications" :class='readnotification(notify.read_at)' @click="readnotify(notify.id)">
+                                                <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
+                                                <span class="m-list-timeline__text">{{notify.data.message.title}}</span>
+                                                <span class="m-list-timeline__time">{{notify.created}}</span>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
 
                     </div>
                 </div>
@@ -48,7 +73,7 @@
 </template>
 <script>
     export default {
-        props:['notifications','backgroundimg'],
+        props:['notifications','backgroundimg','unreadnotifications'],
         methods:{
             readnotify:function(id){
                 axios.post('/user/notification/read',{id:id}).then(response => {

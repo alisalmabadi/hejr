@@ -155,11 +155,11 @@ Route::delete('area/destroy','AreaController@destroy');
     /*** discounts ***/
 
     /*** images ***/
-    Route::delete('image/delete' , ['uses'=>'ImageController@delete','as'=>'image.delete']);    
+/*    Route::delete('image/delete' , ['uses'=>'ImageController@delete','as'=>'image.delete']);
     Route::resource('image' , 'ImageController', ['except'=>'destroy']);    
     Route::post('image/showEventImages' , ['uses'=>'ImageController@show_event_images' , 'as'=>'image.show_event_images']);
     Route::post('image/addEventImage' , ['uses'=>'ImageController@add_event_image', 'as'=>'image.add_event_image']);
-    Route::post('image/deleteEventImage', ['uses'=>'ImageController@delete_event_image', 'as'=>'image.delete_event_image']);
+    Route::post('image/deleteEventImage', ['uses'=>'ImageController@delete_event_image', 'as'=>'image.delete_event_image']);*/
     /*** end of images ***/
 
 });
@@ -316,6 +316,8 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     /**notification ***/
     
     Route::post('notification/get',['uses'=>'NotificationController@get','as'=>'notification.get']);
+    Route::post('notification/unread/get',['uses'=>'NotificationController@unreadget','as'=>'notification.unread.get']);
+
     Route::post('notification/read',['uses'=>'NotificationController@read','as'=>'notification.get']);
 
     /***user events ***/

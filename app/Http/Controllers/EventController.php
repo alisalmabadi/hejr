@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\NotifySignedUpEvent;
+use App\Notifications\SignedUpEvent;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Event;
 use App\EventSubject;
@@ -15,6 +18,7 @@ use App\User;
 use App\Image;
 use App\EventImage;
 use Illuminate\Support\Facades\Gate;
+use Intervention\Image\Facades\Image as ImageChange;
 
 class EventController extends Controller
 {
@@ -74,7 +78,7 @@ class EventController extends Controller
             'center_core_id'=>'required|numeric',
             'xplace'=>'nullable|numeric',
             'yplace'=>'nullable|numeric',
-             /*'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
+          /*   'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
 
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
@@ -109,32 +113,45 @@ class EventController extends Controller
             'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
             'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
             'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
-           /* 'image.image'=>'لطفا فقط عکس انتخاب کنید',
+        /*    'image.image'=>'لطفا فقط عکس انتخاب کنید',
             'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',*/
         ]);
         $admin = \Auth::guard('admin')->user();
         $request['eventable_id'] = $admin->id;
         $request['eventable_type'] = 'admin';
-        $address_point=[$request->xplace,$request->yplace];
-        $address_point=json_encode($address_point);
-
         $event=Event::create($request->except(['information','address_point']));
-       $event->update(['address_point'=>$address_point]);
+        if($request->xplace != null) {
+            $address_point = [$request->xplace, $request->yplace];
+            $address_point = json_encode($address_point);
+            $event->update(['address_point' => $address_point]);
+        }
        $event=$admin->events()->save($event);
 
         /*image upload*/
-    /*    $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
-        $main_folder = 'images/events/'.$request['name'].'/';
+        foreach ($request->image as $key=>$image) {
+        $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
+        $main_folder = 'images/events/';
         $url = $main_folder;
-        $request['image']->move($url, $imagename);
-        $image = new Image();
-        $image = $image->create([
-            'image_type' => $request['image']->getClientOriginalExtension(),
-            'image_original' => $imagename,
-            'image_path' => $url . $imagename,
-        ]);     
+        $image->move($url, $imagename);
+/***thumbnail ***/
+                $path = public_path('images/events/thumbnails') . "/" . $imagename;
+                $img = ImageChange::make(public_path('images/events/') . $imagename)->resize(324,202)->save($path);
+            $images = Image::create([
+                'image_type' => $image->getClientOriginalExtension(),
+                'image_original' => $imagename,
+                'image_path' => $url . $imagename,
+                'thumbnail_path'=>$img->basename,
+            ]);
 
-        $event->images()->attach($image->id); */
+            if($key==0){
+                $event->update(['thumbnail_id'=>$images->id]);
+            }
+            /***thumbnail ***/
+            $event->images()->attach($images->id);
+
+        }
+
+
 
         flashs('رویداد با موفقیت ثبت گردید');
         return redirect()->route('admin.event.index');
@@ -210,7 +227,7 @@ class EventController extends Controller
             'center_core_id'=>'required|numeric',
             'xplace'=>'nullable|numeric',
             'yplace'=>'nullable|numeric',
-            'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',
+       /*     'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
 
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
@@ -245,33 +262,41 @@ class EventController extends Controller
             'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
             'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
             'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
-            'image.image'=>'لطفا فقط عکس انتخاب کنید',
-            'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',
+           /* 'image.image'=>'لطفا فقط عکس انتخاب کنید',
+            'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',*/
         ]);
 
 
 
         $event->update($request->except(['information','address_point']));
-        $address_point=[$request->xplace,$request->yplace];
-        $address_point=json_encode($address_point);
-        $event->update(['address_point'=>$address_point]);
+        if($request->xplace != null) {
+            $address_point = [$request->xplace, $request->yplace];
+            $address_point = json_encode($address_point);
+            $event->update(['address_point' => $address_point]);
+        }
 
         if(!empty($request['image'])){
-            /*image upload*/
-            $imagename = time() . '.' . $request['image']->getClientOriginalExtension();
-            $main_folder = 'images/events/'.$request['name'].'/';
-            $url = $main_folder;
-            $request['image']->move($url, $imagename);
-            //store in images table
-            $image = new Image();
-            $image = $image->create([
-                'image_type' => $request['image']->getClientOriginalExtension(),
-                'image_original' => $imagename,
-                'image_path' => $url . $imagename,
-            ]);     
+            foreach ($request->image as $key=>$image) {
+                $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
+                $main_folder = 'images/events/';
+                $url = $main_folder;
+                $image->move($url, $imagename);
+                /***thumbnail ***/
+                $path = public_path('images/events/thumbnails') . "/" . $imagename;
+                $img = ImageChange::make(public_path('images/events/') . $imagename)->resize(324,202)->save($path);
+                $images = Image::create([
+                    'image_type' => $image->getClientOriginalExtension(),
+                    'image_original' => $imagename,
+                    'image_path' => $url . $imagename,
+                    'thumbnail_path'=>$img->basename,
+                ]);
+                if($key==0){
+                    $event->update(['thumbnail_id'=>$images->id]);
+                }
+                $event->images()->attach($images->id);
+            }
 
-            //attach in eventImages table
-            $event->images()->sync($image->id);  
+
         }
 
         flashs('تغییرات با موفقیت اعمال گردید');
@@ -291,17 +316,9 @@ class EventController extends Controller
 
     public function delete(event $event)
     {
-        if(!empty($event)){
-            if($event->operator_user_id == \Auth::guard('admin')->user()->id){
-                //Delete the event
-                Event::destroy($event->id);
-            }
-            else{
-                flashs('شما قادر به حذف این رویداد نمی باشید');
-                return redirect()->route('admin.event.index');
-            }
-        }
 
+        //Delete the event
+        Event::destroy($event->id);
         flashs('رویداد حذف گردید');
         return redirect()->route('admin.event.index');
     }
@@ -331,9 +348,19 @@ class EventController extends Controller
     public function getDetails(Request $request)
     {
         $event = Event::find($request['event_id']);
+        $event->load('images');
         $user = \Auth::guard('web')->user();
+        $event->subject = $event->event_subject->name;
+        $event->type = $event->event_type->name;
         $event->province = $event->provinces->name;
         $event->city = $event->cities->name;
+        $event->fulled =$event->fulled_capacity;
+
+        $event->start =$event->start_dates;
+        $event->end =$event->end_dates;
+
+        $event->ended =$event->fulled_capacity;
+
         /***check kone ke in rooydad ghablan entekhab shode ya na***/
         foreach($user->events as $u_event){
             if($u_event->id == $event->id){
@@ -344,7 +371,7 @@ class EventController extends Controller
         }
         
         //leaflet points
-        if(!empty($event->address_point)){
+        if($event->address_point != null){
             $event->address_point = json_decode($event->address_point);
         }
         return response($event);
@@ -405,6 +432,11 @@ class EventController extends Controller
             'event_information'=>$event_information,
             'status'=>1,
         ]);
+        $title = "رزرو ثبت نام شما در رویداد NAME انجام شد.";
+        $message = "'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'";
+        $type = 4;
+        $when = Carbon::now()->addSecond();
+       \Notification::send(\Auth::user(),(new NotifySignedUpEvent($event,$title,$message,$type))->delay($when));
         return response($eventUser);
     }
 
@@ -439,6 +471,13 @@ class EventController extends Controller
                         'status'=>1,
                     ]);
                 }
+                $title = "رزرو ثبت نام شما در رویداد NAME انجام شد.";
+                $message = "'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'";
+                $type = 4;
+                $event=Event::find($request['event_id']);
+                $when = Carbon::now()->addSecond();
+                \Notification::send($user,(new NotifySignedUpEvent($event,$title,$message,$type))->delay($when));
+
             }
         }
         return redirect()->route('admin.event.addUser');

@@ -1,5 +1,14 @@
 @extends('layouts.admin_master_full')
-
+@section('style')
+    <style>
+        .tab-content > .tab-pan{
+            display: none;
+        }
+        .tab-content > .active{
+            display: block;
+        }
+        </style>
+@endsection
 @section('content-header')
     <section class="content-header">
         <div class="pull-left">
@@ -24,8 +33,26 @@
                 <h3 class="panel-title"><i class="fa fa-plus "></i>اضافه کردن رویداد جدید</h3>
             </div>
             <div class="panel-body">
-                <form action="{{route('admin.event.store')}}" class="form-horizontal" method="post" enctype="multipart/form-data" id="form-material">
+               <form action="{{route('admin.event.store')}}" class="form-horizontal" method="post" enctype="multipart/form-data" id="form-material">
                     {{csrf_field()}}
+
+               <ul class="nav nav-tabs" data-tabs="tabs">
+
+                        <li class="active"><a href="#general" data-toggle="tab">عمومی</a></li>
+
+                        <li><a href="#gallery" data-toggle="tab">گالری</a></li>
+
+
+               </ul>
+
+
+        <div class="tab-content">
+                        <!-- general tab content -->
+            <div class="tab-pan fade in active" id="general">
+                            <h3>عمومی</h3>
+
+
+
                     <div class="form-group required">
                         <label class="col-md-2 col-lg-2">نام</label>
                         <div class="col-md-10 col-lg-10">
@@ -36,15 +63,15 @@
                         </div>
                     </div>
                     <div class="form-group required">
-                        <label class="col-md-2 col-lg-2">توضیحات</label>
-                        <div class="col-md-4 col-lg-4">
+                        <label class="col-md-1 col-lg-1">توضیحات</label>
+                        <div class="col-md-5 col-lg-5">
                             <textarea name="description" class="form-control">{{old('description')}}</textarea>
                             @if($errors->first('description'))
                                 <label style="color:red;">{{$errors->first('description')}}</label>
                             @endif
                         </div>
-                        <label class="col-md-2 col-lg-2">توضیحات اجمالی</label>
-                        <div class="col-md-4 col-lg-4">
+                        <label class="col-md-1 col-lg-1">توضیحات اجمالی</label>
+                        <div class="col-md-5 col-lg-5">
                             <textarea name="long_description" class="form-control">{{old('long_description')}}</textarea>
                             @if($errors->first('long_description'))
                                 <label style="color:red;">{{$errors->first('long_description')}}</label>
@@ -225,6 +252,43 @@
                             @endif
                         </div>
                     </div>--}}
+                    </div>
+
+            <div class="tab-pan fade in" id="gallery">
+                <h3>تصویرهای رویداد</h3>
+
+                <div class="col-md-12 col-lg-10">
+                  <div class="col-md-10">
+                <div class="form-group required">
+
+
+                    <table class="table">
+                    <tbody id="imagefield">
+                        <tr>
+                            <td>
+ <input class="form-control" type="file" name="image[]">
+                            </td>
+                            <td>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+
+
+                </div>
+
+                </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success center" type="button" id="addphoto">افزودن فیلد عکس</button>
+                    </div>
+                    </div>
+
+
+        </div>
+
+
                 </form>
 
             </div>
@@ -261,8 +325,10 @@
 
     {{--Persian Date picker everything--}}
     <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@latest/dist/css/persian-datepicker.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">--}}
+{{--
         <script src="js/jquery.js"></script>
+--}}
     <script src="https://unpkg.com/persian-date@latest/dist/persian-date.min.js"></script>
     <script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.min.js"></script>
     <style>
@@ -291,6 +357,23 @@
                 initialValue: false
             });
         });
+    $('#addphoto').click(function () {
+        $('#imagefield').append(' <tr>\n' +
+            '                            <td>\n' +
+            ' <input class="form-control" type="file" name="image[]">\n' +
+            '                            </td>\n' +
+            '                            <td>\n' +
+            '<button type="button" class="btn btn-danger deleterow">حذف</button>\n' +
+            '                            </td>\n' +
+            '\n' +
+            '                        </tr>');
+        $('.deleterow').click(function () {
+            $(this).parents('tr').remove();
+        });
+    });
+
+
+
     </script>
     {{--End of Persian Date picker everything--}}
 
