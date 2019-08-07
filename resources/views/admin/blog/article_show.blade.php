@@ -59,7 +59,7 @@
                 <h3 class="panel-title"><i class="fa fa-list"></i> لیست مقالات</h3>
             </div>
             <div class="panel-body">
-                <form action="/9346790b5ef06657673da0bc27951f2ad9d97c44/article/destroy" method="post" enctype="multipart/form-data" id="form-category">
+                <form action="{{route('admin.article.destroy')}}" method="post" enctype="multipart/form-data" id="form-category">
                     {{csrf_field()}}
                     {{method_field('DELETE')}}
                     <div class="table-responsive">
@@ -165,7 +165,7 @@
             type=this.value;
 
             $.ajax({
-                url: '{{route('admin.post.get_post_type')}}',
+                {{--url: '{{route('admin.post.get_post_type')}}',--}}
                 dataType: 'json',
                 type: 'POST',
                 data: {"post_type":type},
