@@ -36,9 +36,22 @@ class ArticleCategoryController extends Controller
     {
         $this->validate($request,[
             'name'=>'required',
-            'slug'=>'required|unique:categories',
-            'img'=>'required',
-        ],['name.required'=>'وارد کردن نام برای دسته الزامی است','slug.unique'=>'این نام باید یکتا باشد']);
+            'slug'=>'required|unique:article_categories',
+            'image'=>'required|mimes:jpg,jpeg,png|max:10000'
+        ],[
+            'name.required'=>'وارد کردن نام برای دسته الزامی است', 
+            'slug.unique'=>'این نام باید یکتا باشد',
+            'image.required' => 'لطفا عکس انتخاب کنید',
+            'image.mimes' => 'فرمت انتخاب شده پشتیبانی نمیشود',
+            'image.max' => 'حجم فایل انتخاب شده بیش از حد مجاز می باشد'
+        ]);
+
+        //upload image
+        $filename = 'article_category_'.time().'.'.$request['image']->getClientOriginalExtension();
+        $imageUrl = 'images/article/category';
+        $request['image']->move($imageUrl, $filename);
+        $request['img'] = $imageUrl.'/'.$filename;
+
 
         $article_category = ArticleCategory::create([
 
@@ -54,23 +67,42 @@ class ArticleCategoryController extends Controller
 
     public function update(Request $request,ArticleCategory $articleCategory)
     {
+        if(!empty($request['image'])){
+            //upload image
+            $filename = 'article_category_'.time().'.'.$request['image']->getClientOriginalExtension();
+            $imageUrl = 'images/article/category';
+            $request['image']->move($imageUrl, $filename);
+            $request['img'] = $imageUrl.'/'.$filename;
+        }
+        else{
+            $request['img'] = $articleCategory->img;
+        }
 
         if($articleCategory->slug!=$request->slug)
         {
             $this->validate($request,[
                 'name'=>'required',
-                'img'=>'required',
-                'slug'=>'required|unique:categories'
-
-            ],['name.required'=>'وارد کردن نام برای دسته الزامی است','slug.unique'=>'این نام باید همتا باشد']);
+                'slug'=>'required|unique:article_categories',
+                'image'=>'nullable|mimes:jpg,jpeg,png|max:10000'
+            ],[
+                'name.required'=>'وارد کردن نام برای دسته الزامی است', 
+                'slug.unique'=>'این نام باید یکتا باشد',
+                'image.required' => 'لطفا عکس انتخاب کنید',
+                'image.mimes' => 'فرمت انتخاب شده پشتیبانی نمیشود',
+                'image.max' => 'حجم فایل انتخاب شده بیش از حد مجاز می باشد'
+            ]);
            $articleCategory->update(['name'=>$request->name,'slug'=>$request->slug,'img'=>$request->img,'desc'=>$request->desc]);
         }else
         {
             $this->validate($request,[
                 'name'=>'required',
-                'img'=>'required',
-
-            ],['name.required'=>'وارد کردن نام برای دسته الزامی است','slug.unique'=>'این نام باید همتا باشد']);
+                'image'=>'nullable|mimes:jpg,jpeg,png|max:10000'
+            ],[
+                'name.required'=>'وارد کردن نام برای دسته الزامی است', 
+                'slug.unique'=>'این نام باید همتا باشد',
+                'image.mimes' => 'فرمت انتخاب شده پشتیبانی نمیشود',
+                'image.max' => 'حجم فایل انتخاب شده بیش از حد مجاز می باشد'
+            ]);
 
             $articleCategory->update(['name'=>$request->name,'img'=>$request->img,'desc'=>$request->desc]);
 
