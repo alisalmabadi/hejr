@@ -24,7 +24,7 @@
                 <h3 class="panel-title"><i class="fa fa-list"></i> لیست دسته بندی مقالات</h3>
             </div>
             <div class="panel-body">
-                <form action="/9346790b5ef06657673da0bc27951f2ad9d97c44/article_category/destroy" method="post" enctype="multipart/form-data" id="form-category">
+                <form action="{{route('admin.article_category.destroy')}}" method="post" enctype="multipart/form-data" id="form-category">
                     {{csrf_field()}}
                     {{method_field('DELETE')}}
                     <div class="table-responsive">
@@ -35,26 +35,32 @@
                                 <input onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" type="checkbox"></td>
                                 <td class="text-center"> نام دسته بندی</td>
                                 <td class="text-center">کلید یکتا</td>
+                                <td class="text-center">تصویر</td>
                                 <td class="text-center">عملیات</td>
                             </tr>
                             </thead>
                             <tbody>
 
-                            @foreach($article_categories as $article_category)
-                                <tr>
-                                    <td class="text-center">
-                                        <input name="selected[]" value="{{$article_category->id}}" type="checkbox">
-                                    </td>
-                                    <td class="text-center">{{$article_category->name}}</td>
-                                    <td class="text-center">{{$article_category->slug}}</td>
-                                    <td class="text-center">
-                                        <a href="{{route('admin.article_category.edit',$article_category)}}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="ویرایش"><i class="fa fa-pencil"></i></a>
+                            @if(!empty($article_categories))
+                                @foreach($article_categories as $article_category)
+                                    <tr>
+                                        <td class="text-center">
+                                            <input name="selected[]" value="{{$article_category->id}}" type="checkbox">
+                                        </td>
+                                        <td class="text-center">{{$article_category->name}}</td>
+                                        <td class="text-center">{{$article_category->slug}}</td>
+                                        <td class="text-center">
+                                            <img src="{{asset($article_category->img)}}" style="width:100px; height:100px;">
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{route('admin.article_category.edit',$article_category)}}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="ویرایش"><i class="fa fa-pencil"></i></a>
 
 
-                                    </td>
+                                        </td>
 
-                                </tr>
-                            @endforeach
+                                    </tr>
+                                @endforeach
+                            @endif
 
 
                             </tbody>
