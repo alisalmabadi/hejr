@@ -447,7 +447,7 @@
 
 
                     {{--blog--}}
-                    <li class="@if(strpos($current_route_name, 'article_category.')===6 ) active @endif treeview">
+                    <li class="@if(strpos($current_route_name, 'article_category.')===6 || strpos($current_route_name, 'article.')===6  ) active @endif treeview">
                         <a href="#">
                             <i class="fa fa-money"></i>
                             <span>بلاگ</span>
@@ -456,8 +456,8 @@
                         </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="@if(strpos($current_route_name, 'discount.create')===6) active @endif"><a href="{{route('admin.article_category.create')}}"><i class="fa fa-plus"></i>دسته بندی</a></li>
-                            <li class="@if(strpos($current_route_name, 'discount.index')===6) active @endif"><a href="{{route('admin.discount.index')}}"><i class="fa fa-circle-o"></i>همه تخفیف ها</a></li>
+                            <li class="@if(strpos($current_route_name, 'article_category')===6) active @endif"><a href="{{route('admin.article_category.index')}}"><i class="fa fa-plus"></i>دسته بندی</a></li>
+                            <li class="@if(strpos($current_route_name, 'article')===6) active @endif"><a href="{{route('admin.article.index')}}"><i class="fa fa-circle-o"></i>مقالات</a></li>
                         </ul>
                     </li>
 
