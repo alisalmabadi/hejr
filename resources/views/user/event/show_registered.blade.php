@@ -286,7 +286,7 @@
                         <td>{{$eventUser->event->end_date_sign}}</td>
                         <td> {{$eventUser->event->capacity}} / {{$eventUser->event->fulled_capacity}} </td>
 
-                        <td> تومان {{number_format($eventUser->event->price)}}</td>
+                        <td>  {{number_format($eventUser->event->price)}}  تومان </td>
                     </tr>
                     </tbody>
                 </table>
@@ -414,7 +414,7 @@
                     <h4 class="modal-title" style="text-align: center;float: none;margin: 0 auto;">محل برگزاری رویداد {{$eventUser->event->name}}</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="row">قیمت
                         <div class="col-md-12 col-lg-12">
                             <div class="col-md-12 col-lg-12 firstPlace">
                                 <div class="leaflet-map">
