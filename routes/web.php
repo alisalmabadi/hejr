@@ -92,6 +92,16 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::delete('message/destroy','MessageController@destroy');
     /***admin message **********/
 
+    /*****admin Article *******/
+    Route::resource('article_category', 'ArticleCategoryController', ['except' => ['destroy']]);
+    Route::Delete('/article_category/destroy',['as'=>'article_category.destroy','uses'=>'ArticleCategoryController@destroy']);
+    Route::post('/article_category/slug',['as'=>'article_category.slug','uses'=>'ArticleCategoryController@slug']);
+    Route::resource('article', 'ArticleController', ['except' => ['destroy']]);
+    Route::Delete('/article/destroy',['as'=>'article.destroy','uses'=>'ArticleController@destroy']);
+    Route::post('/article/slug',['as'=>'article.slug','uses'=>'ArticleController@slug']);
+    Route::Post('/article/filter',['as'=>'article.filter','uses'=>'articleController@filter']);
+    /*****admin Article *******/
+
 
     /***show users for message route *******/
     Route::post('users','UserController@show_users')->name('show_users');
