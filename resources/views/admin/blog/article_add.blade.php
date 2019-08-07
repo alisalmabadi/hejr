@@ -43,7 +43,7 @@
                             @endif
                         </div>
                         </div>
-                    <div class="form-group">
+                    {{--<div class="form-group">
 
                         <label class="col-sm-2 control-label" for="category_id">انتخاب دسته محصول مرتبط </label>
                         <div class="col-sm-4">
@@ -59,8 +59,8 @@
                                     </span>
                             @endif
                         </div>
-                    </div>
-                    <div class="form-group">
+                    </div>--}}
+                    {{--<div class="form-group">
 
                         <label class="col-sm-2 control-label" for="product_id">انتخاب محصول مرتبط </label>
                         <div class="col-sm-4">
@@ -77,7 +77,7 @@
                             @endif
 
                         </div>
-                    </div>
+                    </div>--}}
                     <div class="form-group">
 
                         <label class="col-sm-2 control-label" for="user_id">انتخاب نویسنده </label>
@@ -113,7 +113,7 @@
 
                         <div class="row">
                         <div class="col-sm-2 col-sm-offset-4">
-                            <button type="button" class="btn btn-primary btn-block fileManager" data-url="{{route('home')}}/image-manager" data-multi="true">نمایش گالری</button>
+                            <button type="button" class="btn btn-primary btn-block fileManager" data-url="" data-multi="true">نمایش گالری</button>  
                         </div>
                     </div>
                     <div id="txt_area" class="form-group required">
@@ -170,16 +170,26 @@
                     <hr>
                     <div class="form-group required">
                         <label class="col-sm-2 control-label" for="link">تصویر بند انگشتی مقاله</label>
-
-                        {!! ImageManager::getField(['text' => 'انتخاب عکس', 'class' => 'btn btn-primary', 'field_name' => 'img_thumbnail', 'default' => '1']) !!}
-
+                        <div class="col-sm-4">
+                            <input type='file' id="imgInp" name="image_thumbnale" class="form-control">
+                            <label style="color:red;">{{$errors->first('image_thumbnale')}}</label>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="col-md-6" id="div_show_photos"></div>
+                        </div>
                     </div>
+                    
                     <hr>
+
                     <div class="form-group required">
                         <label class="col-sm-2 control-label" for="link">تصویر مقاله</label>
-
-                        {!! ImageManager::getField(['text' => 'انتخاب عکس', 'class' => 'btn btn-primary', 'field_name' => 'img', 'default' => '1']) !!}
-
+                        <div class="col-sm-4">
+                            <input type='file' id="imgInp2" name="image" class="form-control">
+                            <label style="color:red;">{{$errors->first('image')}}</label>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="col-md-6" id="div_show_photos2"></div>
+                        </div>
                     </div>
 
 
@@ -192,7 +202,8 @@
 
 @endsection
 @section('admin-footer')
-    <script type="application/javascript">
+
+<script type="application/javascript">
         $('.typesel').select2();
         CKEDITOR.replace( 'body' );
 
@@ -253,5 +264,49 @@
 
 
     </script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        /*** namayesh e tasvire entekhab shode bedoone upload ***/
+        function readURL1(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $("#div_show_photos").html('');
+                    $("#div_show_photos").append('<img id="selected_photos" src="'+e.target.result+'" alt="your image" style="width: 150px; height: 150px;"/>');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgInp").change(function() {
+            readURL1(this);
+        });
+    </script>
+    <script>
+        /*** namayesh e tasvire entekhab shode bedoone upload ***/
+        function readURL2(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $("#div_show_photos2").html('');
+                    $("#div_show_photos2").append('<img id="selected_photos2" src="'+e.target.result+'" alt="your image" style="width: 150px; height: 150px;"/>');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgInp2").change(function() {
+            readURL2(this);
+        });
+    </script>
+
 
 @stop
