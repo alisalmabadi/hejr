@@ -7,11 +7,11 @@
             <a href="{{route('admin.discount.create')}}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="ساخت تخفیف جدید"><i class="fa fa-plus"></i></a>
         </div>
         <h1>
-            event users
+            تخفیف
         </h1>
         <ol class="breadcrumb">
 
-            <li class="active"><i class="fa fa-th"></i>all event users</li>
+            <li class="active"><i class="fa fa-th"></i>تمامی کد تخفیف ها</li>
         </ol>
     </section>
 @endsection
@@ -21,7 +21,7 @@
     <section class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>event User list</h3>
+                <h3 class="panel-title"><i class="fa fa-list"></i>تمامی کد تخفیف ها</h3>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
