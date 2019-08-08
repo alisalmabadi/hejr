@@ -62,7 +62,7 @@ class ArticleCategoryController extends Controller
     ]);
 
         flash('دسته مقاله ثبت شد','success');
-        return back();
+        return redirect()->route('admin.article_category.index');
     }
 
     public function update(Request $request,ArticleCategory $articleCategory)
@@ -83,7 +83,7 @@ class ArticleCategoryController extends Controller
             $this->validate($request,[
                 'name'=>'required',
                 'slug'=>'required|unique:article_categories',
-                'image'=>'nullable|mimes:jpg,jpeg,png|max:10000'
+                'image'=>'nullable|image|mimes:jpg,jpeg,png|max:10000'
             ],[
                 'name.required'=>'وارد کردن نام برای دسته الزامی است', 
                 'slug.unique'=>'این نام باید یکتا باشد',
@@ -96,7 +96,7 @@ class ArticleCategoryController extends Controller
         {
             $this->validate($request,[
                 'name'=>'required',
-                'image'=>'nullable|mimes:jpg,jpeg,png|max:10000'
+                'image'=>'nullable|image|mimes:jpg,jpeg,png|max:10000'
             ],[
                 'name.required'=>'وارد کردن نام برای دسته الزامی است', 
                 'slug.unique'=>'این نام باید همتا باشد',
