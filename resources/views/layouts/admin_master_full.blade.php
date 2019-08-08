@@ -312,6 +312,8 @@
 
                             <li class="@if(strpos($current_route_name, 'user.create')===6) active @endif"><a href="{{route('admin.user.create')}}"><i class="fa fa-user-plus"></i>افزودن تکی کاربر</a></li>
 
+                            <li class="@if(strpos($current_route_name, 'user.multiple')===6) active @endif"><a href="{{route('admin.user.multiple')}}"><i class="fa fa-user-plus"></i>افزودن گروهی کاربران با اکسل</a></li>
+
                             <li class="@if(strpos($current_route_name, 'grade.')===6) active @endif"><a href="{{route('admin.grade.index')}}"><i class="fa fa-graduation-cap"></i>وضعیت تحصیلی ها</a></li>
 
                             <li class="@if(strpos($current_route_name, 'soldier-service.')===6) active @endif"><a href="{{route('admin.soldier-service.index')}}"><i class="fa fa-info-circle"></i>وضعیت نظام وظیفه</a></li>
