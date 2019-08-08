@@ -104,10 +104,8 @@ class ArticleController extends Controller
         }
         $article->keywords()->attach($final_list);
 
-                flash('مقاله ذخیره شد','success');
-                return back();
-
-
+                flashs('مقاله ذخیره شد','success');
+                return redirect(route('admin.article.index'));
     }
 
     public function edit(Article  $article) {
@@ -216,7 +214,7 @@ class ArticleController extends Controller
 
 
 
-        flash(' مقاله ویرایش شد','success');
+        flashs(' مقاله ویرایش شد','success');
                 return redirect()->route('admin.article.index');
 
 
@@ -254,7 +252,7 @@ class ArticleController extends Controller
     public function destroy(Request $request,Article $article)
     {
         $article->destroy($request->input('selected' ));
-        flash('مقاله حدف شد','danger');
+        flashs('مقاله حدف شد','danger');
         return back();
 
 
