@@ -446,6 +446,22 @@
                     </li>
 
 
+                    {{--blog--}}
+                    <li class="@if(strpos($current_route_name, 'article_category.')===6 || strpos($current_route_name, 'article.')===6  ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-money"></i>
+                            <span>بلاگ</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'article_category')===6) active @endif"><a href="{{route('admin.article_category.index')}}"><i class="fa fa-plus"></i>دسته بندی</a></li>
+                            <li class="@if(strpos($current_route_name, 'article')===6) active @endif"><a href="{{route('admin.article.index')}}"><i class="fa fa-circle-o"></i>مقالات</a></li>
+                        </ul>
+                    </li>
+
+
 
 
                 </ul>
