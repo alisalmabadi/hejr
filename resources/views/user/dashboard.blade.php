@@ -1,5 +1,13 @@
 @extends('layouts.app_master')
 @section('styles')
+    <style>
+        p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+</style>
 
     @endsection
 @section('content')
@@ -43,7 +51,7 @@
 												تعداد کل رویداد های ایجاد شده
 												</span>
                                             <span class="m-widget24__stats m--font-brand">
-																										{{$data['events_count']}}
+                                                    {{$data['events_count']}}
 
 												</span>
                                             <div class="m--space-10"></div>
@@ -75,7 +83,7 @@
 												</span>
 --}}
                                             <span class="m-widget24__stats m--font-info">
-																										{{$data['events_registered_count']}}
+                                                    {{$data['events_registered_count']}}
 
 												</span>
                                             <div class="m--space-10"></div>
@@ -194,51 +202,57 @@
                     <div class="tab-pane" id="m_widget5_tab1_content" aria-expanded="true">
 
                         <!--begin::m-widget5-->
-                        <div class="m-widget5">
-                            <div class="m-widget5__item">
-                                <div class="m-widget5__content">
-                                    <div class="m-widget5__pic">
-                                        <img class="m-widget7__img" src="../../assets/app/media/img//products/product6.jpg" alt="">
-                                    </div>
-                                    <div class="m-widget5__section">
-                                        <h4 class="m-widget5__title">
-                                            عنوان تست
-                                        </h4>
-                                        <span class="m-widget5__desc">
-																	متن تست متن تست
-																</span>
-                                        <div class="m-widget5__info">
-																	{{--<span class="m-widget5__author">
-																		نویسنده:
-																	</span>--}}
-                                            <span class="m-widget5__info-label">
-																		نویسنده:
-																	</span>
-                                            <span class="m-widget5__info-author-name">
-																		محمدعلی اسمی
-																	</span>
-                                            <span class="m-widget5__info-label">
-																		تاریخ انتشار :
-																	</span>
-                                            <span class="m-widget5__info-date m--font-info">
-																		23 آبان 1396
-																	</span>
+                        @if(!empty($data['articles']))
+                            @foreach($data['articles'] as $article)
+                                <div class="m-widget5 article_shows">
+                                    <div class="m-widget5__item">
+                                        <div class="m-widget5__content">
+                                            <div class="m-widget5__pic">
+                                                <img class="m-widget7__img" src="../../assets/app/media/img//products/product6.jpg" alt="">
+                                            </div>
+                                            <div class="m-widget5__section">
+                                                <h4 class="m-widget5__title article_title">
+                                                    {{$article->title}}
+                                                </h4>
+                                                <span class="m-widget5__desc article_desc">
+                                                    {!! $article->body !!}
+                                                </span>
+                                                <div class="m-widget5__info">
+                                                    {{--<span class="m-widget5__author">
+                                                            نویسنده:
+                                                    </span>--}}
+                                                    <span class="m-widget5__info-label">
+                                                        نویسنده:
+                                                    </span>
+                                                    <span class="m-widget5__info-author-name article_author">
+                                                        {{$article->user->name}}
+                                                    </span>
+                                                    |
+                                                    <span class="m-widget5__info-label">
+                                                        تاریخ انتشار :
+                                                    </span>
+                                                    <span class="m-widget5__info-date m--font-info">
+                                                        {{$article->created_at}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-widget5__content">
+                                            {{--<div class="m-widget5__stats1">
+                                                --}}{{--<span class="m-widget5__number">19,200</span><br>--}}{{--
+                                                <span class="m-widget5__sales"><span class="m-widget5__votes"><button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-danger m-btn--gradient-to-danger"><div class="m-demo-icon__class">
+                                                    لایک		<i class="la la-thumbs-up"></i>    
+                                                </div>
+                                                </button></span>
+                                            </div>--}}
+                                            <div class="m-widget5__stats2">
+                                                <span class="m-widget5__votes"><button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-success m-btn--gradient-to-accent btn-show-article">نمایش</button></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="m-widget5__content">
-                                    <div class="m-widget5__stats1">
-                                        {{--<span class="m-widget5__number">19,200</span><br>--}}
-                                        <span class="m-widget5__sales"><span class="m-widget5__votes"><button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-danger m-btn--gradient-to-danger"><div class="m-demo-icon__class">
-												لایک		<i class="la la-thumbs-up"></i>    </div></button></span>
-                                    </div>
-                                    <div class="m-widget5__stats2">
-
-                                        <span class="m-widget5__votes"><button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-success m-btn--gradient-to-accent">نمایش</button></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            @endforeach
+                        @endif
 
                         <!--end::m-widget5-->
                     </div>
@@ -247,13 +261,40 @@
 
                 <!--end::Content-->
             </div>
+            
         </div>
 
         <!--end:: Widgets/Best Sellers-->
     </div>
 </div>
 
+
+  <!-- The Modal -->
+    <div class="modal fade" id="article_modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">  
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="desc"></div>
+                        <hr/>
+                        <div class="author"></div>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+</div>
     @endsection
 @section('scripts')
 
@@ -267,4 +308,34 @@
 
     <!--end::Page Scripts -->
 
-    @endsection
+
+    <script>
+        $(".btn-show-article").on("click", function(){
+            var title = $(this).closest('.article_shows').find(".article_title").html();
+            var desc = $(this).closest('.article_shows').find(".article_desc").find('p').text();
+            var author = $(this).closest('.article_shows').find(".article_author").html();
+            
+            $("#article_modal").find(".modal-header").find(".modal-title").html('');
+            $("#article_modal").find(".modal-body").find(".desc").html('');
+            $("#article_modal").find(".modal-body").find(".author").html('');
+
+            $("#article_modal").find(".modal-header").find(".modal-title").html(title);
+            $("#article_modal").find(".modal-body").find(".desc").html(desc);
+            $("#article_modal").find(".modal-body").find(".author").html('نویسنده: '+ author);
+
+            $("#article_modal").modal("show");
+        });
+
+        function escapeHtml(text) {
+            var map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
+@endsection
