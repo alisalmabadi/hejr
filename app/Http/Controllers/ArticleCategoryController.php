@@ -61,7 +61,7 @@ class ArticleCategoryController extends Controller
         'img'=>$request->img
     ]);
 
-        flash('دسته مقاله ثبت شد','success');
+        flashs('دسته مقاله ثبت شد','success');
         return back();
     }
 
@@ -114,7 +114,7 @@ class ArticleCategoryController extends Controller
 
 
 
-        flash('دسته مقاله ویرایش شد','success');
+        flashs('دسته مقاله ویرایش شد','success');
         return redirect(route('admin.article_category.index'));
 
     }
@@ -133,7 +133,7 @@ class ArticleCategoryController extends Controller
     public function destroy(Request $request,ArticleCategory $articleCategory)
     {
         $articleCategory->destroy($request->input('selected' ));
-        flash('دسته مقاله حذف شد','danger');
+        flashs('دسته مقاله حذف شد','danger');
         return back();
 
     }
