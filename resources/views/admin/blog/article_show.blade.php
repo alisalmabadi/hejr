@@ -77,22 +77,21 @@
                             </tr>
                             </thead>
                             <tbody id="ajx_content_cat">
-                            @foreach($articles as $article)
-                                <tr>
-                                <td class="text-center">
-                                <input name="selected[]" value="{{$article->id}}" type="checkbox">
-                                </td>
-                                <td class="text-center">{{$article->title}}</td>
-                                <td class="text-center">{{$article->article_category->name}}</td>
+                            @if(!empty($articles))
+                                @foreach($articles as $article)
+                                    <tr>
+                                    <td class="text-center">
+                                    <input name="selected[]" value="{{$article->id}}" type="checkbox">
+                                    </td>
+                                    <td class="text-center">{{$article->title}}</td>
+                                    <td class="text-center">{{$article->article_category->name}}</td>
 
-                                <td class="text-center">{{$article->created_at}}</td>
+                                    <td class="text-center">{{$article->created_at}}</td>
 
-                                <td class="text-center"><a href="{{route('admin.article.edit',$article)}}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="ویرایش"><i class="fa fa-pencil"></i></a></td>
-                                </tr>
-                            @endforeach
-
-
-
+                                    <td class="text-center"><a href="{{route('admin.article.edit',$article)}}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="ویرایش"><i class="fa fa-pencil"></i></a></td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                     </div>
