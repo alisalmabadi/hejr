@@ -24,7 +24,7 @@
                 <h3 class="panel-title"><i class="fa fa-plus "></i>ویرایش دسته مقاله</h3>
             </div>
             <div class="panel-body">
-                <form action="{{route('admin.article_category.update',$article_category)}}" class="form-horizontal" method="post" enctype="multipart/form-data" id="form-category">
+                <form action="{{route('admin.article_category.update',$article_category)}}"  enctype="multipart/form-data" class="form-horizontal" method="post" id="form-category">
                     {{csrf_field()}}
                     {{method_field('PATCH')}}
 
