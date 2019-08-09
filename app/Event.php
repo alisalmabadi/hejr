@@ -68,9 +68,14 @@ class Event extends Model
     }
 
     public function users()
-    {
+    {//return users
         return $this->belongsToMany(User::class , 'event_users');
     }
+    public function event_users()
+    {//return event_users
+        return $this->hasmany(EventUser::class, 'event_id');
+    }
+
     public function getEventUserIdAttribute(){
         $user_id=\Auth::user()->id;
         $event_user_id=EventUser::where(['user_id'=>$user_id,'event_id'=>$this->id])->first()->id;

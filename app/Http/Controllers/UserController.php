@@ -30,6 +30,7 @@ use Intervention\Image\Facades\Image as ImageChange;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Event;
 use App\EventUser;
+use App\Article;
 
 class UserController extends Controller
 {
@@ -238,6 +239,7 @@ if(isset($request->birthday)) {
         $data['cores_count']= Core::all()->count();
         $data['events_count']= Event::all()->count();
         $data['events_registered_count']= EventUser::where('user_id',auth()->user()->id)->count();
+        $data['articles'] = Article::all();
         return view('user.dashboard',['data'=>$data]);
     }
 

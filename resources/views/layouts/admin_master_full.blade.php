@@ -427,7 +427,9 @@
                         </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="@if(strpos($current_route_name, 'eventUser.index')===6) active @endif"><a href="{{route('admin.eventUser.index')}}"><i class="fa fa-circle-o"></i>کاربران ثبت شده در هر رویداد</a></li>
+                            <li class="@if(strpos($current_route_name, 'eventUser.events')===6) active @endif"><a href="{{route('admin.eventUser.events')}}"><i class="fa fa-circle-o"></i>رویدادها</a></li>
+                            
+                            {{--<li class="@if(strpos($current_route_name, 'eventUser.index')===6) active @endif"><a href="{{route('admin.eventUser.index')}}"><i class="fa fa-circle-o"></i>کاربران ثبت شده در هر رویداد</a></li>--}}
                         </ul>
                     </li>
 

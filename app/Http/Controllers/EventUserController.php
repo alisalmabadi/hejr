@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\EventUser;
+use App\Event;
+use App\EventUserStatus;
 
 class EventUserController extends Controller
 {
@@ -16,6 +18,26 @@ class EventUserController extends Controller
     {
         $event_users = EventUser::all();
         return view('admin.eventUser.index' , compact('event_user'));
+    }
+
+    public function events()
+    {
+        $events = Event::all();
+        return view('admin.eventUser.events', compact('events'));
+    }
+
+    public function single_event(Event $event)
+    {
+        $event_users = $event->event_users;
+        $event_user_statuses = EventUserStatus::all();
+        return view('admin.eventUser.single_event', compact('event_users', 'event_user_statuses'));
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $event_user_id = EventUser::find($request['event_user_id']);
+        $event_user_id->update(['status'=>$request['status']]);
+        return response('update_done!');
     }
 
     /**

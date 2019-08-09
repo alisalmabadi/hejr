@@ -112,6 +112,7 @@
 
 
                       {{--  <div class="row">
+
                         <div class="col-sm-2 col-sm-offset-4">
                             <button type="button" class="btn btn-primary btn-block fileManager" data-url="" data-multi="true">نمایش گالری</button>  
                         </div>

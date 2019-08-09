@@ -23,7 +23,7 @@ class ArticleController extends Controller
     {
         $articles=Article::all();
         $article_categories=ArticleCategory::all();
-
+        
         return view('admin.blog.article_show',compact('article_categories','articles'));
     }
 
@@ -106,6 +106,7 @@ class ArticleController extends Controller
 
                 flashs('مقاله ذخیره شد','success');
                 return redirect(route('admin.article.index'));
+
     }
 
     public function edit(Article  $article) {
