@@ -22,6 +22,7 @@ use App\User;
 use App\Image;
 use Carbon\Carbon;
 use Hekmatinasser\Verta\Facades\Verta;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -666,28 +667,39 @@ $this->validate($request,[
     }
     public function registerEvent(Request $request)
     {
+
         $event = Event::find($request['event_id']);
         $user = \Auth::guard('web')->user();
-        $user_information = ['name'=>$user->name.' '.$user->lastname , 'email'=>$user->email , 'username'=>$user->username , 'phonenumber'=>$user->phonenumber];
-        $user_information = json_encode($user_information);
-        $event_information = ['name'=>$event->name , 'description'=>$event->description , 'start_date'=>$event->start_date , 'end_date'=>$event->end_date , 'price'=>$event->price , 'capacity'=>$event->capacity];
-        $event_information = json_encode($event_information);
-        $eventUser = EventUser::create([
-            'user_id'=>$user->id,
-            'event_id'=>$request['event_id'],
-            'user_information'=>$user_information,
-            'event_information'=>$event_information,
-            'status'=>1,
-        ]);
+        $count=$user->events->where('event_id',$event->id)->count();
 
-        $title = "رزرو ثبت نام شما در رویداد NAME انجام شد.";
-        $message = "'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'";
-        $type = 4;
-        $when = Carbon::now()->addSecond();
-        \Notification::send(\Auth::user(),(new NotifySignedUpEvent($event,$title,$message,$type))->delay($when));
-      //  dd($res);
+         if($count==0 && $event->fulled_capacity!=0) {
+             $user_information = ['name' => $user->name . ' ' . $user->lastname, 'email' => $user->email, 'username' => $user->username, 'phonenumber' => $user->phonenumber];
+             $user_information = json_encode($user_information);
+             $event_information = ['name' => $event->name, 'description' => $event->description, 'start_date' => $event->start_date, 'end_date' => $event->end_date, 'price' => $event->price, 'capacity' => $event->capacity];
+             $event_information = json_encode($event_information);
+             $eventUser = EventUser::create([
+                 'user_id' => $user->id,
+                 'event_id' => $request['event_id'],
+                 'user_information' => $user_information,
+                 'event_information' => $event_information,
+                 'status' => 1,
+             ]);
 
-        return response($eventUser);
+             $title = "رزرو ثبت نام شما در رویداد NAME انجام شد.";
+             $message = "'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'";
+             $type = 4;
+             $when = Carbon::now()->addSecond();
+             \Notification::send(\Auth::user(), (new NotifySignedUpEvent($event, $title, $message, $type))->delay($when));
+             //  dd($res);
+
+             return response($eventUser);
+         }elseif ($event->fulled_capacity == 0){
+             return Response()->json(['message'=>'متاسفانه ظرفیت تکمیل شده است. ','status'=>2],403);
+             // abort(403, 'error');
+         }else{
+             return Response()->json(['message'=>'شما قبلا در این رویداد ثبت نام کردید.','status'=>3],403);
+             // abort(403, 'error');
+         }
     }
 
     public function showregistered_event($eventUser_id)

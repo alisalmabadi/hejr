@@ -362,14 +362,28 @@ class EventController extends Controller
         $event->ended =$event->fulled_capacity;
 
         /***check kone ke in rooydad ghablan entekhab shode ya na***/
-        foreach($user->events as $u_event){
+       /* foreach($user->events as $u_event){
             if($u_event->id == $event->id){
-                $event_user_id = EventUser::where('event_id',$event->id)->where('user_id',$user->id)->first()->id;
+                $event_user_id = EventUser::where([['event_id',$event->id],['user_id',$user->id]])->first()->id;
                 $event->registered_me = 'YES';
                 $event->registered_id = $event_user_id;
+            }else{
+                $event->registered_me = 'NO';
+                $event->registered_id = 0;
             }
-        }
-        
+        }*/
+
+       $eventUser= $user->events->where('event_id',$event->id);
+       $eventUser_count=$eventUser->count();
+       $eventUser_id=$eventUser->first();
+       if($eventUser_count>0){
+           $event->registered_me = 'YES';
+           $event->registered_id = $eventUser_id->id;;
+       }else{
+           $event->registered_me = 'NO';
+           $event->registered_id = 0;
+       }
+
         //leaflet points
         if($event->address_point != null){
             $event->address_point = json_decode($event->address_point);

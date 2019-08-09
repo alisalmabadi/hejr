@@ -128,7 +128,7 @@
                                     <div class="m-widget19__body body1_{{$event->id}} text-center" style="display:block;">
                                         <p>{!! str_limit($event->description,200,'...') !!}</p><hr/>
                                         <label>تاریخ دوره</label><br>
-                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">از {{$event->start_dates}} تا {{$event->end_dates}}</p>
+                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">از {{$event->start_dates}} تا {{$event->end_dates}}</p><br>
                                         <label>تاریخ پایان ثبت نام</label><br>
                                         <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">{{$event->end_date_sign}}</p>
                                         <br/>
@@ -177,7 +177,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" style="float: right;margin-right: 0;border: 1px solid;border-radius: 100%;background: #16171f;color: white;">&times;</button>
-                    <h4 class="modal-title" style="text-align: center;float: none;margin: 0 auto;">توضیحات رویداد {{$event->name}}</h4>
+                    <h4 class="modal-title modaleventname" style="text-align: center;float: none;margin: 0 auto;"> </h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -336,10 +336,11 @@
                 url:url,
                 type:'POST',
                 success:function(data){
+                    $('.modaleventname').html( 'توضیحات رویداد '+data.name);
                     for(i=0; i< 10 ; i++) {
                         $('.owl_imagemodal').trigger('remove.owl.carousel',[i]).trigger('refresh.owl.carousel');
                     }
-           // console.log(data);
+            console.log(data);
 
                     $(".owl_imagemodal").owlCarousel({
                         // Most important owl features
@@ -411,7 +412,7 @@
                     if(data.registered_me == 'YES'){//ghablan register karde too in event
                         $("#myModal").find(".btn-success-modal").css('display','none');
                         var new_url = "{{url('/user/events/registered')}}/"+data.registered_id;
-                        $("#myModal").find(".modal-footer").append('<a href="'+new_url+'"><button class="btn btn-primary btn-show-detail">نمایش رویداد</button></a>');
+                        $("#myModal").find(".modal-footer").append('<a href="'+new_url+'"><button class="btn btn-primary btn-show-detail">نمایش رویداد رزرو شده</button></a>');
                     }
                     $("#myModal").modal('show');
                 },
@@ -449,16 +450,25 @@
                         url:url,
                         type:"POST",
                         success:function(data){
-                            Swal.fire(
-                            'موفقیت آمیز',
-                            'ثبت نام با موفقیت انجام شد',
-                            'success'
-                            )
-                            var redirct = "{{url('/user/events/registered')}}/"+data.id;
+
+                            Swal.fire({
+                               title: 'موفقیت آمیز',
+                               text: 'ثبت نام با موفقیت انجام شد',
+                               type :'success',
+                               confirmButtonText: 'خب!',
+                            })
+                           var redirct = "{{url('/user/events/registered')}}/"+data.id;
                             window.location.replace(redirct);
                         },
-                        error:function(){
+                        error:function(request, status, error){
+                           var error = $.parseJSON(request.responseText);
                             console.log('error in registering in event');
+                            Swal.fire({
+                                title: 'متاسفیم!',
+                                text:error.message,
+                                type :'warning',
+                                confirmButtonText: 'خب!',
+                            })
                         }
                     });
                 }

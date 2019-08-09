@@ -225,14 +225,15 @@
                                                         نویسنده:
                                                     </span>
                                                     <span class="m-widget5__info-author-name article_author">
-                                                        {{$article->user->name}}
+                                                        {{$article->user->name}}                                                          {{$article->user->lastname}}
+
                                                     </span>
                                                     |
                                                     <span class="m-widget5__info-label">
                                                         تاریخ انتشار :
                                                     </span>
                                                     <span class="m-widget5__info-date m--font-info">
-                                                        {{$article->created_at}}
+                                                        {{$article->persian_date}}
                                                     </span>
                                                 </div>
                                             </div>
@@ -275,7 +276,7 @@
             <div class="modal-content">  
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
+                    <h4 class="modal-title">توضیحات کامل خبر</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     

@@ -22095,7 +22095,7 @@ body.m-portlet--fullscreen {
     position: absolute;
     bottom: 0;
     display: block;
-    z-index: 1;
+    z-index: 2;
     padding-right: 2.2rem;
     padding-bottom: 1.1rem; }
 
@@ -22151,8 +22151,8 @@ body.m-portlet--fullscreen {
   margin-top: 1.5rem; }
 
 .m-widget19 .m-widget19__pic .m-widget19__shadow {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(20%, rgba(0, 0, 0, 0)), color-stop(40%, rgba(0, 0, 0, 0.1)), color-stop(90%, rgba(0, 0, 0, 0.6))) no-repeat scroll 100% 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.6) 90%) no-repeat scroll 100% 0; }
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(20%, rgba(0, 0, 0, 0)), color-stop(40%, rgba(0, 0, 0, 0.1)), color-stop(90%, rgba(0, 0, 0, 0.6))) no-repeat scroll 100% 0 !important;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.6) 90%) no-repeat scroll 100% 0;!important;z-index:1 }
 
 .m-widget19 .m-widget19__content .m-widget19__title {
   color: #575962; }

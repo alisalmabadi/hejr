@@ -85,7 +85,7 @@
                             <select  name="user_id" id="user_id" style="width: 100%;" class="form-control typesel" >
                                 <option value="0">انتخاب</option>
                                 @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    <option value="{{$user->id}}">{{$user->name}} {{$user->lastname}}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has('user_id'))
@@ -111,7 +111,8 @@
 
 
 
-                    {{--<div class="row">
+                      {{--  <div class="row">
+
                         <div class="col-sm-2 col-sm-offset-4">
                             <button type="button" class="btn btn-primary btn-block fileManager" data-url="" data-multi="true">نمایش گالری</button>  
                         </div>
