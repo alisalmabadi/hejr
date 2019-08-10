@@ -102,12 +102,12 @@
                                                 <span class="m-nav__link-text">Events</span>
                                             </a>
                                         </li>--}}
-                                        <li class="m-nav__item">
+                               {{--         <li class="m-nav__item">
                                             <a href="https://t.me/s_alis77" class="m-nav__link">
                                                 <i class="m-nav__link-icon flaticon-lifebuoy"></i>
                                                 <span class="m-nav__link-text">پشتیبانی</span>
                                             </a>
-                                        </li>
+                                        </li>--}}
                                     </ul>
                                     <div class="m-portlet__body-separator"></div>
                              {{--       <div class="m-widget1 m-widget1--paddingless">
