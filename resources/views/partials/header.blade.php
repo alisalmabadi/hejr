@@ -529,12 +529,12 @@
                                                             <span class="m-nav__link-text">FAQ</span>
                                                         </a>
                                                     </li>--}}
-                                                    <li class="m-nav__item">
+                                  {{--                  <li class="m-nav__item">
                                                         <a href="https://t.me/s_alis77" class="m-nav__link">
                                                             <i class="m-nav__link-icon flaticon-lifebuoy"></i>
                                                             <span class="m-nav__link-text">پشتیبانی</span>
                                                         </a>
-                                                    </li>
+                                                    </li>--}}
                                                     <li class="m-nav__separator m-nav__separator--fit">
                                                     </li>
                                                     <li class="m-nav__item">
