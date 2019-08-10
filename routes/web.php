@@ -134,7 +134,7 @@ Route::delete('area/destroy','AreaController@destroy');
     /*** admin event user ***/
     Route::get('citySelector' , ['uses'=>'EventController@citySelector' , 'as'=>'event.city_selector']);
     Route::get('event/delete/{event}' , ['uses'=>'EventController@delete','as'=>'event.delete']);
-    Route::resource('eventUser' , 'EventUserController' , ['except'=>'show','destroy','create','edit','store','update']);
+/*    Route::resource('eventUser' , 'EventUserController' , ['except'=>'show','destroy','create','edit','store','update']);*/
     Route::get('eventUser/events', ['uses'=>'EventUserController@events', 'as'=>'eventUser.events']);
     Route::get('eventUser/events/{event}', ['uses'=>'EventUserController@single_event', 'as'=>'eventUser.single_event']);
     Route::get('eventUser/changeStatus', ['uses'=>'EventUserController@changeStatus', 'as'=>'eventUser.changeStatus']);
