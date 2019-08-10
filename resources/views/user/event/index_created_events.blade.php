@@ -1,9 +1,7 @@
 @extends('layouts.app_master')
 @section('styles')
     <link rel="stylesheet" href="{{asset('pass/password_strength.css')}}">
-    <style>
-        
-    </style>
+    <link href="{{asset('js/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
 
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
@@ -183,5 +181,11 @@
 
 @endsection
 @section('scripts')
-
+    <script src="{{asset('js/datatables/datatables.bundle.js')}}" type="text/javascript"></script>
+    <script type="text/javascript">
+        var table = $('#m_table_1');
+        table.DataTable({
+            responsive: true,
+        });
+    </script>
 @endsection
