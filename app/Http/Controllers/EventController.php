@@ -38,6 +38,81 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function create_validate1(Request $request)
+    {
+        $this->validate($request , [
+            'name'=>'required|max:255',
+            'description'=>'max:60000',
+            'price'=>'required|numeric',
+            'capacity'=>'required|numeric',
+            'event_subject_id'=>'required|numeric',
+            'event_type_id'=>'required|numeric',
+            'event_status_id'=>'required|numeric',
+            'center_core_id'=>'required|numeric'
+        ],[
+            'name.required'=>'لطفا نام را وارد کنید',
+            'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'description.required'=>'لطفا این فیلد را پر کنید',
+            'description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'long_description.required'=>'لطفا این فیلد را پر کنید',
+            'long_description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'price.required'=>'لطفا قیمت را وارد کنید',
+            'price.numeric'=>'فقط عدد وارد کنید',
+            'capacity.required'=>'ظرفیت را وارد کنید',
+            'capacity.numeric'=>'فقط عدد وارد کنید',
+            'evend_subject_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_subject_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'event_type_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_type_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'event_status_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_status_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'center_core_id.required'=>'این فیلد را خالی رها نکنید',
+            'center_core_id.numeric'=>'از لیست بالا انتخاب کنید',
+        ]);
+    }
+
+    public function create_validate2(Request $request)
+    {
+        $request['start_date'] = Convertnumber2english($request['start_date']);
+        $request['end_date'] = Convertnumber2english($request['end_date']);
+        $request['end_date_signup'] = Convertnumber2english($request['end_date_signup']);
+
+        $this->validate($request , [
+            'start_date'=>'required|date',
+            'end_date'=>'required|date',
+            'end_date_signup'=>'required|date',
+        ],[
+            'start_date.required'=>'لطفا تاریخ شروع را وارد کنید',
+            'start_date.date'=>'فرمت وارد شده اشتباه است',
+            'end_date.required'=>'لطفا تاریخ اتمام را وارد کنید',
+            'end_date.date'=>'فرمت وارد شده اشتباه است',
+            'end_date_signup.required'=>'لطفا تاریخ اتمام ثبت نام را وارد کنید',
+            'end_date_signup.date'=>'فرمت وارد شده اشتباه است',
+        ]);
+    }
+
+    public function create_validate3(Request $request)
+    {   
+        $this->validate($request , [
+            'province_id'=>'required|numeric',
+            'city_id'=>'required|numeric',
+            'address'=>'required|max:255',
+            'xplace'=>'nullable|numeric',
+            'yplace'=>'nullable|numeric',
+        ],[
+            'province_id.required'=>'این فیلد را خالی رها نکنید',
+            'province_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'city_id.required'=>'این فیلد را خالی رها نکنید',
+            'city_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'address.required'=>'لطفا ادرس را وارد کنید',
+            'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+            'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+        ]);
+    }
+
+
     public function create()
     {
         $event_subjects = EventSubject::where('status' , 1)->get();
@@ -128,27 +203,29 @@ class EventController extends Controller
        $event=$admin->events()->save($event);
 
         /*image upload*/
-        foreach ($request->image as $key=>$image) {
-        $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
-        $main_folder = 'images/events/';
-        $url = $main_folder;
-        $image->move($url, $imagename);
-/***thumbnail ***/
-                $path = public_path('images/events/thumbnails') . "/" . $imagename;
-                $img = ImageChange::make(public_path('images/events/') . $imagename)->resize(324,202)->save($path);
-            $images = Image::create([
-                'image_type' => $image->getClientOriginalExtension(),
-                'image_original' => $imagename,
-                'image_path' => $url . $imagename,
-                'thumbnail_path'=>$img->basename,
-            ]);
-
-            if($key==0){
-                $event->update(['thumbnail_id'=>$images->id]);
-            }
+        if(!empty($request->image)){
+            foreach ($request->image as $key=>$image) {
+            $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
+            $main_folder = 'images/events/';
+            $url = $main_folder;
+            $image->move($url, $imagename);
             /***thumbnail ***/
-            $event->images()->attach($images->id);
+                    $path = public_path('images/events/thumbnails') . "/" . $imagename;
+                    $img = ImageChange::make(public_path('images/events/') . $imagename)->resize(324,202)->save($path);
+                $images = Image::create([
+                    'image_type' => $image->getClientOriginalExtension(),
+                    'image_original' => $imagename,
+                    'image_path' => $url . $imagename,
+                    'thumbnail_path'=>$img->basename,
+                ]);
 
+                if($key==0){
+                    $event->update(['thumbnail_id'=>$images->id]);
+                }
+                /***thumbnail ***/
+                $event->images()->attach($images->id);
+
+            }
         }
 
 
