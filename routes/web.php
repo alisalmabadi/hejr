@@ -127,6 +127,9 @@ Route::delete('area/destroy','AreaController@destroy');
     /*** admin event ***/
     Route::get('event/changeStatus/{event}' , ['uses'=>'EventController@changeStatus' , 'as'=>'eventStatus.changeStatus']);
     Route::delete('event/destroy','EventController@destroy');
+    Route::post('event/create/validate1', ['uses'=>'EventController@create_validate1', 'as'=>'event.create.validate1']);
+    Route::post('event/create/validate2', ['uses'=>'EventController@create_validate2', 'as'=>'event.create.validate2']);
+    Route::post('event/create/validate3', ['uses'=>'EventController@create_validate3', 'as'=>'event.create.validate3']);
     Route::resource('event' , 'EventController' , ['except'=>'show','destroy']);
     Route::post('event/showAllEvents', ['uses'=>'EventController@showAllEvents','as'=>'event.showAllEvents']);
     /*** admin event ***/
