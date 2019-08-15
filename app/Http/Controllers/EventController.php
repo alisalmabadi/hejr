@@ -573,4 +573,15 @@ class EventController extends Controller
         }
         return redirect()->route('admin.event.addUser');
     }
+
+    public function delete_image(Request $request)
+    {
+        $image = Image::find($request['image_id']);
+        //delete image FILE
+        unlink($image->image_path);
+        unlink("images/events/thumbnails/".$image->thumbnail_path);
+        Image::destroy($request['image_id']);
+
+        return response($request['image_id']);//vase jquery niaz hastesh.
+    }
 }
