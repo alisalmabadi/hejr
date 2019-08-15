@@ -132,6 +132,7 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::post('event/create/validate3', ['uses'=>'EventController@create_validate3', 'as'=>'event.create.validate3']);
     Route::resource('event' , 'EventController' , ['except'=>'show','destroy']);
     Route::post('event/showAllEvents', ['uses'=>'EventController@showAllEvents','as'=>'event.showAllEvents']);
+    Route::post('event/image/delete', ['uses'=>'EventController@delete_image', 'as'=>'event.delete_image']);
     /*** admin event ***/
 
     /*** admin event user ***/
