@@ -297,11 +297,22 @@
                                 <button class="btn btn-success center" type="button" id="addphoto">افزودن فیلد عکس</button>
                             </div>
                           <div class="images col-md-12">
-                              <table class="table table-responsive">
-                              @foreach($event->images as $image)
-                                  <tr><td><img class="img-responsive" src="{{asset($image->image_path)}}"> </td></tr>
-                              @endforeach
-                              </table>
+                            @if(count($event->images) > 0)
+                                <button type="button" class="btn btn-info form-control" data-toggle="collapse" data-target="#demo" style="margin-bottom:20px">نمایش تصاویر رویداد</button>
+                                
+                                    <div id="demo" class="collapse">
+                                        @foreach($event->images as $image)
+                                        <div class="row img_{{$image->id}}" style="border: 1px solid whitesmoke;box-shadow: 1px 1px 1px 1px #928e8e;border-radius: 20px; margin-bottom:10px;">
+                                            <div class="col-md-9">
+                                                <img class="img-responsive" src="{{asset($image->image_path)}}" style="width:400px; margin-right:220px;">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="button" class="btn btn-danger form-control btn-delete_img" data-img_id="{{$image->id}}" data-event_id="{{$event->id}}">حذف این تصویر</button>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                @endif
                           </div>
 
                         </div>
@@ -400,4 +411,55 @@
         });
 
     </script>
+
+
+    {{--delete image--}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(".btn-delete_img").on("click", function(){
+            swal.fire({
+                title: 'اطمینان دارید ؟',
+                text: "بعد از حذف این تصویر قادر با بازیابی آن نمیباشیم!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'بله, حذف شود',
+                cancelButtonText: 'خیر'
+                }).then((result) => {
+                if (result.value) {
+
+                    var event_id = $(this).data('event_id');
+                    var image_id = $(this).data('img_id');
+                    var url = "{{route('admin.event.delete_image')}}";
+                    $.ajax({
+                        data:{'event_id':event_id, 'image_id':image_id},
+                        url:url,
+                        type:"POST",
+                        success:function(data){
+                            swal.fire({
+                                position: 'center',
+                                type: 'success',
+                                title: 'تصویر با موفقیت حذف گردید!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            setTimeout(function(){
+                                $(".img_"+data).fadeOut("slow");
+                            },1500);
+                        },
+                        error:function(){
+                            console.log('errror in deleting image');
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+    {{--end of delete image--}}
 @stop
