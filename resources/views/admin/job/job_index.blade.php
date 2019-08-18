@@ -20,7 +20,7 @@
     <section class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i> لیست مناطق </h3>
+                <h3 class="panel-title"><i class="fa fa-list"></i> لیست شغل ها </h3>
             </div>
             <div class="panel-body">
                 <form action="/admin/job/destroy" method="post" enctype="multipart/form-data" id="form-material">
