@@ -369,12 +369,3 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
 Route::post('show_cities',['uses'=>'UserController@show_cities','as'=>'show_cities']);
 Route::post('loadfields',['as'=>'loadfields','uses'=>'FieldController@search']);
 /*****public routes**********/
-
-/******test route***********/
-/*Route::get('test',function(){
-   return view('user.dashboard');
-});*/
-/******test route***********/
-Route::get('/test' , function(){
-dd('add reposirory - first test for commit and push - 03');
-});
