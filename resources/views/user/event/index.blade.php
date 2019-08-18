@@ -30,9 +30,7 @@
         .owl-prev i, .owl-next i {transform : scale(6,6); color: #ccc;}
     </style>
 
-    <link rel="stylesheet" href="{{asset('css/leaflet.css')}}"
-          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-          crossorigin=""/>
+    <link rel="stylesheet" href="{{asset('css/leaflet.css')}}" />
 
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
