@@ -10,6 +10,11 @@ use Larabookir\Gateway\Zarinpal\Zarinpal;
 
 class PaymentController extends Controller
 {
+
+    public function __construct()
+    {
+        return $this->middleware('admin');
+    }
     public function request(Request $request)
     {
         $user=\Auth::guard('web')->user();

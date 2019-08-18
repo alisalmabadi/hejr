@@ -23,6 +23,13 @@ use Intervention\Image\Facades\Image as ImageChange;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('admin')->except(['getDetails']);
+        return $this->middleware('auth')->only(['getDetails']);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

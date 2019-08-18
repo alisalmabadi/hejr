@@ -18,6 +18,11 @@ class EventUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $event_users = EventUser::all();

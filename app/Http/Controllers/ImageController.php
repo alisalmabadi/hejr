@@ -14,6 +14,11 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        return $this->middleware('admin');
+    }
+
     public function index()
     {
         $images = Image::all();

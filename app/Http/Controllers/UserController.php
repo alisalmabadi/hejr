@@ -37,7 +37,7 @@ class UserController extends Controller
     public function __construct()
     {
          $this->middleware('admin')->only(['index','create','edit','store','update','index','multiple','multiple_store','show_users']);
-         $this->middleware('auth')->only(['panel','profile','createEvent', 'core_users_index', 'core_users_create', 'core_users_store', 'core_users_edit', 'core_users_update']);
+         $this->middleware('auth')->only(['panel','profile','createEvent', 'core_users_index', 'core_users_create', 'core_users_store', 'core_users_edit', 'core_users_update','show_events','showAllRegistered','indexCreatedEvents','profile_edit','uni_details','university_add','checkemail','checkusername','uploadpic','university_update','storeEvent','updateEvent','editCreatedEvents','registerEvent','showregistered_event','core_users_show','show_cities']);
     }
 
     /**
