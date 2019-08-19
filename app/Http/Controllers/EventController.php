@@ -203,11 +203,11 @@ class EventController extends Controller
         $request['eventable_id'] = $admin->id;
         $request['eventable_type'] = 'admin';
         $event=Event::create($request->except(['information','address_point']));
-        if($request->xplace != null) {
+      //  if($request->xplace != null) {
             $address_point = [$request->xplace, $request->yplace];
             $address_point = json_encode($address_point);
             $event->update(['address_point' => $address_point]);
-        }
+     //  }
         $event=$admin->events()->save($event);
 
         /*image upload*/
@@ -354,11 +354,11 @@ class EventController extends Controller
 
 
         $event->update($request->except(['information','address_point']));
-        if($request->xplace != null) {
+       // if($request->xplace != null) {
             $address_point = [$request->xplace, $request->yplace];
             $address_point = json_encode($address_point);
             $event->update(['address_point' => $address_point]);
-        }
+        //}
 
         if(!empty($request['image'])){
             foreach ($request->image as $key=>$image) {
