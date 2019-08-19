@@ -506,11 +506,11 @@ $this->validate($request,[
             $request['eventable_id'] = $user->id;
             $request['eventable_type'] = 'user';
             $event = Event::create($request->except(['information', 'address_point']));
-            if($request->xplace != null) {
+          //  if($request->xplace != null) {
                 $address_point = [$request->xplace, $request->yplace];
                 $address_point = json_encode($address_point);
                 $event->update(['address_point' => $address_point]);
-            }
+           // }
             $event = $user->createdEvents()->save($event);
 
 
@@ -612,11 +612,11 @@ $this->validate($request,[
         ]);
 
         $event->update($request->except(['information','address_point']));
-        if($request->xplace != null) {
+       // if($request->xplace != null) {
             $address_point = [$request->xplace, $request->yplace];
             $address_point = json_encode($address_point);
             $event->update(['address_point' => $address_point]);
-        }
+      //  }
 
         if(!empty($request['image'])){
             foreach ($request->image as $key=>$image) {
