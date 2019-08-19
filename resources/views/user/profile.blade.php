@@ -368,7 +368,7 @@
                                                 </div>
                                                 <div class="form-group m-form__group row">
                                                     <label for="exampleSelect1" class="col-2 
-                                                    col-form-label">دانشگاه</label>
+                                                    col-form-label">دانشگاه یا حوزه</label>
                                                     <div class="col-7">
                                                         <select class="form-control js-example-basic-multiple change_uni m-input m-input--square" name="university_id" id="exampleSelect1">
                                                             <option value="">انتخاب کنید.</option>
