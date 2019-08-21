@@ -8,9 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    protected $fillable=['name','lastname','username','email','password','bio','city_id','province_id','grade_id','soldier_service_id','field_id','university_id','core_id','area_id','job_id','nationcode','father_name','phonenumber','image_path','birthday','martial','status','address','konkor_grade'];
+    protected $fillable =['name','lastname','username','email','password','bio','city_id','province_id','grade_id','soldier_service_id','field_id','university_id','core_id','area_id','job_id','nationcode','father_name','phonenumber','image_path','birthday','martial','status','address','konkor_grade','home_number','postalcode'];
+
     use Notifiable;
-    use SoftDeletes;
+   // use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
