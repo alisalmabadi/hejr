@@ -36,7 +36,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-         $this->middleware('admin')->only(['index','create','edit','store','update','index','multiple','multiple_store','show_users']);
+         $this->middleware('admin')->only(['index','create','edit','store','update','index','multiple','multiple_store','show_users','destroy']);
          $this->middleware('auth')->only(['panel','profile','createEvent', 'core_users_index', 'core_users_create', 'core_users_store', 'core_users_edit', 'core_users_update','show_events','showAllRegistered','indexCreatedEvents','profile_edit','uni_details','university_add','checkemail','checkusername','uploadpic','university_update','storeEvent','updateEvent','editCreatedEvents','registerEvent','showregistered_event','core_users_show','show_cities']);
     }
 
@@ -220,10 +220,61 @@ if(isset($request->birthday)) {
         return back();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users=User::all();
-        return view('admin.users.index',compact('users'));
+        $cores=Core::all();
+        $jobs=Job::all();
+        $fields = Field::all();
+        $filter = array();
+
+        if($request) {
+            $filter['core_id'] = $request->core_id;
+            $filter['field_id'] = $request->field_id;
+            $filter['job_id'] = $request->job_id;
+        }else{
+
+            $filter['core_id'] = null;
+            $filter['field_id'] = null;
+            $filter['job_id'] = null;
+        }
+
+        if($request->core_id==0 && $request->job_id == 0 && $request->field_id == 0){
+            $users=User::all();
+        }elseif(
+            $request->core_id!=0 && $request->job_id != 0 && $request->field_id != 0
+        ){
+            $users=User::where([['core_id',$request->core_id],['job_id',$request->job_id],['field_id',$request->field_id]])->get();
+
+        }elseif($request->field_id == 0 && $request->job_id !=0 && $request->core_id != 0 ){
+
+            $users=User::where([['core_id',$request->core_id],['job_id',$request->job_id]])->get();
+
+        }elseif($request->field_id != 0 && $request->job_id ==0 && $request->core_id != 0){
+
+            $users=User::where([['core_id',$request->core_id],['field_id',$request->field_id]])->get();
+
+        }elseif($request->field_id != 0 && $request->job_id !=0 && $request->core_id == 0){
+
+            $users=User::where([['job_id',$request->job_id],['field_id',$request->field_id]])->get();
+
+        }elseif($request->field_id != 0 && $request->job_id ==0 && $request->core_id == 0){
+
+            $users=User::where('field_id',$request->field_id)->get();
+
+        }elseif($request->field_id == 0 && $request->job_id !=0 && $request->core_id == 0){
+
+            $users=User::where('field_id',$request->job_id)->get();
+
+        }elseif($request->field_id == 0 && $request->job_id ==0 && $request->core_id != 0){
+           // dd($request->all());
+
+            $users=User::where('core_id',$request->core_id)->get();
+
+        }else{
+            dd('Mage mishe?!');
+        }
+
+        return view('admin.users.index',compact('users','cores','jobs','fields','filter'));
     }
 
     public function show_cities(Request $request)
@@ -254,11 +305,13 @@ if(isset($request->birthday)) {
         $file=str_replace('/storage','storage',$file);
         $file=str_replace('//','/',$file);
         $file = str_replace('storage/files/','',$file);
-/*        dd($file);*/
-       $res = Excel::import(new UsersImport(),$file,'files');
-/*       dd($res);*/
+        /*dd($file);*/
+        $res = Excel::import(new UsersImport(),$file,'files');
+        dd($res);
+
         flashs('کاربران با موفقیت ذخیره شدند.','success');
-        return redirect(route('admin.user.all'));
+        session()->flash(['users',$res]);
+        return redirect(route('admin.user.all'))->withS;
     }
 
     public function profile()
@@ -397,7 +450,7 @@ $this->validate($request,[
         $realtpath= $thumb.$filename;
 
             // path does not exist
-            $img = Image::make($filepath)->resize(200, 200)->save($tfilepath);
+            $img = ImageChange::make($filepath)->resize(200, 200)->save($tfilepath);
             $movetthum= File::move($tfilepath, $realtpath);
             if($movetthum == true) {
             $user=\Auth::user()->update(['image_path'=>'/storage/photos//'.$filename]);
@@ -1009,5 +1062,15 @@ $this->validate($request,[
         }
         flashs('عضو با موفقیت ویرایش شد.','success');
         return redirect()->route('user.coreUsers.index');
+    }
+
+
+    public function destroy(Request $request)
+    {
+        //dd($request->input('selected'));
+        $user = new User();
+        $user = $user->destroy($request->input('selected'));
+        flashs('کاربران انتخاب شده با موفقیت حذف شدند.');
+        return back();
     }
 }
