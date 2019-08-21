@@ -4,6 +4,12 @@
         .select2{
             width: 80% !important;
         }
+        .alerts{
+            padding: 15px;
+            margin-bottom: 22px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
     </style>
 
     @endsection
@@ -28,11 +34,30 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-plus "></i>ایجاد عضو جدید</h3>
+                <h3 class="panel-title"><i class="fa fa-plus "></i>ایجاد گروهی عضو جدید</h3>
             </div>
             <div class="panel-body">
                 <form action="{{route('admin.user.multiple_store')}}" class="form-horizontal" method="post" enctype="multipart/form-data" id="form-material">
                     {{csrf_field()}}
+
+    <div class="alerts alert-danger" role="alert">
+        <h2>
+            لطفا برای افزودن عضو به نکات زیر توجه فرمایید:
+        </h2>
+
+        <ul>
+          <li>
+              عضو تکراری در سامانه موجود نباشد.
+          </li>
+            <li>
+                فایل اکسل آپلود شده باید دارای ستون هایی مثل  <a href="">این فایل</a> باشد.
+
+            </li>
+            <li>
+                هیچ ستون هسته ، رمزعبور و نام کاربری خالی نباشد.
+            </li>
+        </ul>
+    </div>
 
 
                     <div class="input-group">
