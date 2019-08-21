@@ -31,6 +31,8 @@ Route::get('/logout',['as'=>'logout','uses'=>'AdminAuth\LoginController@logout']
 
 Route::group(['prefix'=>'users','as'=>'user.'],function (){
     Route::get('/',['uses'=>'UserController@index','as'=>'all']);
+    Route::delete('destroy','UserController@destroy');
+
     Route::get('create',['uses'=>'UserController@create','as'=>'create']);
     Route::get('{user}/edit',['uses'=>'UserController@edit','as'=>'edit']);
     Route::post('store',['uses'=>'UserController@store','as'=>'store']);
@@ -160,6 +162,12 @@ Route::delete('area/destroy','AreaController@destroy');
     Route::get('discount/delete/{id}' , ['uses'=>'DiscountController@delete' , 'as'=>'discount.delete']);
     Route::resource('discount' , 'DiscountController' , ['except' => 'destroy']);
     /*** discounts ***/
+
+    /*** User Reports ***/
+    Route::get('report/user',['as'=>'report.user','uses'=>'ReportController@users']);
+
+    Route::post('report/user/export',['as'=>'report.user.export','uses'=>'ReportController@export']);
+    /*** User  Reports ***/
 
     /*** images ***/
 /*    Route::delete('image/delete' , ['uses'=>'ImageController@delete','as'=>'image.delete']);
