@@ -305,7 +305,6 @@ if(isset($request->birthday)) {
         $file=str_replace('/storage','storage',$file);
         $file=str_replace('//','/',$file);
         $file = str_replace('storage/files/','',$file);
-        /*dd($file);*/
         $res = new UsersImport() ;
         Excel::import($res,$file,'files');
         flashs('کاربران با موفقیت ذخیره شدند.','success');
