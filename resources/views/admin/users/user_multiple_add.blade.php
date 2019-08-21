@@ -50,7 +50,7 @@
               عضو تکراری در سامانه موجود نباشد.
           </li>
             <li>
-                فایل اکسل آپلود شده باید دارای ستون هایی مثل  <a href="">این فایل</a> باشد.
+                فایل اکسل آپلود شده باید دارای ستون هایی مثل  <a href="{{url('storage/users5.csv')}}">این فایل</a> باشد.
 
             </li>
             <li>
@@ -58,6 +58,22 @@
             </li>
         </ul>
     </div>
+                    @if(Session::has('users'))
+                    <div class="alerts alert-success" role="alert">
+                        <h2>
+                           کاربران زیر با موفقیت افزوده شدند!
+                        </h2>
+
+                        <ul>
+                            @foreach(session()->get('users') as $user)
+                                <li>
+                                    {{$user}}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
 
 
                     <div class="input-group">
