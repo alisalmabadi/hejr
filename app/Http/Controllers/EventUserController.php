@@ -38,8 +38,10 @@ class EventUserController extends Controller
     public function single_event(Event $event)
     {
         $event_users = $event->event_users;
+        //dd($event_users);
         $event_user_statuses = EventUserStatus::all();
-        return view('admin.eventUser.single_event', compact('event_users', 'event_user_statuses'));
+        //dd($event_users);
+        return view('admin.eventUser.single_event', compact('event_users', 'event_user_statuses','event'));
     }
 
     public function changeStatus(Request $request)
