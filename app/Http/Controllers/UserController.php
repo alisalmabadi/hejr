@@ -306,12 +306,11 @@ if(isset($request->birthday)) {
         $file=str_replace('//','/',$file);
         $file = str_replace('storage/files/','',$file);
         /*dd($file);*/
-        $res = Excel::import(new UsersImport(),$file,'files');
-        dd($res);
-
+        $res = new UsersImport() ;
+        Excel::import($res,$file,'files');
         flashs('کاربران با موفقیت ذخیره شدند.','success');
-        session()->flash(['users',$res]);
-        return redirect(route('admin.user.all'))->withS;
+        session()->flash('users',$res->getData());
+        return redirect(route('admin.user.multiple'));
     }
 
     public function profile()
