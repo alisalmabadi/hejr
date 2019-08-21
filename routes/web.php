@@ -24,34 +24,34 @@ Route::Post('payment/request','PaymentController@request')->name('payment.reques
 Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
 //Login Routes...
     Route::get('/','AdminController@index')->name('index');
-Route::get('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@showLoginForm']);
-Route::post('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@login']);
-Route::get('/logout',['as'=>'logout','uses'=>'AdminAuth\LoginController@logout']);
-/*Route::GET('/post/isaac',['as'=>'post.isaac','uses'=>'PostController@isaac']);*/
+    Route::get('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@showLoginForm']);
+    Route::post('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@login']);
+    Route::get('/logout',['as'=>'logout','uses'=>'AdminAuth\LoginController@logout']);
+    /*Route::GET('/post/isaac',['as'=>'post.isaac','uses'=>'PostController@isaac']);*/
 
-Route::group(['prefix'=>'users','as'=>'user.'],function (){
-    Route::get('/',['uses'=>'UserController@index','as'=>'all']);
-    Route::delete('destroy','UserController@destroy');
+    Route::group(['prefix'=>'users','as'=>'user.'],function (){
+        Route::get('/',['uses'=>'UserController@index','as'=>'all']);
+        Route::delete('destroy','UserController@destroy');
 
-    Route::get('create',['uses'=>'UserController@create','as'=>'create']);
-    Route::get('{user}/edit',['uses'=>'UserController@edit','as'=>'edit']);
-    Route::post('store',['uses'=>'UserController@store','as'=>'store']);
-    Route::post('user/{user}',['uses'=>'UserController@update','as'=>'update']);
-    Route::get('multiple',['uses'=>'UserController@multiple','as'=>'multiple']);
-    Route::post('multiple-store',['uses'=>'UserController@multiple_store','as'=>'multiple_store']);
+        Route::get('create',['uses'=>'UserController@create','as'=>'create']);
+        Route::get('{user}/edit',['uses'=>'UserController@edit','as'=>'edit']);
+        Route::post('store',['uses'=>'UserController@store','as'=>'store']);
+        Route::post('user/{user}',['uses'=>'UserController@update','as'=>'update']);
+        Route::get('multiple',['uses'=>'UserController@multiple','as'=>'multiple']);
+        Route::post('multiple-store',['uses'=>'UserController@multiple_store','as'=>'multiple_store']);
 
 
-});
+    });
 
-/** admin area  **/
-Route::resource('area','AreaController',['except'=>['show','destroy']]);
-Route::delete('area/destroy','AreaController@destroy');
-/** admin area  **/
+    /** admin area  **/
+    Route::resource('area','AreaController',['except'=>['show','destroy']]);
+    Route::delete('area/destroy','AreaController@destroy');
+    /** admin area  **/
 
-/** admin field  **/
+    /** admin field  **/
     Route::resource('field','FieldController',['except'=>['show','destroy']]);
     Route::delete('field/destroy','FieldController@destroy');
-/** admin field  **/
+    /** admin field  **/
 
     /** admin grade  **/
     Route::resource('grade','GradeController',['except'=>['show','destroy']]);
@@ -140,7 +140,7 @@ Route::delete('area/destroy','AreaController@destroy');
     /*** admin event user ***/
     Route::get('citySelector' , ['uses'=>'EventController@citySelector' , 'as'=>'event.city_selector']);
     Route::get('event/delete/{event}' , ['uses'=>'EventController@delete','as'=>'event.delete']);
-/*    Route::resource('eventUser' , 'EventUserController' , ['except'=>'show','destroy','create','edit','store','update']);*/
+    /*    Route::resource('eventUser' , 'EventUserController' , ['except'=>'show','destroy','create','edit','store','update']);*/
     Route::get('eventUser/events', ['uses'=>'EventUserController@events', 'as'=>'eventUser.events']);
     Route::get('eventUser/events/{event}', ['uses'=>'EventUserController@single_event', 'as'=>'eventUser.single_event']);
     Route::get('eventUser/changeStatus', ['uses'=>'EventUserController@changeStatus', 'as'=>'eventUser.changeStatus']);
@@ -170,11 +170,11 @@ Route::delete('area/destroy','AreaController@destroy');
     /*** User  Reports ***/
 
     /*** images ***/
-/*    Route::delete('image/delete' , ['uses'=>'ImageController@delete','as'=>'image.delete']);
-    Route::resource('image' , 'ImageController', ['except'=>'destroy']);    
-    Route::post('image/showEventImages' , ['uses'=>'ImageController@show_event_images' , 'as'=>'image.show_event_images']);
-    Route::post('image/addEventImage' , ['uses'=>'ImageController@add_event_image', 'as'=>'image.add_event_image']);
-    Route::post('image/deleteEventImage', ['uses'=>'ImageController@delete_event_image', 'as'=>'image.delete_event_image']);*/
+    /*    Route::delete('image/delete' , ['uses'=>'ImageController@delete','as'=>'image.delete']);
+        Route::resource('image' , 'ImageController', ['except'=>'destroy']);
+        Route::post('image/showEventImages' , ['uses'=>'ImageController@show_event_images' , 'as'=>'image.show_event_images']);
+        Route::post('image/addEventImage' , ['uses'=>'ImageController@add_event_image', 'as'=>'image.add_event_image']);
+        Route::post('image/deleteEventImage', ['uses'=>'ImageController@delete_event_image', 'as'=>'image.delete_event_image']);*/
     /*** end of images ***/
 
 });
@@ -319,7 +319,7 @@ Route::post('register', [
 /********user auth routes***************/
 
 Route::group(['prefix'=>'user','as'=>'user.'],function(){
-   Route::get('/',['as'=>'panel','uses'=>'UserController@panel']);
+    Route::get('/',['as'=>'panel','uses'=>'UserController@panel']);
     Route::get('profile',['as'=>'profile','uses'=>'UserController@profile']);
     Route::post('update',['as'=>'update','uses'=>'UserController@profile_edit']);
     Route::post('/prodile/edit/uniDetails', ['as'=>'uni_details', 'uses'=>'UserController@uni_details']);
@@ -329,7 +329,7 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::post('checkusername',['as'=>'checkusername','uses'=>'UserController@checkusername']);
     Route::post('uploadpic',['uses'=>'UserController@uploadpic','as'=>'uploadpic']);
     /**notification ***/
-    
+
     Route::post('notification/get',['uses'=>'NotificationController@get','as'=>'notification.get']);
     Route::post('notification/unread/get',['uses'=>'NotificationController@unreadget','as'=>'notification.unread.get']);
 
@@ -337,18 +337,18 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
 
     /***user events ***/
     Route::get('events',['uses'=>'UserController@show_events','as'=>'events']);
-    
-/*** event Create For Spec Users ***/
+
+    /*** event Create For Spec Users ***/
     Route::get('events/create',['uses'=>'UserController@createEvent','as'=>'events.create']);
 
     Route::post('events/store',['uses'=>'UserController@storeEvent','as'=>'events.store']);
-    
+
     Route::get('events/index',['uses'=>'UserController@indexCreatedEvents','as'=>'events.index']);
 
     Route::patch('events/{event}',['uses'=>'UserController@updateEvent','as'=>'events.update']);
 
     Route::get('events/{event}/edit',['uses'=>'UserController@editCreatedEvents','as'=>'events.edit']);
-/*** event Create For Spec Users ***/
+    /*** event Create For Spec Users ***/
 
     Route::post('events/register',['uses'=>'UserController@registerEvent','as'=>'events.register']);
     Route::get('events/registered/{user_event}',['uses'=>'UserController@showregistered_event','as'=>'events.registered']);
@@ -356,7 +356,7 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::post('event/getDetails' , ['uses'=>'EventController@getDetails' , 'as'=>'event.details']);
 
     /***peyment routes ***/
-    
+
     Route::get('payment/verify','PaymentController@verify')->name('payment.verify');
     Route::Post('payment/request','PaymentController@request')->name('payment.request');
 
@@ -377,3 +377,8 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
 Route::post('show_cities',['uses'=>'UserController@show_cities','as'=>'show_cities']);
 Route::post('loadfields',['as'=>'loadfields','uses'=>'FieldController@search']);
 /*****public routes**********/
+
+Route::get('migrate',function(){
+    Artisan::call('migrate');
+    dd('migrate shod!');
+});
