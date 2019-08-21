@@ -10,7 +10,7 @@
         </h1>
         <ol class="breadcrumb">
 
-            <li class="active"><i class="fa fa-th"></i>گزارش ثبت نام در رویداد {{$event_users[0]->event->name}}</li>
+            <li class="active"><i class="fa fa-th"></i>گزارش ثبت نام در رویداد {{$event->name}}</li>
         </ol>
     </section>
 @endsection
@@ -20,7 +20,7 @@
     <section class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>گزارش ثبت نام در رویداد {{$event_users[0]->event->name}}</h3>
+                <h3 class="panel-title"><i class="fa fa-list"></i>گزارش ثبت نام در رویداد {{$event->name}}</h3>
             </div>
             <div class="panel-body">
                     <div class="table-responsive" style="overflow-x:hidden;">
