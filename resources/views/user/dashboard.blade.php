@@ -247,7 +247,7 @@
                                                 </button></span>
                                             </div>--}}
                                             <div class="m-widget5__stats2">
-                                                <span class="m-widget5__votes"><button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-success m-btn--gradient-to-accent btn-show-article">نمایش</button></span>
+                                                <span class="m-widget5__votes"><button type="button" class="btn m-btn--pill m-btn--air m-btn m-btn--gradient-from-success m-btn--gradient-to-accent btn-show-article">نمایش بیشتر</button></span>
                                             </div>
                                         </div>
                                     </div>

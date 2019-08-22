@@ -72,6 +72,8 @@ class RegisterController extends Controller
             'lastname' => $data['lastname'],
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
+            'core_id'=>7,
+            'image_path'=>'/storage/photos//5c61ca8a0e938.jpg'
         ]);
     }
 }

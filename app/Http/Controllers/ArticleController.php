@@ -16,7 +16,7 @@ class ArticleController extends Controller
     public function __construct()
     {
 
-        $this->middleware('admin')->except(['show_article','article_show']);
+       return $this->middleware('admin');
     }
 
     public function index()

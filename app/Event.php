@@ -86,4 +86,10 @@ class Event extends Model
     public function eventable(){
         return $this->morphto();
     }
+
+    public function getNewEventUserAttribute()
+    {
+       $neweventuser = $this->event_users->where('status',1)->count();
+       return $neweventuser;
+    }
 }

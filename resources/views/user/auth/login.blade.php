@@ -49,7 +49,7 @@
 							<form method="POST" class="m-login__form m-form" action="{{route('login_user')}}">
 								{{csrf_field()}}
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" type="text" placeholder="نام کاربری" name="username" autocomplete="off">
+									<input class="form-control m-input" type="text" placeholder="نام کاربری(شماره مبایل)" name="username" autocomplete="off">
 								</div>
 								<div class="form-group m-form__group">
 									<input class="form-control m-input m-login__form-input--last" type="password" placeholder="رمز عبور" name="password">
@@ -84,7 +84,7 @@
 								<input class="form-control m-input" type="text" placeholder="نام خانوادگی" name="lastname" style="float: left; width: 50%;   margin-bottom: 1%;">
 								</div>
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" type="text" placeholder="نام کاربری" name="username" autocomplete="off">
+									<input class="form-control m-input" type="text" placeholder="نام کاربری(شماره مبایل)" name="username" autocomplete="off">
 								</div>
 								<div class="form-group m-form__group">
 									<input class="form-control m-input" type="password" placeholder="رمزعبور" name="password">

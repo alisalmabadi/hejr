@@ -6,11 +6,11 @@
             <a href="{{route('admin.eventUser.events')}}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="بازسازی"><i class="fa fa-refresh"></i></a>
         </div>
         <h1>
-           رویدادها
+           گزارشات رویداد ها
         </h1>
         <ol class="breadcrumb">
 
-            <li class="active"><i class="fa fa-th"></i>رویداد ها</li>
+            <li class="active"><i class="fa fa-th"></i>گزارش ثبت نام در رویداد {{$event->name}}</li>
         </ol>
     </section>
 @endsection
@@ -20,18 +20,22 @@
     <section class="content">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i>لیست رویداد ها</h3>
+                <h3 class="panel-title"><i class="fa fa-list"></i>گزارش ثبت نام در رویداد {{$event->name}}</h3>
             </div>
             <div class="panel-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="overflow-x:hidden;">
                         <table class="table table-bordered table-hover" id="m_table_1" style="width:100% !important;">
                             <thead>
                             <tr>
                                 <td class="text-center">#</td>
                                 <td class="text-center">نام کاربر</td>
-                                <td class="text-center">کدملی کاربر</td>
+                      {{--          <td class="text-center">کدملی کاربر</td>--}}
+
                                 <td class="text-center">ایمیل کاربر</td>
                                 <td class="text-center">شماره تلفن کاربر</td>
+                                <td class="text-center">
+                                    وضعیت پرداخت
+                                </td>
                                 <td class="text-center">وضعیت</td>
                             </tr>
                             </thead>
@@ -42,9 +46,23 @@
                                     <tr class="tr_{{$item->id}}">
                                         <td class="text-center iranyekan"> {{$index}} </td>
                                         <td class="text-center">{{$item->user->name}} {{$item->user->lastname}}</td>
-                                        <td class="text-center">{{$item->user->nationalcode}}</td>
+                                        {{--<td class="text-center">{{$item->user->nationalcode}}</td>--}}
                                         <td class="text-center">{{$item->user->email}}</td>
                                         <td class="text-center">{{$item->user->phonenumber}}</td>
+
+                                        <td class="text-center">
+                                            @if($item->payment()->exists())
+                                                @if($item->payment->state == 1)
+                                                    <div class="btn btn-success" type="button">پرداخت شده</div>
+                                                    @else
+                                                    <div class="btn btn-warning" type="button">پرداخت ناموفق</div>
+                                                @endif
+
+                                                @else
+                                                <div class="btn btn-danger" type="button">پرداخت نشده</div>
+                                                @endif
+                                        </td>
+
                                         <td class="text-center">
                                             <img src="{{asset('gif/35.gif')}}" style="width: 95px;height: 30px;position: absolute;display:none;" class="gif_{{$item->id}}">
                                             <select class="change_status select_item_{{$item->id}}" data-event_user_id="{{$item->id}}">

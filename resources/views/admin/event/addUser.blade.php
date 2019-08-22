@@ -101,7 +101,7 @@
                                     <label style="color: red;">{{$errors->first('core')}}</label>
                                 </div>
                                 <div class="col-md-12">
-                                    <input type="submit" name="submit" value="ثبت" class="btn btn-default form-control">
+                                    <input type="submit" name="submit" value="مشاهده کاربران" class="btn btn-default form-control">
                                 </div>
                             </div>
                         </form>

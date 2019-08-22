@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::define('create-event',function($user){
-            return $user->id === $user->core->admin_id;
+            return $user->id == $user->core->admin_id;
          });
          //
  
@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
          });*/
  
          Gate::define('show-users', function($user){
-             return $user->id === $user->core->admin_id;
+             return $user->id == $user->core->admin_id;
          });
     }
 }

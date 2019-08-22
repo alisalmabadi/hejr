@@ -1,9 +1,7 @@
 @extends('layouts.app_master')
 @section('styles')
     <link rel="stylesheet" href="{{asset('pass/password_strength.css')}}">
-    <link rel="stylesheet" href="{{asset('css/leaflet.css')}}"
-          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-          crossorigin=""/>
+    <link rel="stylesheet" href="{{asset('css/leaflet.css')}}" />
 
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
@@ -414,7 +412,7 @@
                     <h4 class="modal-title" style="text-align: center;float: none;margin: 0 auto;">محل برگزاری رویداد {{$eventUser->event->name}}</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">قیمت
+                    <div class="row">
                         <div class="col-md-12 col-lg-12">
                             <div class="col-md-12 col-lg-12 firstPlace">
                                 <div class="leaflet-map">

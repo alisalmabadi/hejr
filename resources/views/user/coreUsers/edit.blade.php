@@ -127,7 +127,7 @@
                         </div>
                         <div class="col-sm-6">
                         <label class="col-sm-6 control-label" for="name">رمز عبور</label>
-                            <input id="name" name="password" value="{{$user->password}}" placeholder="نام کاربری"  class="form-control" type="password">
+                            <input id="name" name="password" value="" placeholder="رمزعبور"  class="form-control" type="password">
                             @if($errors->has('password'))
                                 <span class="help-block">
                                         <strong style="color:red;">{{$errors->first('password')}}</strong>

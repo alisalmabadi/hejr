@@ -19,6 +19,7 @@
 
     <link rel="stylesheet" href="{{asset('js/pdatapiker/persian-datepicker.css')}}">
     <link rel="icon" href="{{asset('images/favicon.ico')}}">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
     @yield('style')
 
@@ -299,6 +300,18 @@
         }
         .iranyekan{
             font-family: iranyekan !important;
+        }
+
+
+        span.neworder {
+            background: red;
+            color: white;
+            padding: 1px 6px 1px 5px;
+            border-radius: 50%;
+            border: 1px solid black;
+            position: absolute;
+            z-index: +5556;
+            margin-bottom: 40px;
         }
     </style>
     @yield('admin-head')
