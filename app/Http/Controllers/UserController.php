@@ -37,7 +37,7 @@ class UserController extends Controller
     public function __construct()
     {
          $this->middleware('admin')->only(['index','create','edit','store','update','index','multiple','multiple_store','show_users','destroy']);
-         $this->middleware('auth')->only(['panel','profile','createEvent', 'core_users_index', 'core_users_create', 'core_users_store', 'core_users_edit', 'core_users_update','show_events','showAllRegistered','indexCreatedEvents','profile_edit','uni_details','university_add','checkemail','checkusername','uploadpic','university_update','storeEvent','updateEvent','editCreatedEvents','registerEvent','showregistered_event','core_users_show','show_cities']);
+         $this->middleware('auth')->only(['panel','profile','createEvent', 'core_users_index', 'core_users_create', 'core_users_store', 'core_users_edit', 'core_users_update','show_events','showAllRegistered','indexCreatedEvents','profile_edit','uni_details','university_add','checkemail','checkusername','uploadpic','university_update','storeEvent','updateEvent','editCreatedEvents','registerEvent','showregistered_event','core_users_show','show_cities', 'create_validate1', 'create_validate2', 'create_validate3']);
     }
 
     /**
@@ -56,6 +56,85 @@ class UserController extends Controller
         $jobs=Job::all();
         return view('admin.users.user_single_add',compact('cores','areas','soldier_services','grades','fields','universities','jobs','cities','provinces'));
     }
+
+
+
+    public function create_validate1(Request $request)
+    {
+        $this->validate($request , [
+            'name'=>'required|max:255',
+            'description'=>'max:60000',
+            'price'=>'required|numeric',
+            'capacity'=>'required|numeric',
+            'event_subject_id'=>'required|numeric',
+            'event_type_id'=>'required|numeric',
+            'event_status_id'=>'required|numeric',
+            'center_core_id'=>'required|numeric'
+        ],[
+            'name.required'=>'لطفا نام را وارد کنید',
+            'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'description.required'=>'لطفا این فیلد را پر کنید',
+            'description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'long_description.required'=>'لطفا این فیلد را پر کنید',
+            'long_description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'price.required'=>'لطفا قیمت را وارد کنید',
+            'price.numeric'=>'فقط عدد وارد کنید',
+            'capacity.required'=>'ظرفیت را وارد کنید',
+            'capacity.numeric'=>'فقط عدد وارد کنید',
+            'evend_subject_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_subject_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'event_type_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_type_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'event_status_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_status_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'center_core_id.required'=>'این فیلد را خالی رها نکنید',
+            'center_core_id.numeric'=>'از لیست بالا انتخاب کنید',
+        ]);
+    }
+
+    public function create_validate2(Request $request)
+    {
+        $request['start_date'] = Convertnumber2english($request['start_date']);
+        $request['end_date'] = Convertnumber2english($request['end_date']);
+        $request['end_date_signup'] = Convertnumber2english($request['end_date_signup']);
+
+        $this->validate($request , [
+            'start_date'=>'required|date',
+            'end_date'=>'required|date',
+            'end_date_signup'=>'required|date',
+        ],[
+            'start_date.required'=>'لطفا تاریخ شروع را وارد کنید',
+            'start_date.date'=>'فرمت وارد شده اشتباه است',
+            'end_date.required'=>'لطفا تاریخ اتمام را وارد کنید',
+            'end_date.date'=>'فرمت وارد شده اشتباه است',
+            'end_date_signup.required'=>'لطفا تاریخ اتمام ثبت نام را وارد کنید',
+            'end_date_signup.date'=>'فرمت وارد شده اشتباه است',
+        ]);
+    }
+
+    public function create_validate3(Request $request)
+    {
+        $this->validate($request , [
+            'province_id'=>'required|numeric',
+            'city_id'=>'required|numeric',
+            'address'=>'required|max:255',
+            'xplace'=>'nullable|numeric',
+            'yplace'=>'nullable|numeric',
+        ],[
+            'province_id.required'=>'این فیلد را خالی رها نکنید',
+            'province_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'city_id.required'=>'این فیلد را خالی رها نکنید',
+            'city_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'address.required'=>'لطفا ادرس را وارد کنید',
+            'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+            'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+        ]);
+    }
+
+
+
+
 
     public function edit(User $user)
     {
@@ -78,15 +157,21 @@ $this->validate($request,[
     'lastname'=>'required',
     'username'=>'required|unique:users',
     'password'=>'required',
-    'email'=>'email',
-
-
+    'email'=>'email|unique:users',
+    'postalcode' => 'nullable|numeric|digits:10',
+    'home_number' => 'nullable|numeric',
+    'nationcode' => 'required|numeric|digits:10|unique:users'
 ],[
     'name.required'=>'نام اجباری است.',
      'lastname.required'=>'نام خانوادگی اجباری است.',
      'password.required'=>'رمزعبور اجباری است.',
         'username.required'=>'نام کاربری اجباری است.',
-    'username.unique'=>'نام کاربری تکراری است.'
+    'username.unique'=>'نام کاربری تکراری است.',
+    'postalcode.digits' => 'کد پستی اشتباه است',
+    'email.unique' => 'این ایمیل قبلا وارد شده است',
+    'nationcode.required' => 'کد ملی را وارد کنید',
+    'nationcode.digits' => 'کد ملی وارد شده اشتباه است',
+    'nationcode.unique' => 'این کد ملی قبلا  وارد شده است'
 
 
 ]);
@@ -123,7 +208,9 @@ if(isset($request->birthday)) {
             'martial'=>$request->martial,
             'status'=>$request->status,
             'address'=>$request->address,
-            'konkor_grade'=>$request->konkor_grade
+            'konkor_grade'=>$request->konkor_grade,
+            'postalcode' => $request->postalcode,
+            'home_number' => $request->home_number
 
         ]);
     flashs('عضو با موفقیت افزوده شد.','success');
@@ -138,7 +225,9 @@ if(isset($request->birthday)) {
             'username'=>'required|unique:users,username,'.$user->id,
 /*            'password'=>'required',*/
             'email'=>'required|unique:users,email,'.$user->id,
-
+            'postalcode' => 'nullable|numeric|digits:10',
+            'home_number' => 'nullable|numeric',
+            'nationcode' => 'required|numeric|digits:10|unique:users,nationcode,'.$user->id
 
         ],[
             'name.required'=>'نام اجباری است.',
@@ -146,7 +235,12 @@ if(isset($request->birthday)) {
 /*            'password.required'=>'رمزعبور اجباری است.',*/
             'username.required'=>'نام کاربری اجباری است.',
             'username.unique'=>'نام کاربری تکراری است.',
-            'email.required'=>'ایمیل را وارد کنید.'
+            'email.required'=>'ایمیل را وارد کنید.',
+            'postalcode.digits' => 'کد پستی اشتباه است',
+            'email.unique' => 'این ایمیل قبلا وارد شده است',
+            'nationcode.required' => 'کد ملی را وارد کنید',
+            'nationcode.digits' => 'کد ملی وارد شده اشتباه است',
+            'nationcode.unique' => 'این کد ملی قبلا  وارد شده است'
 
         ]);
         if(isset($request->birthday)) {
@@ -184,7 +278,9 @@ if(isset($request->birthday)) {
                 'martial'=>$request->martial,
                 'status'=>$request->status,
                 'address'=>$request->address,
-                 'konkor_grade'=>$request->konkor_grade
+                 'konkor_grade'=>$request->konkor_grade,
+                 'nationcode' => $request->nationcode,
+                 'home_number' => $request->home_number
 
             ]);
         }else{
@@ -212,12 +308,14 @@ if(isset($request->birthday)) {
                 'martial'=>$request->martial,
                 'status'=>$request->status,
                 'address'=>$request->address,
-                'konkor_grade'=>$request->konkor_grade
+                'konkor_grade'=>$request->konkor_grade,
+                'nationcode' => $request->nationcode,
+                 'home_number' => $request->home_number
 
             ]);
         }
         flashs('عضو با موفقیت ویرایش شد.','success');
-        return back();
+        return redirect()->route('admin.user.all');
     }
 
     public function index(Request $request)
@@ -894,6 +992,8 @@ $this->validate($request,[
             'username'=>'required|unique:users',
             'password'=>'required',
             'email'=>'email|unique:users',
+            'postalcode' => 'nullable|numeric|digits:10',
+            'home_number' => 'nullable|numeric'
         ],[
             'name.required'=>'نام اجباری است.',
             'lastname.required'=>'نام خانوادگی اجباری است.',
@@ -901,7 +1001,8 @@ $this->validate($request,[
             'username.required'=>'نام کاربری اجباری است.',
             'username.unique'=>'نام کاربری تکراری است.',
             'email.required'=>'ایمیل را وارد کنید',
-            'email.unique'=>'این ایمیل قبلا استفاده شده است !'
+            'email.unique'=>'این ایمیل قبلا استفاده شده است !',
+            'postalcode.digits' => 'کد پستی وارد شده اشتباه است'
         ]);
         if(isset($request->birthday)) {
             /*$date = explode('/', $request->birthday);
@@ -936,7 +1037,9 @@ $this->validate($request,[
             'martial'=>$request->martial,
             'status'=>$request->status,
             'address'=>$request->address,
-            'konkor_grade'=>$request->konkor_grade
+            'konkor_grade'=>$request->konkor_grade,
+            'postalcode' => $request->postalcode,
+            'home_number' => $request->home_number
 
         ]);
             flashs('عضو با موفقیت افزوده شد.','success');
@@ -980,6 +1083,8 @@ $this->validate($request,[
             'username'=>'required|unique:users,username,'.$user->id,
 /*            'password'=>'required',*/
             'email'=>'required|unique:users,email,'.$user->id,
+            'postalcode' => 'nullable|numeric|digits:10',
+            'home_number' => 'nullable|numeric'
 
 
         ],[
@@ -988,7 +1093,8 @@ $this->validate($request,[
 /*            'password.required'=>'رمزعبور اجباری است.',*/
             'username.required'=>'نام کاربری اجباری است.',
             'username.unique'=>'نام کاربری تکراری است.',
-            'email.required'=>'ایمیل را وارد کنید.'
+            'email.required'=>'ایمیل را وارد کنید.',
+            'postalcode.digits' => 'کد پستی وارد شده اشتباه است'
 
         ]);
         if(isset($request->birthday)) {
@@ -1026,7 +1132,9 @@ $this->validate($request,[
                 'martial'=>$request->martial,
                 'status'=>$request->status,
                 'address'=>$request->address,
-                 'konkor_grade'=>$request->konkor_grade
+                 'konkor_grade'=>$request->konkor_grade,
+                 'postalcode' => $request->postalcode,
+                 'home_number' => $request->home_number
 
             ]);
         }else{
@@ -1054,7 +1162,9 @@ $this->validate($request,[
                 'martial'=>$request->martial,
                 'status'=>$request->status,
                 'address'=>$request->address,
-                'konkor_grade'=>$request->konkor_grade
+                'konkor_grade'=>$request->konkor_grade,
+                'postalcode' => $request->postalcode,
+                 'home_number' => $request->home_number
 
             ]);
         }
@@ -1070,5 +1180,24 @@ $this->validate($request,[
         $user = $user->destroy($request->input('selected'));
         flashs('کاربران انتخاب شده با موفقیت حذف شدند.');
         return back();
+    }
+
+    public function delete_image(Request $request)
+    {
+        $image = Image::find($request['image_id']);
+        //delete image FILE
+        unlink($image->image_path);
+        unlink("images/events/thumbnails/".$image->thumbnail_path);
+        Image::destroy($request['image_id']);
+
+        return response($request['image_id']);//vase jquery niaz hastesh.
+    }
+
+    public function change_thumbnail(Request $request)
+    {
+        $event = Event::find($request['event_id']);
+        $before_thumbnail = $event->thumbnail_id;
+        $event->update(['thumbnail_id' => $request['image_id']]);
+        return response($before_thumbnail);
     }
 }
