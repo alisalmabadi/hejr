@@ -592,4 +592,12 @@ class EventController extends Controller
 
         return response($request['image_id']);//vase jquery niaz hastesh.
     }
+
+    public function change_thumbnail(Request $request)
+    {
+        $event = Event::find($request['event_id']);
+        $before_thumbnail = $event->thumbnail_id;
+        $event->update(['thumbnail_id' => $request['image_id']]);
+        return response($before_thumbnail);
+    }
 }
