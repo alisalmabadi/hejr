@@ -135,6 +135,7 @@ Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
     Route::resource('event' , 'EventController' , ['except'=>'show','destroy']);
     Route::post('event/showAllEvents', ['uses'=>'EventController@showAllEvents','as'=>'event.showAllEvents']);
     Route::post('event/image/delete', ['uses'=>'EventController@delete_image', 'as'=>'event.delete_image']);
+    Route::post('event/image/changeThumbnail', ['uses'=>'EventController@change_thumbnail', 'as'=>'event.change_thumbnail_image']);
     /*** admin event ***/
 
     /*** admin event user ***/
@@ -340,6 +341,13 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
 
     /*** event Create For Spec Users ***/
     Route::get('events/create',['uses'=>'UserController@createEvent','as'=>'events.create']);
+
+    Route::post('event/create/validate1', ['uses'=>'UserController@create_validate1', 'as'=>'event.create.validate1']);
+    Route::post('event/create/validate2', ['uses'=>'UserController@create_validate2', 'as'=>'event.create.validate2']);
+    Route::post('event/create/validate3', ['uses'=>'UserController@create_validate3', 'as'=>'event.create.validate3']);
+
+    Route::post('event/image/delete', ['uses'=>'UserController@delete_image', 'as'=>'event.delete_image']);
+    Route::post('event/image/changeThumbnail', ['uses'=>'UserController@change_thumbnail', 'as'=>'event.change_thumbnail_image']);
 
     Route::post('events/store',['uses'=>'UserController@storeEvent','as'=>'events.store']);
 
