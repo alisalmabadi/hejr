@@ -174,7 +174,7 @@
                         </div>
                     </div>--}}
                     <div class="form-group">
-                        <a href="{{route('admin.event.create.validate1')}}" class="btn-validate1"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>
+                        <a href="{{route('user.event.create.validate1')}}" class="btn-validate1"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>
                     </div>
                 </div>
 
@@ -215,7 +215,7 @@
                         <a href="#" class="btn-back_to_validate1"><button type="button" class="btn btn-warning form-control">مرحله قبل</button></a>
                     </div>
                     <div class="col-md-9 col-sm-9">
-                        <a href="{{route('admin.event.create.validate2')}}" class="btn-validate2"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>                    
+                        <a href="{{route('user.event.create.validate2')}}" class="btn-validate2"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>                    
                     </div>
                 </div>
             </div>
@@ -290,7 +290,7 @@
                         <a href="#" class="btn-back_to_validate2"><button type="button" class="btn btn-warning form-control">مرحله قبل</button></a>
                     </div>
                     <div class="col-md-9 col-sm-9">
-                        <a href="{{route('admin.event.create.validate3')}}" class="btn-validate3"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>                    
+                        <a href="{{route('user.event.create.validate3')}}" class="btn-validate3"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>                    
                     </div>
                 </div>
             </div>
