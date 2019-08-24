@@ -139,6 +139,18 @@
                     </div>
 
                     <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="name">کد پستی</label>
+                        <div class="col-sm-6">
+                            <input id="name" name="postalcode" value="{{$user->postalcode}}" placeholder="کد پستی"  class="form-control" type="number">
+                            @if($errors->has('postalcode'))
+                                <span class="help-block">
+                                    <strong>{{$errors->first('postalcode')}}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group required">
                         <label class="col-sm-2 control-label" for="name">رتبه کنکور</label>
                         <div class="col-sm-6">
                             <input id="name" name="konkor_grade" value="{{$user->konkor_grade}}" placeholder="رتبه کنکور"  class="form-control" type="number">
@@ -158,6 +170,19 @@
                             @if($errors->has('phonenumber'))
                                 <span class="help-block">
                                         <strong>{{$errors->first('phonenumber')}}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                    </div>
+
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="name">تلفن منزل</label>
+                        <div class="col-sm-6">
+                            <input id="name" name="home_number" value="{{$user->home_number}}" placeholder="تلفن منزل"  class="form-control" type="number">
+                            @if($errors->has('home_number'))
+                                <span class="help-block">
+                                    <strong>{{$errors->first('home_number')}}</strong>
                                 </span>
                             @endif
                         </div>
