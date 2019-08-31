@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Core;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -22,7 +23,8 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('user.auth.login');
+        $cores = Core::where('status',1)->get();
+        return view('user.auth.login',compact('cores'));
     }
 
     protected function credentials(Request $request)
