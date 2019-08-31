@@ -154,6 +154,27 @@
                                 </span>
                             @endif
                         </div>
+
+                        <div class="col-sm-6">
+                        <label class="col-sm-6 control-label" for="name">کد پستی</label>
+                            <input id="name" name="postalcode" value="{{old('postalcode')}}" placeholder="کد پستی"  class="form-control" type="number">
+                            @if($errors->has('postalcode'))
+                                <span class="help-block">
+                                        <strong style="color:red;">{{$errors->first('postalcode')}}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-sm-6">
+                        <label class="col-sm-6 control-label" for="name">تلفن منزل</label>
+                            <input id="name" name="home_number" value="{{old('home_number')}}" placeholder="تلفن منزل"  class="form-control" type="number">
+                            @if($errors->has('home_number'))
+                                <span class="help-block">
+                                        <strong style="color:red;">{{$errors->first('home_number')}}</strong>
+                                </span>
+                            @endif
+                        </div>
+
                     </div>
 
 

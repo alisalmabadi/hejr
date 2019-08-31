@@ -49,7 +49,7 @@
 							<form method="POST" class="m-login__form m-form" action="{{route('login_user')}}">
 								{{csrf_field()}}
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" type="text" placeholder="نام کاربری" name="username" autocomplete="off">
+									<input class="form-control m-input" type="text" placeholder="نام کاربری (شماره مبایل مثلا 09120002020)" name="username" autocomplete="off">
 								</div>
 								<div class="form-group m-form__group">
 									<input class="form-control m-input m-login__form-input--last" type="password" placeholder="رمز عبور" name="password">
@@ -83,8 +83,13 @@
 								<div class="form-group m-form__group">
 								<input class="form-control m-input" type="text" placeholder="نام خانوادگی" name="lastname" style="float: left; width: 50%;   margin-bottom: 1%;">
 								</div>
+
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" type="text" placeholder="نام کاربری" name="username" autocomplete="off">
+									<input class="form-control m-input" type="email" placeholder="ایمیل" name="email" autocomplete="off">
+								</div>
+
+								<div class="form-group m-form__group">
+									<input class="form-control m-input" type="text" placeholder="نام کاربری (شماره مبایل مثلا 09120002020)" name="username" autocomplete="off">
 								</div>
 								<div class="form-group m-form__group">
 									<input class="form-control m-input" type="password" placeholder="رمزعبور" name="password">
@@ -92,6 +97,16 @@
 								<div class="form-group m-form__group">
 									<input class="form-control m-input m-login__form-input--last" type="password" placeholder="وارد کردن مجدد رمزعبور" name="password_confirmation">
 								</div>
+
+								<div class="form-group p-2">
+									<select class="form-control m-input m-login__form-input--last" name="core_id">
+										<option value="0">هسته خود را انتخاب کنید</option>
+										@foreach($cores as $core)
+											<option value="{{$core->id}}">{{$core->name}}</option>
+										@endforeach
+									</select>
+								</div>
+
 								<div class="row form-group m-form__group m-login__form-sub">
 									<div class="col m--align-left">
 										<label class="m-checkbox m-checkbox--light">

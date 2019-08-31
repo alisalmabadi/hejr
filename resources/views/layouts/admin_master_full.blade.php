@@ -312,6 +312,8 @@
 
                             <li class="@if(strpos($current_route_name, 'user.create')===6) active @endif"><a href="{{route('admin.user.create')}}"><i class="fa fa-user-plus"></i>افزودن تکی کاربر</a></li>
 
+                            <li class="@if(strpos($current_route_name, 'user.multiple')===6) active @endif"><a href="{{route('admin.user.multiple')}}"><i class="fa fa-user-plus"></i>افزودن گروهی کاربران با اکسل</a></li>
+
                             <li class="@if(strpos($current_route_name, 'grade.')===6) active @endif"><a href="{{route('admin.grade.index')}}"><i class="fa fa-graduation-cap"></i>وضعیت تحصیلی ها</a></li>
 
                             <li class="@if(strpos($current_route_name, 'soldier-service.')===6) active @endif"><a href="{{route('admin.soldier-service.index')}}"><i class="fa fa-info-circle"></i>وضعیت نظام وظیفه</a></li>
@@ -366,7 +368,7 @@
                              </ul>
 
                          </li>--}}
-                    <li class="@if(strpos($current_route_name, 'messagetype.')===6 ) active @endif treeview">
+                    <li class="@if(strpos($current_route_name, 'messagetype.')===6 || strpos($current_route_name, 'message.create')===6 || strpos($current_route_name, 'message.index')===6) active @endif treeview">
                         <a href="#">
                             <i class="fa fa-envelope"></i>
                             <span>مدیریت پیام ها</span>
@@ -375,8 +377,7 @@
             </span>
                         </a>
                         <ul class="treeview-menu">
-                            {{-- <li class="@if(strpos($current_route_name, 'report.order')===6) active @endif"><a href="{{route('admin.report.order')}}"><i class="fa fa-circle-o"></i>سفارشات</a></li>--}}
-                            {{-- <li class="@if(strpos($current_route_name, 'core.index')===6) active @endif"><a href="{{route('admin.core.index')}}"><i class="fa fa-circle-o"></i>کلیه هسته ها</a></li>--}}
+
                             <li class="@if(strpos($current_route_name, 'messagetype.')===6) active @endif"><a href="{{route('admin.messagetype.index')}}"><i class="fa fa-envelope-open"></i>مدیریت نوع پیام ها</a></li>
                             <li class="@if(strpos($current_route_name, 'message.create')===6) active @endif"><a href="{{route('admin.message.create')}}"><i class="fa fa-paper-plane"></i>ارسال پیام</a></li>
                             <li class="@if(strpos($current_route_name, 'message.index')===6) active @endif"><a href="{{route('admin.message.index')}}"><i class="fa fa-envelope-square"></i>کلیه پیام ها</a></li>
@@ -384,7 +385,7 @@
                     </li>
 
                     {{--events--}}
-                    <li class="@if(strpos($current_route_name, 'eventSubject')===6 || strpos($current_route_name, 'eventType')===6 || strpos($current_route_name,'eventStatus')===6 || strpos($current_route_name,'index')===12|| strpos($current_route_name, 'image')===6) active @endif treeview">
+                    <li class="@if(strpos($current_route_name, 'eventSubject')===6 || strpos($current_route_name, 'eventType')===6 || strpos($current_route_name,'eventStatus')===6 || strpos($current_route_name,'index')===12|| strpos($current_route_name, 'image')===6 || strpos($current_route_name, 'event.addUser')===6) active @endif treeview">
                         <a href="#">
                             <i class="fa fa-handshake-o"></i>
                             <span>مدیریت رویدادها</span>
@@ -397,12 +398,14 @@
                             <li class="@if(strpos($current_route_name, 'eventSubject.index')===6) active @endif"><a href="{{route('admin.eventSubject.index')}}"><i class="fa fa-server"></i>مدیریت موضوعات</a></li>
                             <li class="@if(strpos($current_route_name, 'eventType.index')===6) active @endif"><a href="{{route('admin.eventType.index')}}"><i class="fa fa-sitemap"></i>مدیریت نوع ها</a></li>
                             <li class="@if(strpos($current_route_name, 'eventStatus.index')===6) active @endif"><a href="{{route('admin.eventStatus.index')}}"><i class="fa fa-toggle-on"></i>مدیریت وضعیت ها</a></li>
+
+                            <li class="@if(strpos($current_route_name, 'event.addUser')===6) active @endif"><a href="{{route('admin.event.addUser')}}"><i class="fa fa-plus"></i>ثبت نام کاربر در رویداد</a></li>
                           {{--  <li class="@if(strpos($current_route_name, 'image')===6) active @endif"><a href="{{route('admin.image.index')}}"><i class="fa fa-picture-o"></i>مدیریت گالری</a></li>--}}
                         </ul>
                     </li>
 
                     {{--sabte name--}}
-                    <li class="@if(strpos($current_route_name, 'event.')===6 ) active @endif treeview">
+                   {{-- <li class="@if(strpos($current_route_name, 'event.')===6 ) active @endif treeview">
                         <a href="#">
                             <i class="fa fa-money"></i>
                             <span>ثبت نام</span>
@@ -413,7 +416,7 @@
                         <ul class="treeview-menu">
                             <li class="@if(strpos($current_route_name, 'event.addUser')===6) active @endif"><a href="{{route('admin.event.addUser')}}"><i class="fa fa-plus"></i>ثبت نام کاربر در رویداد</a></li>
                         </ul>
-                    </li>
+                    </li>--}}
 
                     {{--event users--}}
                     <li class="@if(strpos($current_route_name, 'eventUser')===6 ) active @endif treeview">
@@ -423,9 +426,17 @@
                             <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
+
+                            <span class="pull-right-container">
+                                <span class="label label-danger">{{$count_event_user}}</span>
+                            </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="@if(strpos($current_route_name, 'eventUser.index')===6) active @endif"><a href="{{route('admin.eventUser.index')}}"><i class="fa fa-circle-o"></i>کاربران ثبت شده در هر رویداد</a></li>
+                            <li class="@if(strpos($current_route_name, 'eventUser.events')===6) active @endif"><a href="{{route('admin.eventUser.events')}}"><i class="fa fa-circle-o"></i>رویدادها</a></li>
+                            <li class="@if(strpos($current_route_name, 'report.user')===6) active @endif"><a href="{{route('admin.report.user')}}"><i class="fa fa-circle-o"></i>کاربران</a></li>
+
+
+                            {{--<li class="@if(strpos($current_route_name, 'eventUser.index')===6) active @endif"><a href="{{route('admin.eventUser.index')}}"><i class="fa fa-circle-o"></i>کاربران ثبت شده در هر رویداد</a></li>--}}
                         </ul>
                     </li>
 
@@ -442,6 +453,22 @@
                         <ul class="treeview-menu">
                             <li class="@if(strpos($current_route_name, 'discount.create')===6) active @endif"><a href="{{route('admin.discount.create')}}"><i class="fa fa-plus"></i>تخفیف جدید</a></li>
                             <li class="@if(strpos($current_route_name, 'discount.index')===6) active @endif"><a href="{{route('admin.discount.index')}}"><i class="fa fa-circle-o"></i>همه تخفیف ها</a></li>
+                        </ul>
+                    </li>
+
+
+                    {{--blog--}}
+                    <li class="@if(strpos($current_route_name, 'article_category.')===6 || strpos($current_route_name, 'article.')===6  ) active @endif treeview">
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span>بلاگ</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@if(strpos($current_route_name, 'article_category')===6) active @endif"><a href="{{route('admin.article_category.index')}}"><i class="fa fa-plus"></i>دسته بندی</a></li>
+                            <li class="@if(strpos($current_route_name, 'article.index')===6) active @endif"><a href="{{route('admin.article.index')}}"><i class="fa fa-circle-o"></i>مقالات</a></li>
                         </ul>
                     </li>
 

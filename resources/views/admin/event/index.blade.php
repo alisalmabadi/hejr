@@ -60,7 +60,7 @@
                                     <td class="text-center">{{$event->name}}</td>
                                     <td class="text-center">{!! $event->description !!}</td>
                                  {{--   <td class="text-center">{!! $event->longdescription !!}</td>--}}
-                                    <td class="text-center"> {{$event->start_dates}}  تا  {{$event->end_dates}}</td>
+                                    <td class="text-center">{{-- {{$event->start_dates}}  تا  {{$event->end_dates}}--}}</td>
                                     <td class="text-center">{{$event->price}}</td>
                                     <td class="text-center">{{$event->fulled_capacity}}/{{$event->capacity}}</td>
                                     <td class="text-center">{{$event->event_subject->name}}</td>

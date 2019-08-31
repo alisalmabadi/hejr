@@ -22,11 +22,10 @@
                         <!-- small box -->
                         <div class="small-box bg-aqua">
                             <div class="inner">
-{{--
-                                <h3>{{$loader['order_count']}}</h3>
---}}
 
-                                <p>سفارشات</p>
+                                <h3>{{$data['events_registered_count']}}</h3>
+
+                                <p>کلیه ثبت نام ها</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
@@ -41,11 +40,11 @@
                         <!-- small box -->
                         <div class="small-box bg-green">
                             <div class="inner">
-{{--
-                                <h3>{{$loader['product_count']}}</h3>
---}}
 
-                                <p>تعداد کالا ها</p>
+                                <h3>{{$data['events_count']}}</h3>
+
+
+                                <p>تعداد رویداد ها</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
@@ -58,11 +57,11 @@
                         <!-- small box -->
                         <div class="small-box bg-yellow">
                             <div class="inner">
-{{--
-                                <h3>{{$loader['user_count']}}</h3>
---}}
 
-                                <p>مشتریان</p>
+                                <h3>{{$data['users_count']}}</h3>
+
+
+                                <p>کلیه کاربران</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
@@ -75,11 +74,10 @@
                         <!-- small box -->
                         <div class="small-box bg-red">
                             <div class="inner">
-{{--
-                                <h3>{{$loader['download_count']}}</h3>
---}}
 
-                                <p>دانلود ها</p>
+                                <h3>{{$data['cores_count']}}</h3>
+
+                                <p>تعداد هسته ها</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>

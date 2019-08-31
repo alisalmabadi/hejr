@@ -101,7 +101,7 @@
                                     <label style="color: red;">{{$errors->first('core')}}</label>
                                 </div>
                                 <div class="col-md-12">
-                                    <input type="submit" name="submit" value="ثبت" class="btn btn-default form-control">
+                                    <input type="submit" name="submit" value="مشاهده کاربران" class="btn btn-default form-control">
                                 </div>
                             </div>
                         </form>
@@ -130,7 +130,7 @@
                             <div class="col-md-12">
                                 <div id="owl-example" class="owl-carousel">
                                     @foreach($users as $user)
-                                        <div class="col-md-12 user-container user-container_{{$user->id}}" style="text-align: center;border: 1px solid #e4e6e7;border-radius: 20px;">
+                                        <div class="col-md-12 user-container user-container_{{$user->id}}" style="text-align: center;border: 1px solid #e4e6e7;border-radius: 20px;height:200px;">
                                             {{-- asli --}}
                                             <div class="m-widget_body-item user user_{{$user->id}}">
                                                 <div class="m-widget_body-item-pic">

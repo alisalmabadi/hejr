@@ -11,17 +11,25 @@ use App\EventSubject;
 use App\EventType;
 use App\EventUser;
 use App\EventStatus;
-use App\province;
 use App\City;
 use App\Core;
 use App\User;
 use App\Image;
 use App\EventImage;
 use Illuminate\Support\Facades\Gate;
+use App\Province;
+
 use Intervention\Image\Facades\Image as ImageChange;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('admin')->except(['getDetails']);
+        return $this->middleware('auth')->only(['getDetails']);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -38,6 +46,81 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function create_validate1(Request $request)
+    {
+        $this->validate($request , [
+            'name'=>'required|max:255',
+            'description'=>'max:60000',
+            'price'=>'required|numeric',
+            'capacity'=>'required|numeric',
+            'event_subject_id'=>'required|numeric',
+            'event_type_id'=>'required|numeric',
+            'event_status_id'=>'required|numeric',
+            'center_core_id'=>'required|numeric'
+        ],[
+            'name.required'=>'لطفا نام را وارد کنید',
+            'name.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'description.required'=>'لطفا این فیلد را پر کنید',
+            'description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'long_description.required'=>'لطفا این فیلد را پر کنید',
+            'long_description.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'price.required'=>'لطفا قیمت را وارد کنید',
+            'price.numeric'=>'فقط عدد وارد کنید',
+            'capacity.required'=>'ظرفیت را وارد کنید',
+            'capacity.numeric'=>'فقط عدد وارد کنید',
+            'evend_subject_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_subject_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'event_type_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_type_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'event_status_id.required'=>'این فیلد را خالی رها نکنید',
+            'event_status_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'center_core_id.required'=>'این فیلد را خالی رها نکنید',
+            'center_core_id.numeric'=>'از لیست بالا انتخاب کنید',
+        ]);
+    }
+
+    public function create_validate2(Request $request)
+    {
+        $request['start_date'] = Convertnumber2english($request['start_date']);
+        $request['end_date'] = Convertnumber2english($request['end_date']);
+        $request['end_date_signup'] = Convertnumber2english($request['end_date_signup']);
+
+        $this->validate($request , [
+            'start_date'=>'required|date',
+            'end_date'=>'required|date',
+            'end_date_signup'=>'required|date',
+        ],[
+            'start_date.required'=>'لطفا تاریخ شروع را وارد کنید',
+            'start_date.date'=>'فرمت وارد شده اشتباه است',
+            'end_date.required'=>'لطفا تاریخ اتمام را وارد کنید',
+            'end_date.date'=>'فرمت وارد شده اشتباه است',
+            'end_date_signup.required'=>'لطفا تاریخ اتمام ثبت نام را وارد کنید',
+            'end_date_signup.date'=>'فرمت وارد شده اشتباه است',
+        ]);
+    }
+
+    public function create_validate3(Request $request)
+    {
+        $this->validate($request , [
+            'province_id'=>'required|numeric',
+            'city_id'=>'required|numeric',
+            'address'=>'required|max:255',
+            'xplace'=>'nullable|numeric',
+            'yplace'=>'nullable|numeric',
+        ],[
+            'province_id.required'=>'این فیلد را خالی رها نکنید',
+            'province_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'city_id.required'=>'این فیلد را خالی رها نکنید',
+            'city_id.numeric'=>'از لیست بالا انتخاب کنید',
+            'address.required'=>'لطفا ادرس را وارد کنید',
+            'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
+            'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+            'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
+        ]);
+    }
+
+
     public function create()
     {
         $event_subjects = EventSubject::where('status' , 1)->get();
@@ -78,7 +161,7 @@ class EventController extends Controller
             'center_core_id'=>'required|numeric',
             'xplace'=>'nullable|numeric',
             'yplace'=>'nullable|numeric',
-          /*   'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
+            /*   'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
 
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
@@ -113,42 +196,44 @@ class EventController extends Controller
             'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
             'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
             'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
-        /*    'image.image'=>'لطفا فقط عکس انتخاب کنید',
-            'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',*/
+            /*    'image.image'=>'لطفا فقط عکس انتخاب کنید',
+                'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',*/
         ]);
         $admin = \Auth::guard('admin')->user();
         $request['eventable_id'] = $admin->id;
         $request['eventable_type'] = 'admin';
         $event=Event::create($request->except(['information','address_point']));
-        if($request->xplace != null) {
+      //  if($request->xplace != null) {
             $address_point = [$request->xplace, $request->yplace];
             $address_point = json_encode($address_point);
             $event->update(['address_point' => $address_point]);
-        }
-       $event=$admin->events()->save($event);
+     //  }
+        $event=$admin->events()->save($event);
 
         /*image upload*/
-        foreach ($request->image as $key=>$image) {
-        $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
-        $main_folder = 'images/events/';
-        $url = $main_folder;
-        $image->move($url, $imagename);
-/***thumbnail ***/
+        if(!empty($request->image)){
+            foreach ($request->image as $key=>$image) {
+                $imagename = time() . '-' . sha1(time() . "_" . rand(21321, 465465465456)).'.'. $image->getClientOriginalExtension();
+                $main_folder = 'images/events/';
+                $url = $main_folder;
+                $image->move($url, $imagename);
+                /***thumbnail ***/
                 $path = public_path('images/events/thumbnails') . "/" . $imagename;
                 $img = ImageChange::make(public_path('images/events/') . $imagename)->resize(324,202)->save($path);
-            $images = Image::create([
-                'image_type' => $image->getClientOriginalExtension(),
-                'image_original' => $imagename,
-                'image_path' => $url . $imagename,
-                'thumbnail_path'=>$img->basename,
-            ]);
+                $images = Image::create([
+                    'image_type' => $image->getClientOriginalExtension(),
+                    'image_original' => $imagename,
+                    'image_path' => $url . $imagename,
+                    'thumbnail_path'=>$img->basename,
+                ]);
 
-            if($key==0){
-                $event->update(['thumbnail_id'=>$images->id]);
+                if($key==0){
+                    $event->update(['thumbnail_id'=>$images->id]);
+                }
+                /***thumbnail ***/
+                $event->images()->attach($images->id);
+
             }
-            /***thumbnail ***/
-            $event->images()->attach($images->id);
-
         }
 
 
@@ -177,22 +262,22 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         /*har admin faghat betoone oon event ke khodesh sabt karde ro edit kone*/
-       // if(Gate::allows('edit-event',$event)) {
-            $cities = City::where('province_id', $event->province_id)->get();
-            $event_subjects = EventSubject::where('status', 1)->get();
-            $event_types = EventType::where('status', 1)->get();
-            $event_statuses = EventStatus::where('status', 1)->get();
-            $provinces = Province::all();
-            $cores = Core::where('status', 1)->get();
-            $event['information'] = json_decode($event->information);
-            $event->load('images');
-            return view('admin.event.edit', compact('event', 'cities', 'event_subjects', 'event_types', 'event_statuses', 'provinces', 'cores'));
+        // if(Gate::allows('edit-event',$event)) {
+        $cities = City::where('province_id', $event->province_id)->get();
+        $event_subjects = EventSubject::where('status', 1)->get();
+        $event_types = EventType::where('status', 1)->get();
+        $event_statuses = EventStatus::where('status', 1)->get();
+        $provinces = Province::all();
+        $cores = Core::where('status', 1)->get();
+        $event['information'] = json_decode($event->information);
+        $event->load('images');
+        return view('admin.event.edit', compact('event', 'cities', 'event_subjects', 'event_types', 'event_statuses', 'provinces', 'cores'));
         /*}
         else{
             flashs('شما قادر به ویرایش این رویداد نمی باشید');
             return redirect()->route('admin.event.index');
         }*/
-        
+
 
     }
 
@@ -227,7 +312,7 @@ class EventController extends Controller
             'center_core_id'=>'required|numeric',
             'xplace'=>'nullable|numeric',
             'yplace'=>'nullable|numeric',
-       /*     'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
+            /*     'image'=>'nullable|image|mimes:png,jpg,jpeg|max:10000000000',*/
 
         ],[
             'name.required'=>'لطفا نام را وارد کنید',
@@ -262,18 +347,18 @@ class EventController extends Controller
             'address.max'=>'تعداد کاراکتر وارد شده بیش از حد مجاز است',
             'xplace.numeric'=>'لطفا به صورت عددی وارد کنید',
             'yplace.numeric'=>'لطفا به صورت عددی وارد کنید',
-           /* 'image.image'=>'لطفا فقط عکس انتخاب کنید',
-            'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',*/
+            /* 'image.image'=>'لطفا فقط عکس انتخاب کنید',
+             'image.mimes'=>'نوع فایل انتخاب شده مناسب نمی باشد',*/
         ]);
 
 
 
         $event->update($request->except(['information','address_point']));
-        if($request->xplace != null) {
+       // if($request->xplace != null) {
             $address_point = [$request->xplace, $request->yplace];
             $address_point = json_encode($address_point);
             $event->update(['address_point' => $address_point]);
-        }
+        //}
 
         if(!empty($request['image'])){
             foreach ($request->image as $key=>$image) {
@@ -362,14 +447,28 @@ class EventController extends Controller
         $event->ended =$event->fulled_capacity;
 
         /***check kone ke in rooydad ghablan entekhab shode ya na***/
-        foreach($user->events as $u_event){
-            if($u_event->id == $event->id){
-                $event_user_id = EventUser::where('event_id',$event->id)->where('user_id',$user->id)->first()->id;
-                $event->registered_me = 'YES';
-                $event->registered_id = $event_user_id;
-            }
+        /* foreach($user->events as $u_event){
+             if($u_event->id == $event->id){
+                 $event_user_id = EventUser::where([['event_id',$event->id],['user_id',$user->id]])->first()->id;
+                 $event->registered_me = 'YES';
+                 $event->registered_id = $event_user_id;
+             }else{
+                 $event->registered_me = 'NO';
+                 $event->registered_id = 0;
+             }
+         }*/
+
+        $eventUser= $user->events->where('event_id',$event->id);
+        $eventUser_count=$eventUser->count();
+        $eventUser_id=$eventUser->first();
+        if($eventUser_count>0){
+            $event->registered_me = 'YES';
+            $event->registered_id = $eventUser_id->id;;
+        }else{
+            $event->registered_me = 'NO';
+            $event->registered_id = 0;
         }
-        
+
         //leaflet points
         if($event->address_point != null){
             $event->address_point = json_decode($event->address_point);
@@ -436,7 +535,7 @@ class EventController extends Controller
         $message = "'شما با موفقیت در رویداد NAME رزرو شدید،لطفا برای قطعی شدن ثبت نام،پرداخت را انجام دهید.'";
         $type = 4;
         $when = Carbon::now()->addSecond();
-       \Notification::send(\Auth::user(),(new NotifySignedUpEvent($event,$title,$message,$type))->delay($when));
+        \Notification::send(\Auth::user(),(new NotifySignedUpEvent($event,$title,$message,$type))->delay($when));
         return response($eventUser);
     }
 
@@ -481,5 +580,24 @@ class EventController extends Controller
             }
         }
         return redirect()->route('admin.event.addUser');
+    }
+
+    public function delete_image(Request $request)
+    {
+        $image = Image::find($request['image_id']);
+        //delete image FILE
+        unlink($image->image_path);
+        unlink("images/events/thumbnails/".$image->thumbnail_path);
+        Image::destroy($request['image_id']);
+
+        return response($request['image_id']);//vase jquery niaz hastesh.
+    }
+
+    public function change_thumbnail(Request $request)
+    {
+        $event = Event::find($request['event_id']);
+        $before_thumbnail = $event->thumbnail_id;
+        $event->update(['thumbnail_id' => $request['image_id']]);
+        return response($before_thumbnail);
     }
 }

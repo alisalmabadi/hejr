@@ -165,7 +165,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Hekmatinasser\Verta\VertaServiceProvider::class,
         Larabookir\Gateway\GatewayServiceProvider::class,
-
+        App\Providers\EloquentObserverServiceProvider::class
     ],
 
     /*

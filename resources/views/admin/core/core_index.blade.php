@@ -32,6 +32,7 @@
                             <tr>
                                 <td style="width: 1px;" class="text-center">
                                 <input onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" type="checkbox"></td>
+                                <td class="text-center">آی دی</td>
                                 <td class="text-center"> نام</td>
                                 <td class="text-center">شهر</td>
                                 <td class="text-center">استان</td>
@@ -49,6 +50,7 @@
                                     <td class="text-center">
                                         <input name="selected[]" value="{{$core->id}}" type="checkbox">
                                     </td>
+                                    <td class="text-center iranyekan"> {{$core->id}} </td>
                                     <td class="text-center iranyekan"> {{$core->name}} </td>
                                     <td class="text-center">{{$core->city->name}}</td>
                                     <td class="text-center">{{$core->province->name}}</td>

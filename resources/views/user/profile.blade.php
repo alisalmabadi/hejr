@@ -102,12 +102,12 @@
                                                 <span class="m-nav__link-text">Events</span>
                                             </a>
                                         </li>--}}
-                                        <li class="m-nav__item">
+                               {{--         <li class="m-nav__item">
                                             <a href="https://t.me/s_alis77" class="m-nav__link">
                                                 <i class="m-nav__link-icon flaticon-lifebuoy"></i>
                                                 <span class="m-nav__link-text">پشتیبانی</span>
                                             </a>
-                                        </li>
+                                        </li>--}}
                                     </ul>
                                     <div class="m-portlet__body-separator"></div>
                              {{--       <div class="m-widget1 m-widget1--paddingless">
@@ -368,7 +368,7 @@
                                                 </div>
                                                 <div class="form-group m-form__group row">
                                                     <label for="exampleSelect1" class="col-2 
-                                                    col-form-label">دانشگاه</label>
+                                                    col-form-label">دانشگاه یا حوزه</label>
                                                     <div class="col-7">
                                                         <select class="form-control js-example-basic-multiple change_uni m-input m-input--square" name="university_id" id="exampleSelect1">
                                                             <option value="">انتخاب کنید.</option>

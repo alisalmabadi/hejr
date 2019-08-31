@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->integer('city_id')->unsigned()->nullable();
             $table->integer('province_id')->unsigned()->nullable();
             $table->string('password');
-            $table->string('image_path')->default('1');
+            $table->string('image_path')->default('/storage/photos//5c61ca8a0e938.jpg');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

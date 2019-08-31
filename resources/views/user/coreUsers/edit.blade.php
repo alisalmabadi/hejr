@@ -127,7 +127,7 @@
                         </div>
                         <div class="col-sm-6">
                         <label class="col-sm-6 control-label" for="name">رمز عبور</label>
-                            <input id="name" name="password" value="{{$user->password}}" placeholder="نام کاربری"  class="form-control" type="password">
+                            <input id="name" name="password" value="" placeholder="رمزعبور"  class="form-control" type="password">
                             @if($errors->has('password'))
                                 <span class="help-block">
                                         <strong style="color:red;">{{$errors->first('password')}}</strong>
@@ -156,6 +156,27 @@
                                 </span>
                             @endif
                         </div>
+
+                        <div class="col-sm-6">
+                        <label class="col-sm-6 control-label" for="name">کد پستی</label>
+                            <input id="name" name="postalcode" value="{{$user->postalcode}}" placeholder="کد پستی"  class="form-control" type="number">
+                            @if($errors->has('postalcode'))
+                                <span class="help-block">
+                                        <strong style="color:red;">{{$errors->first('postalcode')}}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-sm-6">
+                        <label class="col-sm-6 control-label" for="name">تلفن منزل</label>
+                            <input id="name" name="home_number" value="{{$user->home_number}}" placeholder="تلفن منزل"  class="form-control" type="number">
+                            @if($errors->has('home_number'))
+                                <span class="help-block">
+                                        <strong style="color:red;">{{$errors->first('home_number')}}</strong>
+                                </span>
+                            @endif
+                        </div>
+
                     </div>
 
 

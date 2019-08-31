@@ -5,18 +5,18 @@
     <!-- BEGIN: Aside Menu -->
     <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " m-menu-vertical="1" m-menu-scrollable="1" m-menu-dropdown-timeout="500" style="position: relative;">
         <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
-            <li class="m-menu__item @if($current_route_name== 'user.panel'))  m-menu__item--active @endif" aria-haspopup="true"><a href="{{route('user.panel')}}" class="m-menu__link "><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">داشبورد</span>
+            <li class="m-menu__item @if($current_route_name == 'user.panel' )  m-menu__item--active @endif" aria-haspopup="true"><a href="{{route('user.panel')}}" class="m-menu__link "><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">داشبورد</span>
 									{{--		<span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span> --}}</span></span></a></li>
             <li class="m-menu__section ">
-                <h4 class="m-menu__section-text">تنظیمات کلی</h4>
+                <h4 class="m-menu__section-text">امکانات کلی</h4>
                 <i class="m-menu__section-icon flaticon-more-v2"></i>
             </li>
-            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">کاربر</span><i
+            <li class="m-menu__item  m-menu__item--submenu @if($current_route_name == 'user.profile') m-menu__item--expanded m-menu__item--open @endif" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">کاربر</span><i
                             class="m-menu__ver-arrow la la-angle-right"></i></a>
                 <div class="m-menu__submenu "><span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
                         <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true"><span class="m-menu__link"><span class="m-menu__link-text">Base</span></span></li>
-                        <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.profile')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">پروفایل شخصی</span></a></li>
+                        <li class="m-menu__item @if($current_route_name == 'user.profile' )  m-menu__item--active @endif" aria-haspopup="true"><a href="{{route('user.profile')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">پروفایل شخصی</span></a></li>
                       {{--  <li class="m-menu__item " aria-haspopup="true"><a href="components/base/typography.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Typography</span></a></li>--}}
                        {{-- <li class="m-menu__item " aria-haspopup="true"><a href="components/base/stack.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Stack</span></a></li>--}}
                        {{-- <li class="m-menu__item " aria-haspopup="true"><a href="components/base/tables.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Tables</span></a></li>
@@ -48,19 +48,19 @@
                     </ul>
                 </div>
             </li>
-            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">رویدادها</span><i
+            <li class="m-menu__item  m-menu__item--submenu @if(strpos($current_route_name,'user.events') !== false)   m-menu__item--expanded m-menu__item--open @endif" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">رویدادها</span><i
                             class="m-menu__ver-arrow la la-angle-right"></i></a>
                 <div class="m-menu__submenu "><span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
-                        <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">نمایش رویدادهای مجاز</span></a></li>
+                        <li class="m-menu__item @if($current_route_name == 'user.events' )  m-menu__item--active @endif" aria-haspopup="true"><a href="{{route('user.events')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">نمایش رویدادهای مجاز</span></a></li>
 
 
 
-                        <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events.showAllRegistered')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text"> رویدادهای ثبت نام شده</span></a></li>
+                        <li class="m-menu__item @if($current_route_name == 'user.events.showAllRegistered' )  m-menu__item--active @endif" aria-haspopup="true"><a href="{{route('user.events.showAllRegistered')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text"> رویدادهای ثبت نام شده</span></a></li>
 
                         @can('create-event') 
-                        <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events.create')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">افزودن رویداد</span></a></li>
-                        <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.events.index')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">رویدادهای افزوده شده</span></a></li>
+                        <li class="m-menu__item @if($current_route_name == 'user.events.create' )  m-menu__item--active @endif " aria-haspopup="true"><a href="{{route('user.events.create')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">افزودن رویداد</span></a></li>
+                        <li class="m-menu__item @if($current_route_name == 'user.events.index' )  m-menu__item--active @endif" aria-haspopup="true"><a href="{{route('user.events.index')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">رویدادهای افزوده شده</span></a></li>
                         @endcan
 
                     </ul>
@@ -68,15 +68,15 @@
             </li>
             {{--users --}}
             @can('show-users')
-                <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">کاربران</span><i
+                <li class="m-menu__item  m-menu__item--submenu @if(strpos($current_route_name,'user.coreUsers') !== false) m-menu__item--expanded m-menu__item--open @endif" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">کاربران</span><i
                                 class="m-menu__ver-arrow la la-angle-right"></i></a>
                     <div class="m-menu__submenu "><span class="m-menu__arrow"></span>
                         <ul class="m-menu__subnav">
-                            <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.coreUsers.index')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">نمایش کاربران هسته</span></a></li>
+                            <li class="m-menu__item @if($current_route_name == 'user.coreUsers.index' )  m-menu__item--active @endif" aria-haspopup="true"><a href="{{route('user.coreUsers.index')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">نمایش کاربران هسته</span></a></li>
 
 
 
-                            <li class="m-menu__item " aria-haspopup="true"><a href="{{route('user.coreUsers.create')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">ایجاد کاربر جدید</span></a></li>
+                            <li class="m-menu__item @if($current_route_name == 'user.coreUsers.create' )  m-menu__item--active @endif" aria-haspopup="true"><a href="{{route('user.coreUsers.create')}}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">ایجاد کاربر جدید</span></a></li>
 
                         </ul>
                     </div>

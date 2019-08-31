@@ -1,9 +1,7 @@
 @extends('layouts.app_master')
 @section('styles')
     <link rel="stylesheet" href="{{asset('pass/password_strength.css')}}">
-    <link rel="stylesheet" href="{{asset('css/leaflet.css')}}"
-          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-          crossorigin=""/>
+    <link rel="stylesheet" href="{{asset('css/leaflet.css')}}" />
 
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
@@ -286,7 +284,7 @@
                         <td>{{$eventUser->event->end_date_sign}}</td>
                         <td> {{$eventUser->event->capacity}} / {{$eventUser->event->fulled_capacity}} </td>
 
-                        <td> تومان {{number_format($eventUser->event->price)}}</td>
+                        <td>  {{number_format($eventUser->event->price)}}  تومان </td>
                     </tr>
                     </tbody>
                 </table>

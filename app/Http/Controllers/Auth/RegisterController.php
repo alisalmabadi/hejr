@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\SignedUpUserEvent;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -52,10 +53,12 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
+            'email'=>'required|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ],[
             'password.min'=>'رمزعبور حداقل باید 6 کاراکتر باشد.',
             'username.unique'=>'این نام کاربری قبلا انتخاب شده است.',
+            'email.unique'=>'این ایمیل قبلا انتخاب شده است.',
         ]);
     }
 
@@ -67,11 +70,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'lastname' => $data['lastname'],
             'username' => $data['username'],
+            'phonenumber' => $data['username'],
             'password' => Hash::make($data['password']),
+            'core_id'=>$data['core_id'],
+            'email'=>$data['email'],
+            'image_path'=>'/storage/photos//5c61ca8a0e938.jpg'
         ]);
+
+        event(new SignedUpUserEvent($user));
+
+        return $user;
     }
 }

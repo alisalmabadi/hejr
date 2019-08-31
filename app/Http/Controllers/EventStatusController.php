@@ -12,6 +12,10 @@ class EventStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        return $this->middleware('admin');
+    }
     public function index()
     {
         $event_statuses = EventStatus::all();
