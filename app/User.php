@@ -27,6 +27,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    /*protected $appends = ['is_online'];
+
+    protected $attributes = ['is_online'];*/
 
     public function getThumbnailAttribute()
     {
@@ -95,6 +98,18 @@ class User extends Authenticatable
     public function createdEvents()
     {
         return $this->morphMany(Event::class,'eventable');
+    }
+
+    public function getIsOnlineAttribute()
+    {
+        return \Cache::has('user_is_online_'.md5($this->username));
+    }
+
+    public function scopeOnlineUsers($query)
+    {
+
+        return $query->get()->where('is_online',true);
+
     }
 
 }

@@ -24,6 +24,8 @@ class AdminController extends Controller
         $data['events_count']= Event::all()->count();
         $data['events_registered_count']= EventUser::all()->count();
         $data['articles'] = Article::all();
-       return view('admin.index',['data'=>$data]);
+        $users = User::OnlineUsers();
+        $data['online_users'] = $users->count();
+       return view('admin.index',['data'=>$data,'users'=>$users]);
     }
 }
