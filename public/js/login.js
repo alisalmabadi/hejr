@@ -119,9 +119,8 @@ var SnippetLogin = function() {
 /*
                     alert(response.responseJSON.errors.email[0]);
 */
-                    jQuery.each(response.responseJSON.errors.username, function(key, value){
-                        showErrorMsg(form, 'danger',value);
-
+                    jQuery.each(response.responseJSON.errors, function(key, value) {
+                        showErrorMsg(form, 'danger', response.responseJSON.errors[key]);
                     });
 
                     btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
@@ -230,16 +229,9 @@ var SnippetLogin = function() {
                 },
                 error: function (response) {
 
-                    /*jQuery.each(response.responseJSON.errors.username, function(key, value){
-                        showErrorMsg(form, 'danger',response.responseJSON.errors.username[key]);
-
-                    });*/
                     jQuery.each(response.responseJSON.errors, function(key, value) {
                         showErrorMsg(form, 'danger', response.responseJSON.errors[key]);
                     });
-                        /*jQuery.each(response.responseJSON.errors.email, function(key, value){
-                            showErrorMsg(form, 'danger',response.responseJSON.errors.email[key]);
-                    });*/
 
                     btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
                 }
