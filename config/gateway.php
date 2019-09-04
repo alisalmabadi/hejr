@@ -12,10 +12,10 @@ return [
     // Zarinpal gateway
     //--------------------------------
     'zarinpal' => [
-        'merchant-id'  => '2d50cbba-fb71-11e7-802a-005056a205be',
+        'merchant-id'  => 'bd26bce8-cd90-11e9-9ee1-000c295eb8fc',
         'type'         => 'normal',             // Types: [zarin-gate || normal]
         'callback-url' => '/',
-        'server'       => 'test',                // Servers: [germany || iran || test]
+        'server'       => 'iran',                // Servers: [germany || iran || test]
         'email'        => 'email@gmail.com',
         'mobile'       => '09xxxxxxxxx',
         'description'  => 'پرداخت هزینه کلاس ها',
