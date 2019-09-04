@@ -51,7 +51,8 @@ class EventController extends Controller
     {
         $this->validate($request , [
             'name'=>'required|max:255',
-            'description'=>'max:60000',
+            'description'=>'required|max:6000',
+            'long_description'=>'required|max:8000',
             'price'=>'required|numeric',
             'capacity'=>'required|numeric',
             'event_subject_id'=>'required|numeric',
@@ -145,8 +146,8 @@ class EventController extends Controller
 
         $this->validate($request , [
             'name'=>'required|max:255',
-            'description'=>'required|max:60000',
-            'long_description'=>'required',
+            'description'=>'required|max:6000',
+            'long_description'=>'required|max:8000',
             'start_date'=>'required|date',
             'end_date'=>'required|date',
             'end_date_signup'=>'required|date',
@@ -203,11 +204,11 @@ class EventController extends Controller
         $request['eventable_id'] = $admin->id;
         $request['eventable_type'] = 'admin';
         $event=Event::create($request->except(['information','address_point']));
-      //  if($request->xplace != null) {
-            $address_point = [$request->xplace, $request->yplace];
-            $address_point = json_encode($address_point);
-            $event->update(['address_point' => $address_point]);
-     //  }
+        //  if($request->xplace != null) {
+        $address_point = [$request->xplace, $request->yplace];
+        $address_point = json_encode($address_point);
+        $event->update(['address_point' => $address_point]);
+        //  }
         $event=$admin->events()->save($event);
 
         /*image upload*/
@@ -354,10 +355,10 @@ class EventController extends Controller
 
 
         $event->update($request->except(['information','address_point']));
-       // if($request->xplace != null) {
-            $address_point = [$request->xplace, $request->yplace];
-            $address_point = json_encode($address_point);
-            $event->update(['address_point' => $address_point]);
+        // if($request->xplace != null) {
+        $address_point = [$request->xplace, $request->yplace];
+        $address_point = json_encode($address_point);
+        $event->update(['address_point' => $address_point]);
         //}
 
         if(!empty($request['image'])){
