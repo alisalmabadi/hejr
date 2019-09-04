@@ -14346,3 +14346,9 @@ h3.headerdisc {
   margin: 0 auto;
 }
 
+.m--font-widget-title {
+  font-size: 17px;
+  text-align: center;
+  margin-top: 5%;
+}
+
