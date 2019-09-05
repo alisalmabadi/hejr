@@ -91,15 +91,37 @@
                 <!-- Main row -->
                 <div class="row">
                     <!-- Left col -->
-                    <section class="col-lg-7 connectedSortable">
+                    <section class="col-lg-12 connectedSortable">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"></h3>
+                                    <div class="box-tools pull-right">
+                                        <span class="label label-danger">{{$data['online_users']}} کاربر آنلاین </span>
+                                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body no-padding">
+                                    <p style="text-align: center">
+                                        @if(count($users) == 0) هیچ کاربری آنلاین نیست.@endif
+                                    </p>
+                                    <ul class="users-list clearfix">
 
+            @foreach($users as $user)
+                                        <li>
+                                            <img src="{{$user->thumbnail}}" alt="User Image">
+                                            <a class="users-list-name" href="#">{{$user->lastname}} {{$user->name}}</a>
+                                            <span class="users-list-date">آنلاین</span>
+                                        </li>
+                @endforeach
+                                    </ul>
+                                </div>
+                                <div class="box-footer text-center">
+                                    <a href="{{route('admin.user.all')}}" class="uppercase">نمایش تمام کاربران</a>
+                                </div>
+                            </div>
                     </section>
-                    <!-- /.Left col -->
-                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                    <section class="col-lg-5 connectedSortable">
 
-                    </section>
-                    <!-- right col -->
                 </div>
                 <!-- /.row (main row) -->
 

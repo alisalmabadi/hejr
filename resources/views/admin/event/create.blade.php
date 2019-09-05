@@ -60,17 +60,17 @@
                         </div>
                     </div>
                     <div class="form-group required">
-                        <label class="col-md-1 col-lg-1">توضیحات</label>
+                        <label class="col-md-1 col-lg-1">توضیحات کوتاه</label>
                         <div class="col-md-5 col-lg-5">
-                            <textarea name="description" class="form-control" id="general_description">{{old('description')}}</textarea>
+                            <textarea name="description" class="form-control" id="general_description"></textarea>
                             @if($errors->first('description'))
                                 <label style="color:red;">{{$errors->first('description')}}</label>
                             @endif
                             <label style="color:red;display:none;" id="general_description_error"></label>
                         </div>
-                        <label class="col-md-1 col-lg-1">توضیحات اجمالی</label>
+                        <label class="col-md-1 col-lg-1">توضیحات کاملتر</label>
                         <div class="col-md-5 col-lg-5">
-                            <textarea name="long_description" class="form-control" id="general_long_description">{{old('long_description')}}</textarea>
+                            <textarea name="long_description" class="form-control" id="general_long_description"></textarea>
                             @if($errors->first('long_description'))
                                 <label style="color:red;">{{$errors->first('long_description')}}</label>
                             @endif
@@ -174,7 +174,7 @@
                         </div>
                     </div>--}}
                     <div class="form-group">
-                        <a href="{{route('user.event.create.validate1')}}" class="btn-validate1"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>
+                        <a href="{{route('admin.event.create.validate1')}}" class="btn-validate1"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>
                     </div>
                 </div>
 
@@ -215,7 +215,7 @@
                         <a href="#" class="btn-back_to_validate1"><button type="button" class="btn btn-warning form-control">مرحله قبل</button></a>
                     </div>
                     <div class="col-md-9 col-sm-9">
-                        <a href="{{route('user.event.create.validate2')}}" class="btn-validate2"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>                    
+                        <a href="{{route('admin.event.create.validate2')}}" class="btn-validate2"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>
                     </div>
                 </div>
             </div>
@@ -290,7 +290,7 @@
                         <a href="#" class="btn-back_to_validate2"><button type="button" class="btn btn-warning form-control">مرحله قبل</button></a>
                     </div>
                     <div class="col-md-9 col-sm-9">
-                        <a href="{{route('user.event.create.validate3')}}" class="btn-validate3"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>                    
+                        <a href="{{route('admin.event.create.validate3')}}" class="btn-validate3"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>
                     </div>
                 </div>
             </div>
@@ -440,7 +440,9 @@
             $("#general_event_type_id_error").fadeOut("slow");
             $("#general_event_subject_id_error").fadeOut("slow");
             $("#general_center_core_id_error").fadeOut("slow");
-
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
             var data = $("#general :input").serialize();
             var url = $(this).attr('href');
             $.ajax({
@@ -473,7 +475,7 @@
                     }
                     if(e.responseJSON.errors.long_description){
                         $("#general_long_description_error").text(e.responseJSON.errors.long_description[0]);
-                        $("#general_long_description_error").fadeIn("slow");
+    $("#general_long_description_error").fadeIn("slow");
                     }
                     if(e.responseJSON.errors.price){
                         $("#general_price_error").text(e.responseJSON.errors.price[0]);

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Area;
 use App\City;
 use App\Core;
+use App\Events\SignedUpUserEvent;
 use App\EventStatus;
 use App\EventSubject;
 use App\EventType;
@@ -64,6 +65,7 @@ class UserController extends Controller
         $this->validate($request , [
             'name'=>'required|max:255',
             'description'=>'max:60000',
+            'long_description' => 'required',
             'price'=>'required|numeric',
             'capacity'=>'required|numeric',
             'event_subject_id'=>'required|numeric',
@@ -213,6 +215,7 @@ if(isset($request->birthday)) {
             'home_number' => $request->home_number
 
         ]);
+        event(new SignedUpUserEvent($user));
     flashs('عضو با موفقیت افزوده شد.','success');
     return back();
     }

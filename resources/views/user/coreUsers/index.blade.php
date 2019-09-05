@@ -83,6 +83,7 @@
                     <td class="text-center">ایمیل</td>
                     <td class="text-center">شماره تلفن</td>
                     <td class="text-center">دانشگاه</td>
+                    <td class="text-center">وضعیت آنلاین</td>
                     <td class="text-center">عملیات</td>
                 </tr>
                 </thead>
@@ -103,6 +104,12 @@
                             @endif
                         </td>
 
+                        <td class="text-center">
+         @if($user->is_online)
+                            <button class="btn btn-outline-success" type="button">آنلاین</button>
+         @else
+                                <button class="btn btn-outline-danger" type="button">آنلاین نیست</button></td>
+                    @endif
                         <td class="text-center"><a class="btn btn-primary btn-show-coreUser" href="{{route('user.coreUsers.show',$user)}}">جزئیات</a>
                         <a class="btn btn-info" href="{{route('user.coreUsers.edit',$user)}}">ویرایش</a> </td>
                     </tr>

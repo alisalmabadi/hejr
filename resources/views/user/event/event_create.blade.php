@@ -84,7 +84,7 @@
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-1 col-form-label">توضیحات مختصر</label>
                             <div class="col-5">
-                                <textarea name="description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;">{{old('description')}}</textarea>
+                                <textarea name="description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;"></textarea>
                                 @if($errors->first('description'))
                                     <label style="color:red">{{$errors->first('description')}}</label>
                                 @endif
@@ -94,7 +94,7 @@
 
                             <label for="example-text-input" class="col-1 col-form-label">توضیحات تکمیلی</label>
                             <div class="col-5">
-                                <textarea name="long_description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;">{{old('long_description')}}</textarea>
+                                <textarea name="long_description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;"></textarea>
                                 @if($errors->first('long_description'))
                                     <label style="color:red">{{$errors->first('long_description')}}</label>
                                 @endif

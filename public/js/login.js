@@ -119,9 +119,8 @@ var SnippetLogin = function() {
 /*
                     alert(response.responseJSON.errors.email[0]);
 */
-                    jQuery.each(response.responseJSON.errors.username, function(key, value){
-                        showErrorMsg(form, 'danger',value);
-
+                    jQuery.each(response.responseJSON.errors, function(key, value) {
+                        showErrorMsg(form, 'danger', response.responseJSON.errors[key]);
                     });
 
                     btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
@@ -137,6 +136,11 @@ var SnippetLogin = function() {
             var btn = $(this);
             var form = $(this).closest('form');
 
+            // add the rule here
+            jQuery.validator.addMethod("notEqual", function(value, element, param) {
+                return this.optional(element) || value != param;
+            }, "مقدار دیگری انتخاب کنید");
+
             form.validate({
                 rules: {
                     name: {
@@ -148,11 +152,18 @@ var SnippetLogin = function() {
                     username: {
                         required: true
                     },
+                    email: {
+                        required: true
+                    },
                     password: {
                         required: true
                     },
                     password_confirmation: {
                         required: true
+                    },
+                    core_id : {
+                      required: true,
+                        notEqual: '0'
                     },
                     agree: {
                         required: true
@@ -163,10 +174,14 @@ var SnippetLogin = function() {
                         required:""
                     },
                     lastname: {
-                        required: ""
+                        required: "لطفا نام خانوادگی را وارد کنید"
                     },
                     username: {
                         required: "لطفا نام کاربری وارد کنید"
+                    },
+                    email: {
+                        required: "لطفا ایمیل را وارد کنید",
+                        email: "لطفا ایمیل معتبری وارد کنید"
                     },
                     password : {
                         required: "رمز عبور را وارد نمایید"
@@ -176,6 +191,10 @@ var SnippetLogin = function() {
                     },
                     agree : {
                         required: "لطفا قوانین را تایید کنید."
+                    },
+                    core_id : {
+                        required: "هسته خود را انتخاب کنید",
+                        notEqual: "هسته خود را انتخاب کنید"
                     }
 
                 }
@@ -210,15 +229,10 @@ var SnippetLogin = function() {
                 },
                 error: function (response) {
 
-                    jQuery.each(response.responseJSON.errors.username, function(key, value){
-                        showErrorMsg(form, 'danger',value[0]);
-
+                    jQuery.each(response.responseJSON.errors, function(key, value) {
+                        showErrorMsg(form, 'danger', response.responseJSON.errors[key]);
                     });
 
-                    jQuery.each(response.responseJSON.errors.password, function(key, value){
-                        showErrorMsg(form, 'danger',value[0]);
-
-                    });
                     btn.removeClass('m-loader m-loader--right m-loader--light').attr('disabled', false);
                 }
             });
@@ -262,7 +276,7 @@ var SnippetLogin = function() {
 	                    signInForm.clearForm();
 	                    signInForm.validate().resetForm();
 
-	                    showErrorMsg(signInForm, 'success', 'Cool! Password recovery instruction has been sent to your email.');
+	                    showErrorMsg(signInForm, 'success', 'پسوورد ریکاوری با موفقیت ارسال شد.');
                 	}, 2000);
                 }
             });

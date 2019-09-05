@@ -127,6 +127,7 @@
                                 {{--<td class="text-center" style="max-width: 70px">کد پستی</td>--}}
                                 <td class="text-center" style="max-width: 150px;text-overflow: ellipsis;">عملیات</td>
                                 <td class="text-center" style="max-width: 150px;text-overflow: ellipsis;">وضعیت</td>
+                                <td class="text-center" style="max-width: 150px;text-overflow: ellipsis;">آنلاین</td>
 
                                 {{--
                                                                 <td class="text-center" style="max-width: 150px;text-overflow: ellipsis;">نمایش کامل</td>
@@ -160,6 +161,14 @@
                                         <div class="btn btn-success" type="button">فعال</div>
                                     @else
                                             <div class="btn btn-danger" type="button">غیرفعال</div>
+                                        @endif
+                                    </td>
+
+                                    <td class="text-center">
+                                        @if($user->is_online)
+                                            <div class="btn btn-success" type="button">آنلاین است</div>
+                                        @else
+                                            <div class="btn btn-danger" type="button">آنلاین نیست</div>
                                         @endif
                                     </td>
 

@@ -95,11 +95,12 @@
             @endforeach
 
              </div>
-                                    <h3 class="m-widget19__title m--font-light">
-                                        {{$event->name}}
-                                    </h3>
+
                                     <div class="m-widget19__shadow"></div>
                                 </div>
+                                <h3 class="m-widget19__title m--font-light m--font-widget-title">
+                                    {{$event->name}}
+                                </h3>
                                 <div class="m-widget19__content">
                                     <div class="m-widget19__header">
                                         <div class="m-widget19__user-img">
