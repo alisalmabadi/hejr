@@ -4,6 +4,23 @@
         .form-control-feedback {
             color: red;
         }
+
+        .event_imgs{
+            width:400px; 
+            margin-right:220px;
+        }
+        .li_tabs{
+            font-size:15px;
+        }
+        @media screen and (max-width: 600px) {
+            .event_imgs{
+                width:200px; 
+                margin-right:20px;
+            }
+            .li_tabs{
+                font-size:11px;
+            }
+        }
     </style>
 @endsection
 @section('content')
@@ -58,12 +75,12 @@
                     <div class="m-portlet__body">
 
                         <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
+                            <li class="nav-item li_tabs">
                                 <a class="nav-link active show" data-toggle="tab" href="#m_tabs_1_1">
                                     <i class="la la-exclamation-triangle"></i> اطلاعات اولیه رویداد
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item li_tabs">
                                 <a class="nav-link" data-toggle="tab" href="#m_tabs_1_2">
                                     <i class="la la-cloud-download"></i> عکس های رویداد
                                 </a>
@@ -89,8 +106,8 @@
                                                                        </div>--}}
 
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-2 col-form-label">نام رویداد</label>
-                            <div class="col-10">
+                            <label for="example-text-input" class="col-md-2 col-lg-2 col-sm-2 col-xs-12 col-form-label">نام رویداد</label>
+                            <div class="col-md-10 col-lg-10 col-sm-10 col-xs-12">
                                 <input class="form-control m-input" name="name" type="text" value="{{$event->name}}" >
                                 @if($errors->first('name'))
                                     <label style="color:red">{{$errors->first('name')}}</label>
@@ -99,8 +116,8 @@
                         </div>
 
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-1 col-form-label">توضیحات مختصر</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">توضیحات مختصر</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <textarea name="description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;">{{$event->description}}</textarea>
                                 @if($errors->first('description'))
                                     <label style="color:red">{{$errors->first('description')}}</label>
@@ -108,8 +125,8 @@
                             </div>
 
 
-                            <label for="example-text-input" class="col-1 col-form-label">توضیحات تکمیلی</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">توضیحات تکمیلی</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <textarea name="long_description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;">{{$event->long_description}}</textarea>
                                 @if($errors->first('long_description'))
                                     <label style="color:red">{{$errors->first('long_description')}}</label>
@@ -118,15 +135,15 @@
 
                         </div>
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-1 col-form-label">تاریخ شروع</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">تاریخ شروع</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <input class="form-control m-input start_date" name="start_date" type="text" value="{{$event->start_date}}" >
                                 @if($errors->first('start_date'))
                                     <label style="color:red">{{$errors->first('start_date')}}</label>
                                 @endif
                             </div>
-                            <label for="example-text-input" class="col-1 col-form-label">تاریخ پایان</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">تاریخ پایان</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <input class="form-control m-input end-date" name="end_date" type="text" value="{{$event->end_date}}">
                                 @if($errors->first('end_date'))
                                     <label style="color:red">{{$errors->first('end_date')}}</label>
@@ -135,8 +152,8 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-2 col-form-label">تاریخ پایان ثبت نام</label>
-                            <div class="col-10">
+                            <label for="example-text-input" class="col-md-2 col-lg-2 col-sm-2 col-xs-12 col-form-label">تاریخ پایان ثبت نام</label>
+                            <div class="col-md-10 col-lg-10 col-sm-10 col-xs-12">
                                 <input class="form-control m-input" name="end_date_signup" type="text" value="{{$event->end_date_signup}}">
                                 @if($errors->first('end_date_signup'))
                                     <label style="color:red">{{$errors->first('end_date_signup')}}</label>
@@ -145,15 +162,15 @@
                         </div>
 
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-1 col-form-label">قیمت</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">قیمت</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <input class="form-control m-input" name="price" type="number" value="{{$event->price}}">
                                 @if($errors->first('price'))
                                     <label style="color:red">{{$errors->first('price')}}</label>
                                 @endif
                             </div>
-                            <label for="example-text-input" class="col-1 col-form-label">ظرفیت</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">ظرفیت</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <input class="form-control m-input" name="capacity" type="number" value="{{$event->capacity}}">
                                 @if($errors->first('capacity'))
                                     <label style="color:red">{{$errors->first('capacity')}}</label>
@@ -161,8 +178,8 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label for="exampleSelect1" class="col-2 col-form-label">موضوع رویداد</label>
-                            <div class="col-10">
+                            <label for="exampleSelect1" class="col-md-2 col-lg-2 col-sm-2 col-xs-12 col-form-label">موضوع رویداد</label>
+                            <div class="col-md-10 col-lg-10 col-sm-10 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="event_subject_id"  id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($event_subjects as $event_subject)                            <option @if($event->event_subject_id==$event_subject->id) selected @endif value="{{$event_subject->id}}">{{$event_subject->name}}</option>
@@ -183,8 +200,8 @@
                                                                         </div>--}}
 
                         <div class="form-group m-form__group row">
-                            <label for="exampleSelect1" class="col-1 col-form-label">نوع رویداد</label>
-                            <div class="col-5">
+                            <label for="exampleSelect1" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">نوع رویداد</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="event_type_id"  id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($event_types as $event_type)
@@ -196,8 +213,8 @@
                                 @endif
                             </div>
 
-                            <label for="exampleSelect1" class="col-1 col-form-label">وضعیت رویداد</label>
-                            <div class="col-5">
+                            <label for="exampleSelect1" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">وضعیت رویداد</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="event_status_id"  id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($event_statuses as $event_status)
@@ -218,8 +235,8 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label for="exampleSelect1" class="col-1 col-form-label">استان</label>
-                            <div class="col-5">
+                            <label for="exampleSelect1" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">استان</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="province_id"  id="province">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($provinces as $province)
@@ -230,8 +247,8 @@
                                     <label style="color:red">{{$errors->first('province_id')}}</label>
                                 @endif
                             </div>
-                            <label for="exampleSelect1" class="col-1 col-form-label">شهر</label>
-                            <div class="col-5">
+                            <label for="exampleSelect1" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">شهر</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="city_id"  id="city_id">
                                     <option value="{{$event->city_id}}">{{$event->cities->name}}</option>
 
@@ -243,8 +260,8 @@
                         </div>
 
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-1 col-form-label">آدرس</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">آدرس</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
  <textarea class="form-control" type="text" name="address" rows="3">{{$event->address}}
  </textarea>
                                 @if($errors->first('address'))
@@ -252,15 +269,15 @@
                                 @endif
                             </div>
 
-                            <label for="" class="col-1 col-from-label">مختصات x</label>
-                            <div class="col-2">
+                            <label for="" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-from-label">مختصات x</label>
+                            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-12">
                                 <input class="form-control m-input" name="xplace" type="text" value="{{$xplace}}" >
                                 @if($errors->first('xplace'))
                                     <label style="color:red">{{$errors->first('xplace')}}</label>
                                 @endif
                             </div>
-                            <label for="" class="col-1 col-from-label">مختصات y</label>
-                            <div class="col-2">
+                            <label for="" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-from-label">مختصات y</label>
+                            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-12">
                                 <input class="form-control m-input" name="yplace" type="text" value="{{$yplace}}" >
                                 @if($errors->first('yplace'))
                                     <label style="color:red">{{$errors->first('yplace')}}</label>
@@ -268,8 +285,8 @@
                             </div>
                         </div>/
                         <div class="form-group m-form__group row">
-                            <label for="exampleSelect1" class="col-2 col-form-label">هسته اصلی</label>
-                            <div class="col-7">
+                            <label for="exampleSelect1" class="col-md-2 col-lg-2 col-sm-2 col-xs-12 col-form-label">هسته اصلی</label>
+                            <div class="col-md-7 col-lg-7 col-sm-7 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="center_core_id" id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($cores as $core)
@@ -326,9 +343,10 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-md-2 col-lg-2">
-                                        <button class="btn btn-success pull-left" type="button" id="addphoto">افزودن فیلد عکس</button>
+                                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-12">
+                                        <button class="btn btn-success pull-left form-control" type="button" id="addphoto">افزودن فیلد عکس</button>
                                     </div>
+                                    <hr/>
 
                                 </div>
 
@@ -340,7 +358,7 @@
                                         @foreach($event->images as $image)
                                         <div class="row img_{{$image->id}}" style="border: 1px solid whitesmoke;box-shadow: 1px 1px 1px 1px #928e8e;border-radius: 20px; margin-bottom:10px;">
                                             <div class="col-md-9">
-                                                <img class="img-responsive" src="{{asset($image->image_path)}}" style="width:400px; margin-right:220px;">
+                                                <img class="img-responsive event_imgs" src="{{asset($image->image_path)}}">
                                             </div>
                                             <div class="col-md-3 not_thumbnail_{{$image->id}}" style="@if($event->thumbnail_id == $image->id) display:none; @endif">
                                                 <button type="button" class="btn btn-danger form-control btn-delete_img" data-img_id="{{$image->id}}" data-event_id="{{$event->id}}">حذف این تصویر</button>
