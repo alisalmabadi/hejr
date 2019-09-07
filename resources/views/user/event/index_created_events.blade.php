@@ -152,7 +152,7 @@
                     <tbody>
                     @foreach($user->createdEvents as $event)
                         <tr>
-                            <td>{{$event->id}}</td>
+                            <td class="respons_click">{{$event->id}}</td>
                             <td>{{$event->name}}</td>
                             <td>{{$event->description}}</td>
                             <td>{{$event->center_core->name}}</td>
@@ -187,5 +187,12 @@
         table.DataTable({
             responsive: true,
         });
+    </script>
+
+    <script>
+        window.load = doSth();
+        function doSth(){
+            $(".respons_click").trigger("click");
+        }
     </script>
 @endsection

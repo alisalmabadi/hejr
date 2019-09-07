@@ -4,6 +4,52 @@
         .form-control-feedback {
             color: red;
         }
+
+
+        #general_gif{
+            position: absolute;
+            z-index: 2;
+            top: 45%;
+            right: 50%;
+            display:none;
+        }
+        #time_gif{
+            position: absolute;
+            z-index: 2;
+            top: 45%;
+            right: 50%;
+            display:none;
+        }
+        #address_gif{
+            position: absolute;
+            z-index: 2;
+            top: 45%;
+            right: 50%;
+            display:none;
+        }
+        @media screen and (max-width: 600px) {
+            #general_gif{
+                position: absolute;
+                z-index: 2;
+                top: 65%;
+                right: 10%;
+                display:none;
+            }
+            #time_gif{
+                position: absolute;
+                z-index: 2;
+                top: 45%;
+                right: 10%;
+                display:none;
+            }
+            #address_gif{
+                position: absolute;
+                z-index: 2;
+                top: 50%;
+                right: 10%;
+                display:none;
+            }
+        }
     </style>
 @endsection
 @section('content')
@@ -69,10 +115,10 @@
                             </div>--}}
 
                 <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
-                    <img src="{{asset('gif/waiter.gif')}}" style="position: absolute;z-index: 2;top: 45%;right: 50%;display:none;" id="general_gif">
+                    <img src="{{asset('gif/waiter.gif')}}" id="general_gif">
                         <div class="form-group m-form__group row">
-                        <label for="example-text-input" class="col-2 col-form-label">نام رویداد</label>
-                            <div class="col-10">
+                        <label for="example-text-input" class="col-sm-2 col-md-2 col-lg-2 col-xs-12 col-form-label">نام رویداد</label>
+                            <div class="col-sm-10 col-md-10 col-lg-10 col-xs-12">
                                 <input class="form-control m-input" name="name" type="text" value="{{old('name')}}" >
                                 @if($errors->first('name'))
                                     <label style="color:red">{{$errors->first('name')}}</label>
@@ -82,8 +128,8 @@
                         </div>
 
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-1 col-form-label">توضیحات مختصر</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">توضیحات مختصر</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <textarea name="description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;"></textarea>
                                 @if($errors->first('description'))
                                     <label style="color:red">{{$errors->first('description')}}</label>
@@ -92,8 +138,8 @@
                             </div>
 
 
-                            <label for="example-text-input" class="col-1 col-form-label">توضیحات تکمیلی</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">توضیحات تکمیلی</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <textarea name="long_description" class="form-control md-input" data-provide="markdown" rows="10" style="resize: none;"></textarea>
                                 @if($errors->first('long_description'))
                                     <label style="color:red">{{$errors->first('long_description')}}</label>
@@ -104,16 +150,16 @@
                         </div>
 
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-1 col-form-label">قیمت</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">قیمت</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <input class="form-control m-input" name="price" type="number" value="{{old('price')}}">
                                 @if($errors->first('price'))
                                     <label style="color:red">{{$errors->first('price')}}</label>
                                 @endif
                                 <label style="color:red;display:none;" id="general_price_error"></label>
                             </div>
-                            <label for="example-text-input" class="col-1 col-form-label">ظرفیت</label>
-                            <div class="col-5">
+                            <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">ظرفیت</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <input class="form-control m-input" name="capacity" type="number" value="{{old('capacity')}}">
                                 @if($errors->first('capacity'))
                                     <label style="color:red">{{$errors->first('capacity')}}</label>
@@ -122,8 +168,8 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label for="exampleSelect1" class="col-2 col-form-label">موضوع رویداد</label>
-                            <div class="col-10">
+                            <label for="exampleSelect1" class="col-md-2 col-lg-2 col-sm-2 col-xs-12 col-form-label">موضوع رویداد</label>
+                            <div class="col-md-10 col-lg-10 col-sm-10 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="event_subject_id"  id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($event_subjects as $event_subject)                            <option value="{{$event_subject->id}}">{{$event_subject->name}}</option>
@@ -145,8 +191,8 @@
                             </div>--}}
 
                         <div class="form-group m-form__group row">
-                            <label for="exampleSelect1" class="col-1 col-form-label">نوع رویداد</label>
-                            <div class="col-5">
+                            <label for="exampleSelect1" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">نوع رویداد</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="event_type_id"  id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($event_types as $event_type)
@@ -159,8 +205,8 @@
                                 <label style="color:red;display:none;" id="general_event_type_id_error"></label>
                             </div>
 
-                            <label for="exampleSelect1" class="col-1 col-form-label">وضعیت رویداد</label>
-                            <div class="col-5">
+                            <label for="exampleSelect1" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">وضعیت رویداد</label>
+                            <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="event_status_id"  id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($event_statuses as $event_status)
@@ -177,8 +223,8 @@
                         </div>
                         <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
                         <div class="form-group m-form__group row">
-                            <label for="exampleSelect1" class="col-2 col-form-label">هسته اصلی</label>
-                            <div class="col-7">
+                            <label for="exampleSelect1" class="col-md-2 col-lg-2 col-sm-2 col-xs-12 col-form-label">هسته اصلی</label>
+                            <div class="col-md-7 col-lg-7 col-sm-7 col-xs-12">
                                 <select class="form-control m-input m-input--square" name="center_core_id" id="exampleSelect1">
                                     <option value="">انتخاب کنید.</option>
                                     @foreach($cores as $core)
@@ -212,18 +258,18 @@
                         </div>
 
                         <div class="tab-pane" id="m_tabs_1_1_2" role="tabpanel">
-                            <img src="{{asset('gif/waiter.gif')}}" style="position: absolute;z-index: 2;top: 45%;right: 50%;display:none;" id="time_gif">
+                            <img src="{{asset('gif/waiter.gif')}}" id="time_gif">
                             <div class="form-group m-form__group row">
-                                <label for="example-text-input" class="col-1 col-form-label">تاریخ شروع</label>
-                                <div class="col-5">
+                                <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">تاریخ شروع</label>
+                                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                     <input class="form-control m-input start_date" name="start_date" type="text" value="{{old('start_date')}}" >
                                     @if($errors->first('start_date'))
                                         <label style="color:red">{{$errors->first('start_date')}}</label>
                                     @endif
                                     <label id="time_start_date_error" style="color:red;display:none;"></label>
                                 </div>
-                                <label for="example-text-input" class="col-1 col-form-label">تاریخ پایان</label>
-                                <div class="col-5">
+                                <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">تاریخ پایان</label>
+                                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                     <input class="form-control m-input end-date" name="end_date" type="text" value="{{old('end_date')}}">
                                     @if($errors->first('end_date'))
                                         <label style="color:red">{{$errors->first('end_date')}}</label>
@@ -233,8 +279,8 @@
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label for="example-text-input" class="col-2 col-form-label">تاریخ پایان ثبت نام</label>
-                                <div class="col-10">
+                                <label for="example-text-input" class="col-md-2 col-lg-2 col-sm-2 col-xs-12 col-form-label">تاریخ پایان ثبت نام</label>
+                                <div class="col-md-10 col-lg-10 col-sm-10 col-xs-12">
                                     <input class="form-control m-input" name="end_date_signup" type="text" value="{{old('end_date_signup')}}">
                                     @if($errors->first('end_date_signup'))
                                         <label style="color:red">{{$errors->first('end_date_signup')}}</label>
@@ -243,25 +289,25 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-3 col-sm-3">
+                                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-12">
                                     <a href="#" class="btn-back_to_validate1"><button type="button" class="btn btn-warning form-control">مرحله قبل</button></a>
                                 </div>
-                                <div class="col-md-9 col-sm-9">
+                                <div class="col-md-9 col-lg-9 col-sm-9 col-xs-12">
                                     <a href="{{route('user.event.create.validate2')}}" class="btn-validate2"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>                    
                                 </div>
                             </div>
                         </div>
 
                         <div class="tab-pane" id="m_tabs_1_1_3" role="tabpanel">
-                            <img src="{{asset('gif/waiter.gif')}}" style="position: absolute;z-index: 2;top: 45%;right: 50%;display:none;" id="address_gif">
+                            <img src="{{asset('gif/waiter.gif')}}" id="address_gif">
                             <div class="form-group m-form__group row">
                                 <div class="col-10 ml-auto">
                                     <h3 class="m-form__section">محل برگزاری</h3>
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
-                                <label for="exampleSelect1" class="col-1 col-form-label">استان</label>
-                                <div class="col-5">
+                                <label for="exampleSelect1" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">استان</label>
+                                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                     <select class="form-control m-input m-input--square" name="province_id"  id="province">
                                         <option value="">انتخاب کنید.</option>
                                         @foreach($provinces as $province)
@@ -273,8 +319,8 @@
                                     @endif
                                     <label id="address_province_id" style="color:red;display:none;"></label>
                                 </div>
-                                <label for="exampleSelect1" class="col-1 col-form-label">شهر</label>
-                                <div class="col-5">
+                                <label for="exampleSelect1" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">شهر</label>
+                                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                     <select class="form-control m-input m-input--square" name="city_id"  id="city_id">
                                         <option value="">انتخاب کنید.</option>
                                     </select>
@@ -286,8 +332,8 @@
                             </div>
 
                             <div class="form-group m-form__group row">
-                                <label for="example-text-input" class="col-1 col-form-label">آدرس</label>
-                                <div class="col-5">
+                                <label for="example-text-input" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-form-label">آدرس</label>
+                                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12">
                                     <textarea class="form-control" type="text" name="address" rows="3">{{old('address')}}
                                     </textarea>
                                     @if($errors->first('address'))
@@ -296,16 +342,16 @@
                                     <label id="address_address" style="color:red;display:none;"></label>
                                 </div>
 
-                                <label for="" class="col-1 col-from-label">مختصات x</label>
-                                <div class="col-2">
+                                <label for="" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-from-label">مختصات x</label>
+                                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-12">
                                     <input class="form-control m-input" name="xplace" type="text" value="{{old('xplace')}}" >
                                     @if($errors->first('xplace'))
                                         <label style="color:red">{{$errors->first('xplace')}}</label>
                                     @endif
                                     <label id="address_xplace" style="color:red;display:none;"></label>
                                 </div>
-                                <label for="" class="col-1 col-from-label">مختصات y</label>
-                                <div class="col-2">
+                                <label for="" class="col-md-1 col-lg-1 col-sm-1 col-xs-12 col-from-label">مختصات y</label>
+                                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-12">
                                     <input class="form-control m-input" name="yplace" type="text" value="{{old('yplace')}}" >
                                     @if($errors->first('yplace'))
                                         <label style="color:red">{{$errors->first('yplace')}}</label>
@@ -314,10 +360,10 @@
                                 </div>
                             </div>/
                             <div class="form-group row">
-                                <div class="col-md-3 col-sm-3">
+                                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-12">
                                     <a href="#" class="btn-back_to_validate2"><button type="button" class="btn btn-warning form-control">مرحله قبل</button></a>
                                 </div>
-                                <div class="col-md-9 col-sm-9">
+                                <div class="col-md-9 col-lg-9 col-sm-9 col-xs-12">
                                     <a href="{{route('user.event.create.validate3')}}" class="btn-validate3"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>                    
                                 </div>
                             </div>
@@ -359,9 +405,9 @@
                             <div class="m-portlet__foot m-portlet__foot--fit">
                                 <div class="m-form__actions">
                                     <div class="row">
-                                        <div class="col-2">
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                         </div>
-                                        <div class="col-7">
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                             <button id="submit_edituser" type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom iranyekan"> ذخیره تغییرات</button>&nbsp;&nbsp;
                                             {{--                                 <button type="reset" class="btn btn-secondary m-btn m-btn--air m-btn--custom">Cancel</button>--}}
                                         </div>
