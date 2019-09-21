@@ -309,10 +309,10 @@ Route::get('password/reset/{token}', [
 ]);
 
 // Registration Routes...
-Route::get('register', [
+/*Route::get('register', [
     'as' => 'register',
     'uses' => 'Auth\RegisterController@showRegistrationForm'
-]);
+]);*/
 Route::post('register', [
     'as' => 'register_user',
     'uses' => 'Auth\RegisterController@register'
