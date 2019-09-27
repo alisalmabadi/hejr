@@ -178,6 +178,17 @@ Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
         Route::post('image/deleteEventImage', ['uses'=>'ImageController@delete_event_image', 'as'=>'image.delete_event_image']);*/
     /*** end of images ***/
 
+    /** forms routes **/
+    Route::group(['prefix'=>'form','as'=>'form.'],function(){
+        Route::resource('field', 'FormFieldController', ['except'=>['destroy']]);
+        Route::get('field/delete/{id}', ['uses'=>'FormFieldController@delete','as'=>'field.delete']);
+        Route::resource('type', 'FormTypeController', ['except'=>['destroy']]);
+        Route::get('type/delete/{id}', ['uses'=>'FormTypeController@delete','as'=>'type.delete']);
+        Route::resource('status', 'FormStatusController', ['except'=>['destroy']]);
+        Route::get('status/delete/{id}', ['uses'=>'FormStatusController@delete','as'=>'status.delete']);
+    });
+    /** forms routes **/
+
 });
 
 /***laravel filemanger ***/
