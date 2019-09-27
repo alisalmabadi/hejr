@@ -127,9 +127,9 @@
                                     <div class="m-widget19__body body1_{{$event->id}} text-center" style="display:block;">
                                         <p>{!! str_limit($event->description,200,'...') !!}</p><hr/>
                                         <label>تاریخ دوره</label><br>
-                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">از {{$event->start_dates}} تا {{$event->end_dates}}</p><br>
+                                        {{--<p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">از {{$event->start_dates}} تا {{$event->end_dates}}</p><br>
                                         <label>تاریخ پایان ثبت نام</label><br>
-                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">{{$event->end_date_sign}}</p>
+                                        <p class="btn btn-secondary m-btn m-btn--icon m-btn--pill">{{$event->end_date_sign}}</p>--}}
                                         <br/>
                                         <hr/>
                                         <p>موضوع دوره:
