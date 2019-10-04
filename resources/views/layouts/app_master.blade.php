@@ -57,7 +57,6 @@
 {{--
     <link href="{{asset('css/select2.min.css')}}" rel="stylesheet">
 --}}
-
 {{--
     <link href="{{asset('vendors/nouislider/distribute/nouislider.css')}}" rel="stylesheet" type="text/css" />
 --}}
@@ -95,7 +94,9 @@
 {{--
   <link href="{{asset('vendors/chartist/dist/chartist.min.css')}}" rel="stylesheet" type="text/css" />
 --}}
- {{-- <link href="{{asset('vendors/sweetalert2/dist/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />--}}
+
+ {{-- <link href="{{asset('vendors/sweetalert2/dist/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+ --}}
 
   <link href="{{asset('vendors/socicon/css/socicon.css')}}" rel="stylesheet" type="text/css" />
 
@@ -108,7 +109,8 @@
   <!--end:: Global Optional Vendors -->
 
 <!--begin::Global Theme Styles -->
-    {{--<link href="../../../assets/demo/base/style.bundle.css" rel="stylesheet" type="text/css" />--}}
+    {{--<link href="../../../assets/demo/base/style.bundle.css" rel="stylesheet" type="text/css" />
+    --}}
 
 
     <link href="{{asset('css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
@@ -118,12 +120,13 @@
 </head>
 
 <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
-{{--
+
 <div id="app">
---}}
+
 <!-- begin:: Page -->
 <div class="m-grid m-grid--hor m-grid--root m-page">
    @include('partials.header')
+
    <!-- begin::Body -->
        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
 
@@ -619,10 +622,17 @@
        <!-- begin::Quick Nav -->
 
 
-       <!--begin:: Global Mandatory Vendors -->
+<!--end::Global Theme Bundle -->
+
+
+</div>
+
+
+
+<!--begin:: Global Mandatory Vendors -->
 {{--<script src="{{asset('vendors/jquery/dist/jquery.js')}}" type="text/javascript"></script>--}}
 
-<script src="{{asset('js/app.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/app.js')}}"></script>
 
 {{--
 <script src="{{asset('vendors/popper.js/dist/umd/popper.js')}}" type="text/javascript"></script>
@@ -793,11 +803,8 @@
 
 <!--begin::Global Theme Bundle -->
 <script src="{{asset('js/scripts.bundle.js')}}" type="text/javascript"></script>
-
-<!--end::Global Theme Bundle -->
-
 @yield('scripts')
-{{--</div>--}}
+
 </body>
 
 <!-- end::Body -->
