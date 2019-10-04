@@ -71,8 +71,9 @@
     </li>
 
 </template>
-<script>
+<script  type="application/javascript">
     export default {
+        name: "notification",
         props:['notifications','backgroundimg','unreadnotifications'],
         methods:{
             readnotify:function(id){
