@@ -27,7 +27,7 @@ Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
     Route::get('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@showLoginForm']);
     Route::post('/login',['as'=>'login','uses'=>'AdminAuth\LoginController@login']);
     Route::get('/logout',['as'=>'logout','uses'=>'AdminAuth\LoginController@logout']);
-    /*Route::GET('/post/isaac',['as'=>'post.isaac','uses'=>'PostController@isaac']);*/
+
 
     Route::group(['prefix'=>'users','as'=>'user.'],function (){
         Route::get('/',['uses'=>'UserController@index','as'=>'all']);
@@ -334,7 +334,7 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::get('/',['as'=>'panel','uses'=>'UserController@panel']);
     Route::get('profile',['as'=>'profile','uses'=>'UserController@profile']);
     Route::post('update',['as'=>'update','uses'=>'UserController@profile_edit']);
-    Route::post('/prodile/edit/uniDetails', ['as'=>'uni_details', 'uses'=>'UserController@uni_details']);
+    Route::post('/profile/edit/uniDetails', ['as'=>'uni_details', 'uses'=>'UserController@uni_details']);
     Route::post('/profile/edit/updateUni', ['as'=>'university.updates', 'uses'=>'UserController@university_update']);
     Route::post('/profile/edit/addUni', ['as'=>'university.add', 'uses'=>'UserController@university_add']);
     Route::post('checkemail',['as'=>'checkemail','uses'=>'UserController@checkemail']);
@@ -390,6 +390,8 @@ Route::group(['prefix'=>'user','as'=>'user.'],function(){
     Route::patch('coreUsers/update/{user}', ['as'=>'coreUsers.update', 'uses'=>'UserController@core_users_update']);
     /***** core_users_routes ******/
 
+    /****get article dashboard ****/
+    Route::get('articles/get',['as'=>'article','uses'=>'UserController@articleGet']);
 });
 
 /*****public routes**********/
