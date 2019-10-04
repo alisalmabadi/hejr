@@ -1,5 +1,7 @@
 <!-- BEGIN: Header -->
+{{--
 <div id="app">
+--}}
 
 <header id="m_header" class="m-grid__item    m-header " m-minimize-offset="200" m-minimize-mobile-offset="200">
     <div class="m-container m-container--fluid m-container--full-height">
@@ -564,6 +566,8 @@
         </div>
     </div>
 </header>
+{{--
 </div>
+--}}
 <!-- END: Header -->
 
