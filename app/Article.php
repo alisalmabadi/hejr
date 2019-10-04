@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     public  $created_atp;
+    protected $appends = ['persian_date'];
+
     protected  $fillable=[
         'article_category_id',
         'order',
