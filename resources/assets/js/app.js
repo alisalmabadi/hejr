@@ -4,6 +4,9 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import dashboardPortlet from './components/dashboard-porlet';
+import notifications from './components/notification';
+import dashboardArticle from './components/dashboard-article';
 window.Swal = require('sweetalert2');
 require('./bootstrap');
 window.PerfectScrollbar = require('perfect-scrollbar').default;
@@ -18,8 +21,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('notification',require('./components/Notification.vue'));
+Vue.component('notification',notifications);
+Vue.component('dashboard-portlet',dashboardPortlet);
+Vue.component('dashboardArticle',dashboardArticle);
 
 const app = new Vue({
     el: '#app',
