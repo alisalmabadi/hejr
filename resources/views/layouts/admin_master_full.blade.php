@@ -484,7 +484,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="@if(strpos($current_route_name, 'form.field')===6) active @endif"><a href="{{route('admin.form.field.index')}}"><i class="fa fa-plus"></i>مدیریت فیلدها</a></li>
-                            <li class="@if(strpos($current_route_name, 'article_category')===6) active @endif"><a href="{{route('admin.article_category.index')}}"><i class="fa fa-plus"></i>مدیریت فرم ها</a></li>
+                            <li class="@if(strpos($current_route_name, 'article_category')===6) active @endif"><a href="{{route('admin.form.form.index')}}"><i class="fa fa-plus"></i>مدیریت فرم ها</a></li>
                             <li class="@if(strpos($current_route_name, 'form.type')===6) active @endif"><a href="{{route('admin.form.type.index')}}"><i class="fa fa-plus"></i>مدیریت نوع فرم ها</a></li>
                             <li class="@if(strpos($current_route_name, 'form.status')===6) active @endif"><a href="{{route('admin.form.status.index')}}"><i class="fa fa-circle-o"></i>مدیریت وضعیت فرم ها</a></li>
                         </ul>

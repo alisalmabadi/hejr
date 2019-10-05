@@ -186,6 +186,10 @@ Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
         Route::get('type/delete/{id}', ['uses'=>'FormTypeController@delete','as'=>'type.delete']);
         Route::resource('status', 'FormStatusController', ['except'=>['destroy']]);
         Route::get('status/delete/{id}', ['uses'=>'FormStatusController@delete','as'=>'status.delete']);
+        Route::resource('form', 'FormController', ['except'=>['destroy']]);
+        Route::get('form/delete/{id}', ['uses'=>'FormController@delete','as'=>'delete']);
+        Route::post('form/edit/updateGenral/{form}', ['uses'=>'FormController@update_general', 'as'=>'form.update_genral']);
+        Route::post('form/edit/add_field', ['uses'=>'FormController@add_field', 'as'=>'form.add_field']);
     });
     /** forms routes **/
 
