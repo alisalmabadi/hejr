@@ -18,4 +18,9 @@ class Form extends Model
     {
         return $this->hasOne('App\FormStatus', 'id', 'form_status_id');
     }
+
+    public function form_form_fields()
+    {
+        return $this->hasMany('App\Form_FormField', 'form_id', 'id');
+    }
 }
