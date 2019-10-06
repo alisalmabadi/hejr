@@ -125,6 +125,31 @@
                     </div>
                 </div>
                 <div class="row required field_frm_field_result" style="padding-top: 10%;padding-right: 10%;padding-left: 10%;">
+
+                    @if(!empty($form->form_form_fields))
+                        @foreach($form->form_form_fields as $field)
+                            @if($field->field->type == 1)
+                                <div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:block;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="{{route('admin.form.form.del_field',$field->id)}}" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm" style="opacity: 0.5;pointer-events: none; background-color: lightgreen"><form method="post" action="{{route('admin.form.form.add_field')}}" class="frm-choosed_field"><input type="hidden" name="form_id" value="{{$form->id}}"><input type="hidden" name="form_field_id" value="{{$form->id}}"><input type="hidden" name="id" value="{{$field->id}}"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div></form></div></div><hr/>
+                            @elseif($field->field->type == 2 || $field->field->type == 3)
+                                <div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:block;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="{{route('admin.form.form.del_field',$field->id)}}" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm" style="opacity: 0.5;pointer-events: none; background-color: lightgreen"><button class="btn btn-warning btn_add_answere_field" type="button">افزودن فیلد برای گزینه ها</button><form class="frm-choosed_field" method="post" action="{{route('admin.form.form.add_field')}}"><input type="hidden" name="form_field_id" value="{{$form->id}}"><input type="hidden" name="form_field_id" value="{{$field->id}}"><input type="hidden" name="id" value="{{$field->id}}"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10 last_position"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div>
+                                @php
+                                if($field->attribute != null){
+                                    $options = json_decode($field->attribute);
+                                }
+                                else{
+                                    $options = null;
+                                }
+                                @endphp
+                                @if($options != null)
+                                    @foreach($options as $option)
+                                    <label class="col-md-2 col-lg-2">فیلد گزینه</label><div class="col-md-10 col-lg-10"><input type="text" class="form-control" value="{{$option->option}}" placeholder="گزینه مورد نظر را وارد کنید." name="options[]"></div>
+                                    @endforeach
+                                @endif
+                                </form></div></div><hr/>
+                            @endif
+                        @endforeach
+                    @endif
+
                 </div>
                 <div class="form-group" style="margin-top:10%;">
                     <!-- <div class="col-md-3 col-sm-3">
@@ -298,37 +323,97 @@
     {{--Field area--}}
     <script>
         $("#select_field").on("click", function(){
+            var add_form_url = "{{route('admin.form.form.add_field')}}";
             var field_id = $("#choose_field").val();
             var field_type_id = $('#choose_field').find(":selected").data('type_id');
             var form_id = $("#form_id").val();
                 if(field_type_id == 1){
-                    $(".field_frm_field_result").append('<div class="whole_frm"><form class="frm-choosed_field"><input type="hidden" name="form_id" value="'+form_id+'"><input type="hidden" name="form_field_id" value="'+field_id+'"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div></form></div><hr/>');
+                    $(".field_frm_field_result").append('<div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:none;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="#" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm"><form method="post" action="'+add_form_url+'" class="frm-choosed_field"><input type="hidden" name="form_id" value="'+form_id+'"><input type="hidden" name="form_field_id" value="'+field_id+'"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div></form></div></div><hr/>');
                 }
                 else if(field_type_id == 2 || field_type_id == 3){
-                    
+                    $(".field_frm_field_result").append('<div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:none;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="#" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm"><button class="btn btn-warning btn_add_answere_field" type="button">افزودن فیلد برای گزینه ها</button><form class="frm-choosed_field" method="post" action="'+add_form_url+'"><input type="hidden" name="form_id" value="'+form_id+'"><input type="hidden" name="form_field_id" value="'+field_id+'"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10 last_position"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div></form></div></div><hr/>');
                 }
         });
     </script>
     <script>
         $(document).on("submit", ".frm-choosed_field", function(e){
             e.preventDefault();
+            var field_id = 0;
+            var form = $(this);
             if($(this).find(".title").val() == ""){
                 alert('عنوان را وارد کنید');
                 return false;
             }
 
             var data = $(this).serialize();
-            var url = "{{route('admin.form.form.add_field')}}";
-            var type = "POST";
+            var url = $(this).attr("action");
+            var type = "POST"
+            // console.log(data, url, type);
             $.ajax({
                 data:data,
                 type:type,
                 url:url,
-                success:function(){},
+                success:function(form_field_id)
+                {
+                    form.append('<input type="hidden" name="id" value="'+form_field_id+'">');
+                    var del_url = "{{route('admin.form.form.index')}}/edit/del_field/"+form_field_id;
+                    form.closest(".whole_frm").closest(".kollesh").find(".vase_remove").find(".btn_delete_appended_form").attr("href", del_url);
+                },
                 error:function(){console.log('error in adding the form_field');return false;}
             });
             $(this).closest('.whole_frm').css({'opacity': '0.5', 'pointer-events': 'none', 'background-color': 'lightgreen'});
+            $(this).closest(".kollesh").find(".vase_remove").fadeIn("slow");
         });
+    </script>
+
+    <script>
+    $(document).on("click", ".btn_add_answere_field", function(){
+        $(this).closest(".whole_frm").find('form').find(".last_position").append('<label class="col-md-2 col-lg-2">فیلد گزینه</label><div class="col-md-10 col-lg-10"><input type="text" class="form-control" placeholder="گزینه مورد نظر را وارد کنید." name="options[]"></div>');
+    });
+    </script>
+    <script>
+    $(document).on("click", ".btn_change_appended_form", function(){
+        $(this).closest(".kollesh").find(".vase_remove").fadeOut("slow");
+        $(this).closest(".kollesh").find(".whole_frm").css({'opacity': '1', 'pointer-events': 'auto', 'background-color': 'white'});
+    });
+    </script>
+    <script>
+    $(document).on("click", ".btn_delete_appended_form", function(e){
+        e.preventDefault();
+        var url = $(this).attr("href");
+        var btn = $(this);
+
+        swal.fire({
+            title: 'اطمینان دارید؟',
+            text: "بعد از حذف قابل بازیابی نمی باشد!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'بله, حذف شود!',
+            cancelButtonText: 'خیر'
+            }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    data:'',
+                    type:"GET",
+                    url:url,
+                    success:function(){
+                        swal.fire(
+                            'موفقیت آمیز!',
+                            'عملیات حذف انجام شد',
+                            'success'
+                        )
+                        btn.closest(".vase_remove").closest(".kollesh").fadeOut("slow");
+                    },
+                    error:function(){
+                        console.log('error in deleting form_field');
+                    }
+                });
+            }
+        });
+    });
     </script>
     {{--end of Field area--}}
 
