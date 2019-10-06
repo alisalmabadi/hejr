@@ -8,6 +8,7 @@ use App\FormStatus;
 use App\FormType;
 use App\FormField;
 use App\Form_FormField;
+use App\Form_FormField_answere;
 
 class FormController extends Controller
 {
@@ -78,7 +79,7 @@ class FormController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Form $form)
-    {
+    {//dd($form->form_form_fields[2]->field);
         $fields = FormField::where('status', 1)->get();
         foreach($fields as $key=>$field)
         {
@@ -130,9 +131,43 @@ class FormController extends Controller
 
     public function add_field(Request $request)
     {
-        $form_form_field = new Form_FormField();
-        $form_form_field->create($request->all());
-        return response('form_form_field added!');
+        if(!empty($request['id']))
+        {
+            $form_form_field = Form_FormField::find($request['id']);
+            $form_form_field->update($request->all());
+            if(!empty($request['options']))
+            {
+                $option_array = array();
+                foreach($request['options'] as $option)
+                {
+                    $option_array[] = ['option'=>$option];
+                }
+                $option_array = json_encode($option_array);
+                $form_form_field->update(['attribute'=>$option_array]);
+            }
+        }
+        else
+        {
+            $form_form_field = new Form_FormField();
+            $form_form_field = $form_form_field->create($request->all());
+            if(!empty($request['options']))
+            {
+                $option_array = array();
+                foreach($request['options'] as $option)
+                {
+                    $option_array[] = ['option'=>$option];
+                }
+                $option_array = json_encode($option_array);
+                $form_form_field->update(['attribute'=>$option_array]);
+            }
+        }
+        return response($form_form_field->id);
+    }
+
+    public function del_field($id)
+    {
+        Form_FormField::destroy($id);
+        return response('deleted');
     }
 
     /**
