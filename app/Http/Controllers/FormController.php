@@ -9,6 +9,7 @@ use App\FormType;
 use App\FormField;
 use App\Form_FormField;
 use App\Form_FormField_answere;
+use App\Core;
 
 class FormController extends Controller
 {
@@ -92,9 +93,10 @@ class FormController extends Controller
             else
                 $fields[$key]->type_name = "Undefined";
         }
+        $cores = Core::where('status', 1)->get();
         $form_types = FormType::where('status', 1)->get();
         $form_statuses = FormStatus::where('form_type', 1)->get();
-        return view('admin.form.form.edit', compact('form', 'form_types', 'form_statuses', 'fields'));
+        return view('admin.form.form.edit', compact('form', 'form_types', 'form_statuses', 'fields', 'cores'));
     }
 
     /**
@@ -142,6 +144,10 @@ class FormController extends Controller
                 {
                     $option_array[] = ['option'=>$option];
                 }
+                if(!empty($request['multi']))
+                {
+                    $option_array[] = ['multiple_select'];
+                }
                 $option_array = json_encode($option_array);
                 $form_form_field->update(['attribute'=>$option_array]);
             }
@@ -157,6 +163,10 @@ class FormController extends Controller
                 {
                     $option_array[] = ['option'=>$option];
                 }
+                if(!empty($request['multi']))
+                {
+                    $option_array[] = ['multiple_select'];
+                }
                 $option_array = json_encode($option_array);
                 $form_form_field->update(['attribute'=>$option_array]);
             }
@@ -168,6 +178,38 @@ class FormController extends Controller
     {
         Form_FormField::destroy($id);
         return response('deleted');
+    }
+
+
+    public function loadUsersByCore(Request $request)
+    {
+        $form = Form::find($request['form_id']);
+        $core = Core::find($request['core_id']);
+        $core_users = $core->users;
+        if(!empty($core_users)){
+            foreach($core_users as $key=>$user){
+                foreach($user->forms as $u_f){
+                    if($u_f->id == $form->id){
+                        $core_users[$key]->used = 'yes';
+                    }
+                }
+            }
+        }
+        $users = $core_users;
+        return view('admin.form.form.edit', compact('users', 'form'));
+    }
+
+    public function addUser(Request $request)
+    {
+        $form = Form::find($request['form_id']);
+        $form->users()->attach($request['user_id']);
+        return response($request['user_id']);
+    }
+    public function removeUser(Request $request)
+    {
+        $form = Form::find($request['form_id']);
+        $form->users()->detach($request['user_id']);
+        return response($request['user_id']);
     }
 
     /**
