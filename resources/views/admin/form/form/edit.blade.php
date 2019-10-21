@@ -7,7 +7,50 @@
         .tab-content > .active{
             display: block;
         }
+
+
+        /*hover styles*/
+        .user{
+            opacity: 1;
+            transition: .8s ease;
+        }
+        .userHover{
+            opacity: 0;
+            transition: .8s ease;
+        }
+        .user-container:hover .user {
+            opacity: 0.3;
+        }
+
+        .user-container:hover .userHover {
+            opacity: 1;
+        }
+        /*End of hover styles*/
+
+        .owl-prev {
+            width: 15px;
+            height: 100px;
+            position: absolute;
+            top: 30%;
+            margin-left: -20px;
+            display: block !important;
+            border:0px solid black;
+        }
+
+        .owl-next {
+            width: 15px;
+            height: 100px;
+            position: absolute;
+            top: 30%;
+            right: -25px;
+            margin-right: 100%;
+            display: block !important;
+            border:0px solid black;
+        }
+        .owl-prev i, .owl-next i {transform : scale(6,6); color: #ccc;}
         </style>
+        <link href="{{asset('vendors/owl.carousel/dist/assets/owl.carousel.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('vendors/owl.carousel/dist/assets/owl.theme.default.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content-header')
     <section class="content-header">
@@ -39,9 +82,9 @@
                     {{csrf_field()}}
 
                <ul class="nav nav-tabs" data-tabs="tabs">
-                    <li><a href="#general" id="general_clicker" data-toggle="tab">عمومی</a></li>
-                    <li class="active"><a href="#time_tab" id="time_tab_clicker" data-toggle="tab" style="">فیلد های فرم</a></li>
-                    <li><a href="#address_tab" id="address_tab_clicker" data-toggle="tab" style="display:none;">آدرس</a></li>
+                    <li><a href="#general" id="general_clicker" data-toggle="tab" @if(!empty($users)) style="display:none;" @endif>عمومی</a></li>
+                    <li class="active"><a href="#time_tab" id="time_tab_clicker" data-toggle="tab" @if(!empty($users)) style="display:none;" @endif>فیلد های فرم</a></li>
+                    <li><a href="#users_tab" id="users_tab_clicker" data-toggle="tab" style="@if(empty($users)) display:none; @endif">کاربرها</a></li>
                     <li><a href="#gallery" id="image_tab_clicker" data-toggle="tab" style="display:none;">گالری</a></li>
                </ul>
 
@@ -106,7 +149,7 @@
             </div>
 
 
-            <div class="tab-pan fade in active" id="time_tab">
+            <div class="tab-pan fade in @if(empty($users)) active @endif" id="time_tab">
                 <h3>فیلدها</h3>
                 <img src="{{asset('gif/waiter.gif')}}" style="position: absolute;z-index: 2;top: 45%;right: 50%;display:none;" id="field_gif">
                 <div class="form-group required">
@@ -131,7 +174,6 @@
                             @if($field->field->type == 1)
                                 <div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:block;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="{{route('admin.form.form.del_field',$field->id)}}" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm" style="opacity: 0.5;pointer-events: none; background-color: lightgreen"><form method="post" action="{{route('admin.form.form.add_field')}}" class="frm-choosed_field"><input type="hidden" name="form_id" value="{{$form->id}}"><input type="hidden" name="form_field_id" value="{{$form->id}}"><input type="hidden" name="id" value="{{$field->id}}"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div></form></div></div><hr/>
                             @elseif($field->field->type == 2 || $field->field->type == 3)
-                                <div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:block;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="{{route('admin.form.form.del_field',$field->id)}}" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm" style="opacity: 0.5;pointer-events: none; background-color: lightgreen"><button class="btn btn-warning btn_add_answere_field" type="button">افزودن فیلد برای گزینه ها</button><form class="frm-choosed_field" method="post" action="{{route('admin.form.form.add_field')}}"><input type="hidden" name="form_field_id" value="{{$form->id}}"><input type="hidden" name="form_field_id" value="{{$field->id}}"><input type="hidden" name="id" value="{{$field->id}}"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10 last_position"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div>
                                 @php
                                 if($field->attribute != null){
                                     $options = json_decode($field->attribute);
@@ -140,11 +182,15 @@
                                     $options = null;
                                 }
                                 @endphp
+                                <div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:block;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="{{route('admin.form.form.del_field',$field->id)}}" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm" style="opacity: 0.5;pointer-events: none; background-color: lightgreen"><button class="btn btn-warning btn_add_answere_field" type="button">افزودن فیلد برای گزینه ها</button><form class="frm-choosed_field" method="post" action="{{route('admin.form.form.add_field')}}"><label class="label-default" style="margin-right: 100px;"><input type="checkbox" name="multi" @if(end($options)[0] == "multiple_select") checked @endif>انتخاب چندگزینه همزمان</label><input type="hidden" name="form_field_id" value="{{$form->id}}"><input type="hidden" name="form_field_id" value="{{$field->id}}"><input type="hidden" name="id" value="{{$field->id}}"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان" value="{{$field->title}}"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10 last_position"><textarea name="description" placeholder="توضیحات" class="form-control">{{$field->description}}</textarea>
                                 @if($options != null)
                                     @foreach($options as $option)
-                                    <label class="col-md-2 col-lg-2">فیلد گزینه</label><div class="col-md-10 col-lg-10"><input type="text" class="form-control" value="{{$option->option}}" placeholder="گزینه مورد نظر را وارد کنید." name="options[]"></div>
+                                        @if(!empty($option->option))
+                                            <label class="col-md-2 col-lg-2">فیلد گزینه</label><div class="col-md-10 col-lg-10"><input type="text" class="form-control" value="{{$option->option}}" placeholder="گزینه مورد نظر را وارد کنید." name="options[]"></div>
+                                        @endif
                                     @endforeach
                                 @endif
+                                </div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div>
                                 </form></div></div><hr/>
                             @endif
                         @endforeach
@@ -152,84 +198,99 @@
 
                 </div>
                 <div class="form-group" style="margin-top:10%;">
-                    <!-- <div class="col-md-3 col-sm-3">
+                     <div class="col-md-3 col-sm-3">
                         <a href="#" class="btn-back_to_validate1"><button type="button" class="btn btn-warning form-control">مرحله قبل</button></a>
                     </div>
                     <div class="col-md-9 col-sm-9">
-                        <a href="{{route('admin.event.create.validate2')}}" class="btn-validate2"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>
-                    </div> -->
+                        <button type="button" class="btn btn-primary form-control go_to_users">تایید و رفتن به مرحله بعد</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="tab-pan fade in" id="address_tab">
-                <h3>تعیین آدرس</h3>
+            <div class="tab-pan fade in @if(!empty($users)) active @endif" id="users_tab">
+                <h3>کاربرها</h3>
                 <img src="{{asset('gif/waiter.gif')}}" style="position: absolute;z-index: 2;top: 45%;right: 50%;display:none;" id="address_gif">
                 <div class="form-group required">
-                    <label class="col-md-2 col-lg-2">استان</label>
-                    <div class="col-md-4 col-lg-4">
-                        <select class="form-control province_selector" name="province_id">
-                            <option value="">انتخاب کنید</option>
-                            
-                        </select>
-                        @if($errors->first('province_id'))
-                            <label style="color:red;">{{$errors->first('province_id')}}</label>
-                        @endif
-                        <label id="address_province_id" style="color:red;display:none;"></label>
-                    </div>
-                    <label class="col-md-2 col-lg-2">شهر</label>
-                    <div class="col-md-4 col-lg-4">
-                        <select class="form-control city_selector" name="city_id">
-                            <option value="">انتخاب کنید</option>
-                        </select>
-                        @if($errors->first('city_id'))
-                            <label style="color:red;">{{$errors->first('city_id')}}</label>
-                        @endif
-                        <label id="address_city_id" style="color:red;display:none;"></label>
-                    </div>
-                </div>
-                <div class="form-group required">
-                    <label class="col-md-2 col-lg-2">آدرس</label>
-                    <div class="col-md-4 col-lg-4">
-                        <textarea class="form-control" name="address">{{old('address')}}</textarea>
-                        @if($errors->first('address'))
-                            <label style="color:red;">{{$errors->first('address')}}</label>
-                        @endif
-                        <label id="address_address" style="color:red;display:none;"></label>
-                    </div>
-                    <label class="col-md-2 col-lg-2 control-label" for="instagram_id">مختصات <a href="https://jsfiddle.net/ehLr8ehk/">لیفلت</a> </label>
-
-                    <div class="col-sm-2">
-                        <input id="xplace" name="xplace" value="{{old('xplace')}}" placeholder="xplace" class="form-control" type="text">
-                        <label class="success">
-                            مختصات lat
-                        </label>
-                        <label style="color:red">
-                            @if($errors->has('xplace'))
-                                {{$errors->first('xplace')}}
+                    <form method="post" action="{{route('admin.form.loadUsersByCore')}}">
+                    {{csrf_field()}}
+                        <input type="hidden" value="{{$form->id}}" name="form_id">
+                        <label class="col-md-2 col-lg-2">انتخاب هسته</label>
+                        <div class="col-md-6 col-lg-6">
+                            <select class="form-control core_select" name="core_id">
+                                <option value="">انتخاب کنید</option>
+                                @if(!empty($cores))
+                                    @foreach($cores as $core)
+                                        <option value="{{$core->id}}">{{$core->name}}</option>
+                                    @endforeach
                                 @endif
-                        </label>
-                        <label id="address_xplace" style="color:red;display:none;"></label>
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <input type="submit" class="btn btn-primary form-control" value="برای نمایش کاربران کلیک کنید">
+                        </div>
+                    </form>
+                </div>
+                <div class="form-group show_core_users">
+                    <img src="{{asset('gif/waiter.gif')}}" style="position: absolute;z-index: 2;top: 45%;right: 50%;display:none;" id="show_users_gif">
+
+                    <div id="owl-example" class="owl-carousel">
+                        @if(!empty($users))
+                            @foreach($users as $user)
+                                <div class="col-md-12 user-container user-container_{{$user->id}}" style="text-align: center;border: 1px solid #e4e6e7;border-radius: 20px;height:200px;">
+                                    {{-- asli --}}
+                                    <div class="m-widget_body-item user user_{{$user->id}}">
+                                        <div class="m-widget_body-item-pic">
+                                            <img src="{{asset('images/user2-160x160.jpg')}}" title="" style="border-radius: 200px;">
+                                        </div>
+                                        <div class="m-widget_body-item-desc">
+                                            <span>{{$user->name .' '. $user->lastname}}</span><br>
+                                            <span>{{$user->username}}</span>
+                                        </div>
+                                    </div>
+                                    {{-- hover --}}
+                                    @if($user->used)
+                                        <div class="m-widget_body-item userHover_added userHover_added_{{$user->id}}">
+                                            <div class="m-widget_body-item-pic" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;border-radius: 20px;">
+                                                <img src="{{asset('images/tik.png')}}">
+                                                <label class="label-info" style="position: absolute;left: 0;top: 34px;transform: rotate(-36deg);">
+                                                    این کاربر اد شده است
+                                                </label>
+                                                <button type="button" class="btn btn-remove" data-id="{{$user->id}}" style="position: absolute;right: 0;bottom: 8px;border-radius: 50px;"><i class="fa fa-remove"></i></button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="m-widget_body-item userHover userHover_{{$user->id}}">
+                                            <div class="m-widget_body-item-pic" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;border-radius: 20px;">
+                                                <span>ایمیل: {{$user->email}}</span>
+                                                <hr/>
+                                                <span>آدرس: </span>
+                                                @if(!empty($user->provinces && $user->cities && $user->address))
+                                                    <span>{{$user->provinces->name .' '.$user->cities->name. ' '. $user->address}}</span>
+                                                @endif
+                                                <button class="btn btn-success form-control btn-registerUser" data-id="{{$user->id}}" style="margin-bottom: -78%;border-radius: 20px;">ثبت کاربر</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    {{-- gif --}}
+                                    <div class="m-widget_body-item userGif userGif_{{$user->id}}" style="display: none;">
+                                        <div class="m-widget_body-item-pic" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;border-radius: 20px;background-color: #ffffffed;">
+                                            <img src="{{asset('gif/35.gif')}}" style="width: 60px;margin-right: 37%;margin-top: 41%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            ...
+                        @endif
                     </div>
 
-                    <div class="col-sm-2">
-                        <input id="yplace" name="yplace" value="{{old('yplace')}}" placeholder="yplace" class="form-control" type="text">
-                        <label class="success">
-                            مختصات lng
-                        </label>
-                        <label style="color:red">
-                            @if($errors->has('yplace'))
-                                {{$errors->first('yplace')}}
-                            @endif
-                        </label>
-                        <label id="address_yplace" style="color:red;display:none;"></label>
-                    </div>
+
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 100px;">
                     <div class="col-md-3 col-sm-3">
                         <a href="#" class="btn-back_to_validate2"><button type="button" class="btn btn-warning form-control">مرحله قبل</button></a>
                     </div>
                     <div class="col-md-9 col-sm-9">
-                        <a href="{{route('admin.event.create.validate3')}}" class="btn-validate3"><button type="button" class="btn btn-primary form-control">تایید و رفتن به مرحله بعد</button></a>
+                        <a href="{{route('admin.form.form.index')}}" class="btn-validate3"><button type="button" class="btn btn-primary form-control">تکمیل فرم</button></a>
                     </div>
                 </div>
             </div>
@@ -331,7 +392,7 @@
                     $(".field_frm_field_result").append('<div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:none;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="#" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm"><form method="post" action="'+add_form_url+'" class="frm-choosed_field"><input type="hidden" name="form_id" value="'+form_id+'"><input type="hidden" name="form_field_id" value="'+field_id+'"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div></form></div></div><hr/>');
                 }
                 else if(field_type_id == 2 || field_type_id == 3){
-                    $(".field_frm_field_result").append('<div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:none;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="#" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm"><button class="btn btn-warning btn_add_answere_field" type="button">افزودن فیلد برای گزینه ها</button><form class="frm-choosed_field" method="post" action="'+add_form_url+'"><input type="hidden" name="form_id" value="'+form_id+'"><input type="hidden" name="form_field_id" value="'+field_id+'"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10 last_position"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div></form></div></div><hr/>');
+                    $(".field_frm_field_result").append('<div class="kollesh"><div class="vase_remove row" style="position: relative;top: 100px;z-index: 2; display:none;"><div class="col-md-6 col-lg-6"><button type="button" class="btn btn-warning form-control btn_change_appended_form">تغییر این فیلد</button></div><div class="col-md-6 col-lg-6"><a href="#" class="btn btn-danger form-control btn_delete_appended_form">حذف این فیلد</a></div></div><div class="whole_frm"><button class="btn btn-warning btn_add_answere_field" type="button">افزودن فیلد برای گزینه ها</button><form class="frm-choosed_field" method="post" action="'+add_form_url+'"><label class="label-default" style="margin-right: 100px;"><input type="checkbox" name="multi">انتخاب چندگزینه همزمان</label><input type="hidden" name="form_id" value="'+form_id+'"><input type="hidden" name="form_field_id" value="'+field_id+'"><div class="form-group"><label class="col-md-2 col-lg-2">عنوان</label><div class="col-md-4 col-lg-4"><input type="text" class="form-control title" name="title" placeholder="عنوان"></div><label class="col-md-2 col-lg-2">وضعیت</label><div class="col-md-4 col-lg-4"><select class="form-control" name="status"><option value="1">فعال</option><option value="0">غیرفعال</option></select></div></div><div class="form-group"><label class="col-md-2 col-lg-2">توضیحات</label><div class="col-md-10 col-lg-10 last_position"><textarea name="description" placeholder="توضیحات" class="form-control"></textarea></div></div><div class="form-group"><input type="submit" value="تایید این فیلد" class="form-control btn btn-primary"></div></form></div></div><hr/>');
                 }
         });
     </script>
@@ -416,6 +477,159 @@
     });
     </script>
     {{--end of Field area--}}
+
+    <script>
+        $(".go_to_users").on("click", function(){
+            $("#users_tab_clicker").fadeIn("slow");
+            setTimeout(function(){
+                $("#users_tab_clicker").trigger("click");
+            }, 100);
+        });
+    </script>
+
+
+    {{--USERS--}}
+    {{-- calling owlcarrousel --}}
+    <script src="{{asset('vendors/owl.carousel/dist/owl.carousel.js')}}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function() {
+            $("#owl-example").owlCarousel({
+                // Most important owl features
+                items : 5,
+                touchDrag: true,
+                nav:true,
+                autoplay:true,
+                itemsDesktop : [1199,4],
+                itemsDesktopSmall : [980,3],
+                itemsTablet: [768,2],
+                itemsTabletSmall: false,
+                itemsMobile : [479,1],
+                singleItem : true,
+                //Basic Speeds
+                slideSpeed : 200,
+                paginationSpeed : 800,
+                rewindSpeed : 1000,
+                //Autoplay
+                autoPlay : true,
+                stopOnHover : true,
+                // Navigation
+                navigation : true,
+                navigationText : ["prev","next"],
+                rewindNav : true,
+                scrollPerPage : false,
+                //Pagination
+                pagination : true,
+                paginationNumbers: true,
+                rtl:true,
+                nav:true,
+                navText : ['<i class="fa fa-angle-right" aria-hidden="true"></i>','<i class="fa fa-angle-left" aria-hidden="true"></i>']
+
+            });
+        });
+    </script>
+    {{-- end of calling owlcarrousel --}}
+    
+    {{-- add User to event --}}
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click' , '.btn-registerUser' , function(){
+            var id = $(this).data('id');
+            var data = $("#form_id").val();
+            var url = "{{route('admin.form.addUser')}}";
+            var main_asset = "{{asset('')}}";
+            $(".userGif_"+id).css('display','block');
+            $.ajax({
+                data:{'user_id':id,'form_id':data},
+                url:url,
+                type:'POST',
+                success:function(data){
+                    $(".userHover_"+data).css('display','none');
+                    $(".user-container_"+data).append('<div class="m-widget_body-item userHover_added userHover_added_'+data+'"><div class="m-widget_body-item-pic" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;border-radius: 20px;"><img src="'+main_asset+'/images/tik.png"><label class="label-info" style="position: absolute;left: 0;top: 34px;transform: rotate(-36deg);">ین کاربر اد شده است</label></div><button type="button" class="btn btn-remove" data-id="'+data+'" style="position: absolute;right: 0;bottom: 8px;border-radius: 50px;"><i class="fa fa-remove"></i></button></div>');
+                    $(".userGif_"+data).fadeOut("slow");
+                },
+                error:function(){
+                    console.log('error in adding user to event');
+                    $(".userGif").css('display','none');
+                }
+            });
+        });
+    </script>
+    {{-- END OF add User to event --}}
+
+    {{-- remove User to event --}}
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click' , '.btn-remove' , function(){
+            var id = $(this).data('id');
+            var data = $('#form_id').val();
+            var url = "{{route('admin.form.removeUser')}}";
+            $(".userGif_"+id).css('display','block');
+            $.ajax({
+                data:{'user_id':id,'form_id':data},
+                url:url,
+                type:'POST',
+                success:function(data){
+                    $(".userHover_added_"+data).css('display','none');
+                    $(".user-container_"+data).append('<div class="m-widget_body-item userHover userHover_'+data+'"><div class="m-widget_body-item-pic" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;border-radius: 20px;"><button class="btn btn-success form-control btn-registerUser" data-id="'+data+'" style="margin-bottom: -78%;border-radius: 20px;">ثبت کاربر</button></div></div>');
+                    $(".userGif_"+data).fadeOut("slow");
+                },
+                error:function(){
+                    console.log('error in removing user to event');
+                    $(".userGif").css('display','none');
+                }
+            });
+        });
+    </script>
+    {{-- END OF remove User to event --}}
+
+
+    <script>
+        // $(".core_select").on("change", function(){
+        //     $("#show_users_gif").fadeIn("slow");
+
+        //     var core_id = $(this).val();
+        //     var form_id = $("#form_id").val();
+        //     if(core_id == ""){
+        //         return false;
+        //     }
+
+        //     var url = "{{route('admin.form.loadUsersByCore')}}";
+        //     $.ajax({
+        //         data: {'core_id':core_id, 'form_id':form_id},
+        //         url:url,
+        //         type:'post',
+        //         success:function(users){
+        //             console.log(users);
+
+        //             var main_asset = "{{asset('')}}";
+        //             $("#owl-example").html('');
+                    
+        //             $.each(users, function(user){
+        //                 if(users[user].used == "yes"){
+        //                     $("#owl-example").append('<div class="col-md-12 user-container user-container_'+users[user].id+'" style="text-align: center;border: 1px solid #e4e6e7;border-radius: 20px;height:200px;"><div class="m-widget_body-item user user_'+users[user].id+'"><div class="m-widget_body-item-pic"><img src="'+main_asset+'images/user2-160x160.jpg" title="" style="border-radius: 200px;"></div><div class="m-widget_body-item-desc"><span>'+users[user].name+' '+users[user].lastname+'</span><br><span>'+users[user].username+'</span></div></div><div class="m-widget_body-item userHover_added userHover_added_'+users[user].id+'"><div class="m-widget_body-item-pic" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;border-radius: 20px;"><img src="'+main_asset+'/images/tik.png"><label class="label-info" style="position: absolute;left: 0;top: 34px;transform: rotate(-36deg);">این کاربر اد شده است</label><button type="button" class="btn btn-remove" data-id="'+users[user].id+'" style="position: absolute;right: 0;bottom: 8px;border-radius: 50px;"><i class="fa fa-remove"></i></button></div></div><div class="m-widget_body-item userGif userGif_'+users[user].id+'" style="display: none;"><div class="m-widget_body-item-pic" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;border-radius: 20px;background-color: #ffffffed;"><img src="'+main_asset+'/gif/35.gif" style="width: 60px;margin-right: 37%;margin-top: 41%;"></div></div></div>...</div>');
+        //                 }
+        //                 else{/**add nashode bood */
+        //                     $("#owl-example").append('<div class="col-md-12 user-container user-container_'+users[user].id+'" style="text-align: center;border: 1px solid #e4e6e7;border-radius: 20px;height:200px;"><div class="m-widget_body-item user user_'+users[user].id+'"><div class="m-widget_body-item-pic"><img src="'+main_asset+'images/user2-160x160.jpg" title="" style="border-radius: 200px;"></div><div class="m-widget_body-item-desc"><span>'+users[user].name+' '+users[user].lastname+'</span><br><span>'+users[user].username+'</span></div></div><div class="m-widget_body-item userHover userHover_'+users[user].id+'"><div class="m-widget_body-item-pic" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;border-radius: 20px;"><span>ایمیل: '+users[user].email+'</span><hr/><span>آدرس: </span><button class="btn btn-success form-control btn-registerUser" data-id="'+users[user].id+'" style="margin-bottom: -78%;border-radius: 20px;">ثبت کاربر</button></div></div><div class="m-widget_body-item userGif userGif_'+users[user].id+'" style="display: none;"><div class="m-widget_body-item-pic" style="position: absolute;top: 0;right: 0;width: 100%;height: 100%;border-radius: 20px;background-color: #ffffffed;"><img src="'+main_asset+'/gif/35.gif" style="width: 60px;margin-right: 37%;margin-top: 41%;"></div></div></div>...</div>');
+        //                 }
+        //             });
+        //             $("#show_users_gif").fadeOut("slow");
+        //         },
+        //         error:function(){
+        //             console.log('error in loading users by core_id');
+        //             $("#show_users_gif").fadeOut("slow");
+        //         }
+        //     });
+        // });
+    </script>
+    {{--End of USERS--}}
 
 
 
@@ -624,62 +838,19 @@
     <script>
         $(".btn-validate3").on("click", function(e){
             e.preventDefault();
-            $("#address_gif").fadeIn("slow");
 
-            $("#address_province_id").fadeOut("slow");
-            $("#address_city_id").fadeOut("slow");
-            $("#address_address").fadeOut("slow");
-            $("#address_xplace").fadeOut("slow");
-            $("#address_yplace").fadeOut("slow");
-
-
-            var data = $("#address_tab :input").serialize();
             var url = $(this).attr('href');
-            $.ajax({
-                data:data,
-                url:url,
-                type:"POST",
-                success:function(){
-                    swal.fire({
-                        position: 'top-end',
-                        type: 'success',
-                        title: 'موفقیت آمیز',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-
-                    $("#address_gif").fadeOut("slow");
-                    $("#image_tab_clicker").fadeIn("slow");
-                    $("#image_tab_clicker").trigger("click");
-                    $("#address_tab_clicker").fadeOut("slow");
-
-                    $("#submit_base_frm").fadeIn("slow");
-                },
-                error:function(e){
-                    console.log(e.responseJSON.errors);
-                    if(e.responseJSON.errors.province_id){
-                        $("#address_province_id").text(e.responseJSON.errors.province_id[0]);
-                        $("#address_province_id").fadeIn("slow");
-                    }
-                    if(e.responseJSON.errors.city_id){
-                        $("#address_city_id").text(e.responseJSON.errors.city_id[0]);
-                        $("#address_city_id").fadeIn("slow");
-                    }
-                    if(e.responseJSON.errors.address){
-                        $("#address_address").text(e.responseJSON.errors.address[0]);
-                        $("#address_address").fadeIn("slow");
-                    }
-                    if(e.responseJSON.errors.xplace){
-                        $("#address_xplace").text(e.responseJSON.errors.xplace[0]);
-                        $("#address_xplace").fadeIn("slow");
-                    }
-                    if(e.responseJSON.errors.yplace){
-                        $("#address_yplace").text(e.responseJSON.errors.yplace[0]);
-                        $("#address_yplace").fadeIn("slow");
-                    }
-                    $("#address_gif").fadeOut("slow");
-                }
+            swal.fire({
+                position: 'center',
+                type: 'success',
+                title: 'ثبت فرم با موفقیت تکمیل گردید!',
+                showConfirmButton: false,
+                timer: 2000
             });
+            setTimeout(function(){
+                // console.log(url);
+                document.location.href=url;
+            },2000);
         });
     </script>
     <script>
