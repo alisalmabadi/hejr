@@ -191,6 +191,9 @@ Route::group(['prefix'=>'admin','as' => 'admin.'],function(){
         Route::post('form/edit/updateGenral/{form}', ['uses'=>'FormController@update_general', 'as'=>'form.update_genral']);
         Route::post('form/edit/add_field', ['uses'=>'FormController@add_field', 'as'=>'form.add_field']);
         Route::get('form/edit/del_field/{id}', ['uses'=>'FormController@del_field', 'as'=>'form.del_field']);
+        Route::post('form/edit/loadUsersByCore' , ['uses'=>'FormController@loadUsersByCore', 'as'=>'loadUsersByCore']);
+        Route::post('form/edit/addUser' , ['uses'=>'FormController@addUser', 'as'=>'addUser']);
+        Route::post('form/edit/removeUser' , ['uses'=>'FormController@removeUser', 'as'=>'removeUser']);
     });
     /** forms routes **/
 
