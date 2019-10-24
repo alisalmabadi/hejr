@@ -196,7 +196,8 @@ class FormController extends Controller
             }
         }
         $users = $core_users;
-        return view('admin.form.form.edit', compact('users', 'form'));
+        $cores = Core::where('status', 1)->get();
+        return view('admin.form.form.edit', compact('users', 'form', 'cores'));
     }
 
     public function addUser(Request $request)
