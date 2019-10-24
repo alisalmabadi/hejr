@@ -233,7 +233,7 @@
                 <div class="form-group show_core_users">
                     <img src="{{asset('gif/waiter.gif')}}" style="position: absolute;z-index: 2;top: 45%;right: 50%;display:none;" id="show_users_gif">
 
-                    <div id="owl-example" class="owl-carousel">
+                    <div id="owl-example" class="owl-carousel" style="margin-top:10%;">
                         @if(!empty($users))
                             @foreach($users as $user)
                                 <div class="col-md-12 user-container user-container_{{$user->id}}" style="text-align: center;border: 1px solid #e4e6e7;border-radius: 20px;height:200px;">
