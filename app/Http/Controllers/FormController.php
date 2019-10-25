@@ -197,7 +197,19 @@ class FormController extends Controller
         }
         $users = $core_users;
         $cores = Core::where('status', 1)->get();
-        return view('admin.form.form.edit', compact('users', 'form', 'cores'));
+        $fields = FormField::where('status', 1)->get();
+        foreach($fields as $key=>$field)
+        {
+            if($field->type == 1)
+                $fields[$key]->type_name = "text Box";
+            elseif($field->type == 2)
+                $fields[$key]->type_name = "check Box";
+            elseif($field->type == 3)
+                $fields[$key]->type_name = "Drop Down";
+            else
+                $fields[$key]->type_name = "Undefined";
+        }
+        return view('admin.form.form.edit', compact('users', 'form', 'cores', 'fields'));
     }
 
     public function addUser(Request $request)
