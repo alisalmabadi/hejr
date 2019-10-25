@@ -340,6 +340,21 @@
 @endsection
 @section('admin-footer')
 
+    {{--users--}}
+    @if(!empty($users))
+        <script>
+            window.onload = doSth;
+            function doSth()
+            {
+                console.log('shoru shod');
+                $("#users_tab_clicker").trigger("click");
+            }
+        </script>
+    @endif
+    {{--end of users--}}
+
+
+
     {{--general frm--}}
     <script>
         $("#general-frm").on("submit", function(e){
@@ -631,6 +646,16 @@
     </script>
     {{--End of USERS--}}
 
+    <script>
+        $(".btn-back_to_validate2").on("click", function(){
+            $("#time_tab_clicker").fadeIn("slow");
+            $("#time_tab_clicker").trigger("click");
+        });
+    </script>
+
+
+
+
 
 
 
@@ -857,16 +882,10 @@
         $(".btn-back_to_validate1").on("click", function(){
             $("#general_clicker").fadeIn("slow");
             $("#general_clicker").trigger("click");
-            $("#time_tab_clicker").fadeOut("slow");
+            // $("#time_tab_clicker").fadeOut("slow");
         });
     </script>
-    <script>
-        $(".btn-back_to_validate2").on("click", function(){
-            $("#time_tab_clicker").fadeIn("slow");
-            $("#time_tab_clicker").trigger("click");
-            $("#address_tab_clicker").fadeOut("slow");
-        });
-    </script>
+    
     {{--end of validates--}}
 
     {{--textareas ckEditor--}}
