@@ -233,7 +233,7 @@
                 <div class="form-group show_core_users">
                     <img src="{{asset('gif/waiter.gif')}}" style="position: absolute;z-index: 2;top: 45%;right: 50%;display:none;" id="show_users_gif">
 
-                    <div id="owl-example" class="owl-carousel">
+                    <div id="owl-example" class="owl-carousel" style="margin-top:10%;">
                         @if(!empty($users))
                             @foreach($users as $user)
                                 <div class="col-md-12 user-container user-container_{{$user->id}}" style="text-align: center;border: 1px solid #e4e6e7;border-radius: 20px;height:200px;">
@@ -339,6 +339,21 @@
 
 @endsection
 @section('admin-footer')
+
+    {{--users--}}
+    @if(!empty($users))
+        <script>
+            window.onload = doSth;
+            function doSth()
+            {
+                console.log('shoru shod');
+                $("#users_tab_clicker").trigger("click");
+            }
+        </script>
+    @endif
+    {{--end of users--}}
+
+
 
     {{--general frm--}}
     <script>
@@ -631,6 +646,16 @@
     </script>
     {{--End of USERS--}}
 
+    <script>
+        $(".btn-back_to_validate2").on("click", function(){
+            $("#time_tab_clicker").fadeIn("slow");
+            $("#time_tab_clicker").trigger("click");
+        });
+    </script>
+
+
+
+
 
 
 
@@ -857,16 +882,10 @@
         $(".btn-back_to_validate1").on("click", function(){
             $("#general_clicker").fadeIn("slow");
             $("#general_clicker").trigger("click");
-            $("#time_tab_clicker").fadeOut("slow");
+            // $("#time_tab_clicker").fadeOut("slow");
         });
     </script>
-    <script>
-        $(".btn-back_to_validate2").on("click", function(){
-            $("#time_tab_clicker").fadeIn("slow");
-            $("#time_tab_clicker").trigger("click");
-            $("#address_tab_clicker").fadeOut("slow");
-        });
-    </script>
+    
     {{--end of validates--}}
 
     {{--textareas ckEditor--}}
